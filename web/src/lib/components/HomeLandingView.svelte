@@ -228,7 +228,7 @@
          it said anything. -->
     <div class="flex flex-col items-center gap-5 text-center">
       <h1 class="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-        Every tech job, straight from the source.
+        Get hired today.
       </h1>
       <p class="text-balance text-base leading-relaxed text-muted-foreground">
         Indexed from company career boards, deduplicated, and tagged by stack, seniority

@@ -240,7 +240,7 @@ type Settings struct {
 	// NotifyEmailFrom are set — either empty and the worker still delivers Telegram
 	// (enforced at the cmd/notify call site, not here). AWS credentials come from the
 	// default AWS chain (env/role), never config. NotifyEmailFrom is the verified SES
-	// sender address (e.g. notifications@hireme.example.com).
+	// sender address (e.g. notifications@hiremetoday.ca).
 	AWSRegion       string
 	NotifyEmailFrom string
 

@@ -168,7 +168,7 @@ func campaignSample(name, title, campaignName, baseURL string) (Sample, error) {
 		if !ok {
 			return fmt.Errorf("campaign %q is not registered", campaignName)
 		}
-		return broadcast.NewMailer(c, "notifications@hireme.example.com", "dunsin@hireme.example.com", baseURL, previewLinks(baseURL)).
+		return broadcast.NewMailer(c, "notifications@hiremetoday.ca", "dunsin@hireme.example.com", baseURL, previewLinks(baseURL)).
 			Send(context.Background(), campaign, previewUserID, "someone@example.com")
 	})
 }
@@ -177,7 +177,7 @@ func campaignSample(name, title, campaignName, baseURL string) (Sample, error) {
 // these are the only mails that ask for an answer.
 func onboardingSample(name, title string, step onboarding.Step, baseURL string) (Sample, error) {
 	return sample(name, title, func(c *capture) error {
-		return onboarding.NewMailer(c, "notifications@hireme.example.com", "dunsin@hireme.example.com", baseURL, previewLinks(baseURL)).
+		return onboarding.NewMailer(c, "notifications@hiremetoday.ca", "dunsin@hireme.example.com", baseURL, previewLinks(baseURL)).
 			Send(context.Background(), step, previewUserID, "someone@example.com")
 	})
 }

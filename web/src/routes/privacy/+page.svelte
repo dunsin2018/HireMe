@@ -7,7 +7,7 @@
   // Confirmed monitored. This is the address a data-subject request and the Google OAuth
   // review team both arrive at, so it has to stay a mailbox somebody actually reads —
   // the same string is published on /terms, /support and /delete-account.
-  const contactEmail = 'hello@hireme.example.com';
+  const contactEmail = 'notifications@hiremetoday.ca';
 
   const canonical = $derived(`${page.url.origin}/privacy`);
 

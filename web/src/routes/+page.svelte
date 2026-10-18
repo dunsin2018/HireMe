@@ -18,7 +18,7 @@
 
 <Seo
   title="hireme — the open-source search engine for tech jobs"
-  description="Search 3M+ tech jobs indexed straight from company career boards — deduplicated and tagged by stack, seniority and location. Free, open source, no walls."
+  description="Get hired today. Search 3M+ tech jobs indexed straight from company career boards — deduplicated and tagged by stack, seniority and location. Free, open source, no walls."
   canonical="{origin}/"
 />
 

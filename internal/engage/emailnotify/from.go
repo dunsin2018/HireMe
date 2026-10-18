@@ -11,7 +11,7 @@ import "net/mail"
 // service that never set one.
 //
 // The address argument may itself already carry a display name (a deployment is
-// free to set NOTIFY_EMAIL_FROM to `hireme <notifications@hireme.example.com>`); the
+// free to set NOTIFY_EMAIL_FROM to `hireme <notifications@hiremetoday.ca>`); the
 // address is extracted from it so the name given here always wins. An unparseable
 // value is passed through untouched: a malformed From is the operator's to fix, and
 // silently rewriting it would hide the mistake.

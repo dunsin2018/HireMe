@@ -2,7 +2,7 @@
   import { page } from '$app/state';
   import Seo from '$lib/components/Seo.svelte';
 
-  const contactEmail = 'hello@hireme.example.com';
+  const contactEmail = 'notifications@hiremetoday.ca';
   const canonical = $derived(`${page.url.origin}/delete-account`);
 </script>
 
