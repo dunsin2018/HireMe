@@ -49,12 +49,12 @@ func TestGetOrCreate_ComposesAddressFromUsername(t *testing.T) {
 	s := newFakeStore()
 	e := &fakeEnsurer{usernames: map[int64]string{1: "ivan"}}
 
-	addr, err := GetOrCreate(context.Background(), s, e, 1, "ivan@gmail.com", "inbox.hireme.example.com")
+	addr, err := GetOrCreate(context.Background(), s, e, 1, "ivan@gmail.com", "inbox.hiremetoday.ca")
 	if err != nil {
 		t.Fatalf("GetOrCreate: %v", err)
 	}
-	if addr != "ivan@inbox.hireme.example.com" {
-		t.Errorf("addr = %q, want %q", addr, "ivan@inbox.hireme.example.com")
+	if addr != "ivan@inbox.hiremetoday.ca" {
+		t.Errorf("addr = %q, want %q", addr, "ivan@inbox.hiremetoday.ca")
 	}
 }
 
@@ -62,7 +62,7 @@ func TestGetOrCreate_EnrollsTheUser(t *testing.T) {
 	s := newFakeStore()
 	e := &fakeEnsurer{usernames: map[int64]string{1: "ivan"}}
 
-	if _, err := GetOrCreate(context.Background(), s, e, 1, "ivan@gmail.com", "inbox.hireme.example.com"); err != nil {
+	if _, err := GetOrCreate(context.Background(), s, e, 1, "ivan@gmail.com", "inbox.hiremetoday.ca"); err != nil {
 		t.Fatalf("GetOrCreate: %v", err)
 	}
 	if !s.enrolled[1] {
@@ -75,11 +75,11 @@ func TestGetOrCreate_IsIdempotent(t *testing.T) {
 	e := &fakeEnsurer{usernames: map[int64]string{1: "ivan"}}
 	ctx := context.Background()
 
-	first, err := GetOrCreate(ctx, s, e, 1, "ivan@gmail.com", "inbox.hireme.example.com")
+	first, err := GetOrCreate(ctx, s, e, 1, "ivan@gmail.com", "inbox.hiremetoday.ca")
 	if err != nil {
 		t.Fatalf("GetOrCreate (first): %v", err)
 	}
-	second, err := GetOrCreate(ctx, s, e, 1, "ivan@gmail.com", "inbox.hireme.example.com")
+	second, err := GetOrCreate(ctx, s, e, 1, "ivan@gmail.com", "inbox.hiremetoday.ca")
 	if err != nil {
 		t.Fatalf("GetOrCreate (second): %v", err)
 	}
@@ -94,7 +94,7 @@ func TestGetOrCreate_ResolvesUsernameBeforeEnrolling(t *testing.T) {
 	s.trace = &trace
 	e := &fakeEnsurer{usernames: map[int64]string{1: "ivan"}, trace: &trace}
 
-	if _, err := GetOrCreate(context.Background(), s, e, 1, "ivan@gmail.com", "inbox.hireme.example.com"); err != nil {
+	if _, err := GetOrCreate(context.Background(), s, e, 1, "ivan@gmail.com", "inbox.hiremetoday.ca"); err != nil {
 		t.Fatalf("GetOrCreate: %v", err)
 	}
 	want := []string{"EnsureUsername", "EnsureRow"}
@@ -107,7 +107,7 @@ func TestGetOrCreate_DoesNotEnrollWhenEnsureUsernameFails(t *testing.T) {
 	s := newFakeStore()
 	e := &fakeEnsurer{errs: map[int64]error{1: errors.New("boom")}}
 
-	if _, err := GetOrCreate(context.Background(), s, e, 1, "ivan@gmail.com", "inbox.hireme.example.com"); err == nil {
+	if _, err := GetOrCreate(context.Background(), s, e, 1, "ivan@gmail.com", "inbox.hiremetoday.ca"); err == nil {
 		t.Fatal("GetOrCreate: want an error")
 	}
 	if s.enrolled[1] {
@@ -120,7 +120,7 @@ func TestGetOrCreate_PropagatesEnsureUsernameError(t *testing.T) {
 	wantErr := errors.New("boom")
 	e := &fakeEnsurer{errs: map[int64]error{1: wantErr}}
 
-	if _, err := GetOrCreate(context.Background(), s, e, 1, "ivan@gmail.com", "inbox.hireme.example.com"); !errors.Is(err, wantErr) {
+	if _, err := GetOrCreate(context.Background(), s, e, 1, "ivan@gmail.com", "inbox.hiremetoday.ca"); !errors.Is(err, wantErr) {
 		t.Errorf("GetOrCreate error = %v, want %v", err, wantErr)
 	}
 }

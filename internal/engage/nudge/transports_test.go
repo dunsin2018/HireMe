@@ -37,7 +37,7 @@ func batchOf(kind string, n int) []Message {
 
 func TestEmailNotifier_BatchListsEveryNudgeUnderTheListLimit(t *testing.T) {
 	sender := &captureSender{}
-	n := NewEmailNotifier(sender, "jobs@hireme.example.com", "https://hireme.example.com", testLinks())
+	n := NewEmailNotifier(sender, "jobs@hiremetoday.ca", "https://hiremetoday.ca", testLinks())
 
 	if err := n.Send(context.Background(), "email", "u@x.com", KindFollowUp, batchOf(KindFollowUp, 3)); err != nil {
 		t.Fatalf("Send: %v", err)
@@ -58,7 +58,7 @@ func TestEmailNotifier_BatchListsEveryNudgeUnderTheListLimit(t *testing.T) {
 // job-closed has nothing left to track, so its batch leads to the saved list.
 func TestEmailNotifier_JobClosedBatchLeadsToSavedJobs(t *testing.T) {
 	sender := &captureSender{}
-	n := NewEmailNotifier(sender, "jobs@hireme.example.com", "https://hireme.example.com", testLinks())
+	n := NewEmailNotifier(sender, "jobs@hiremetoday.ca", "https://hiremetoday.ca", testLinks())
 
 	if err := n.Send(context.Background(), "email", "u@x.com", KindJobClosed, batchOf(KindJobClosed, 2)); err != nil {
 		t.Fatalf("Send: %v", err)
@@ -72,7 +72,7 @@ func TestEmailNotifier_JobClosedBatchLeadsToSavedJobs(t *testing.T) {
 // board — the third kind, and the one neither of the two above covers.
 func TestEmailNotifier_InterviewPrepBatchLeadsToTheTrackingBoard(t *testing.T) {
 	sender := &captureSender{}
-	n := NewEmailNotifier(sender, "jobs@hireme.example.com", "https://hireme.example.com", testLinks())
+	n := NewEmailNotifier(sender, "jobs@hiremetoday.ca", "https://hiremetoday.ca", testLinks())
 
 	if err := n.Send(context.Background(), "email", "u@x.com", KindInterviewPrep, batchOf(KindInterviewPrep, 2)); err != nil {
 		t.Fatalf("Send: %v", err)
@@ -91,12 +91,12 @@ func TestEmailNotifier_FollowUpAndInterviewPrepSingle_LeadToTheGeneralBoard(t *t
 	for _, kind := range []string{KindFollowUp, KindInterviewPrep} {
 		t.Run(kind, func(t *testing.T) {
 			sender := &captureSender{}
-			n := NewEmailNotifier(sender, "jobs@hireme.example.com", "https://hireme.example.com", testLinks())
+			n := NewEmailNotifier(sender, "jobs@hiremetoday.ca", "https://hiremetoday.ca", testLinks())
 			ms := []Message{{UserID: testUserID, Kind: kind, JobTitle: "Go Dev", Company: "Acme", Slug: "go-dev-acme"}}
 			if err := n.Send(context.Background(), "email", "u@x.com", kind, ms); err != nil {
 				t.Fatalf("Send: %v", err)
 			}
-			if !strings.Contains(sender.html, "https://hireme.example.com/my/tracking?utm_source=email") {
+			if !strings.Contains(sender.html, "https://hiremetoday.ca/my/tracking?utm_source=email") {
 				t.Errorf("html = %q, want the bare tracking-board destination", sender.html)
 			}
 			if strings.Contains(sender.html, "/my/tracking/go-dev-acme") {
@@ -122,7 +122,7 @@ func TestEmailNotifier_AutoApplyOutcomeKinds_SingleAndBatch(t *testing.T) {
 	for _, c := range cases {
 		t.Run(c.kind+"/single", func(t *testing.T) {
 			sender := &captureSender{}
-			n := NewEmailNotifier(sender, "jobs@hireme.example.com", "https://hireme.example.com", testLinks())
+			n := NewEmailNotifier(sender, "jobs@hiremetoday.ca", "https://hiremetoday.ca", testLinks())
 			ms := []Message{{UserID: testUserID, Kind: c.kind, JobTitle: "Go Dev", Company: "Acme", Slug: "go-dev-acme"}}
 			if err := n.Send(context.Background(), "email", "u@x.com", c.kind, ms); err != nil {
 				t.Fatalf("Send: %v", err)
@@ -136,14 +136,14 @@ func TestEmailNotifier_AutoApplyOutcomeKinds_SingleAndBatch(t *testing.T) {
 		})
 		t.Run(c.kind+"/batch", func(t *testing.T) {
 			sender := &captureSender{}
-			n := NewEmailNotifier(sender, "jobs@hireme.example.com", "https://hireme.example.com", testLinks())
+			n := NewEmailNotifier(sender, "jobs@hiremetoday.ca", "https://hiremetoday.ca", testLinks())
 			if err := n.Send(context.Background(), "email", "u@x.com", c.kind, batchOf(c.kind, 2)); err != nil {
 				t.Fatalf("Send: %v", err)
 			}
 			if !strings.Contains(sender.subject, "2") {
 				t.Errorf("subject = %q, want the batch count", sender.subject)
 			}
-			if !strings.Contains(sender.html, "https://hireme.example.com/my/tracking?utm_source=email") {
+			if !strings.Contains(sender.html, "https://hiremetoday.ca/my/tracking?utm_source=email") {
 				t.Errorf("html = %q, want the bare tracking-board destination for a batch", sender.html)
 			}
 		})
@@ -153,7 +153,7 @@ func TestEmailNotifier_AutoApplyOutcomeKinds_SingleAndBatch(t *testing.T) {
 func TestTelegramNotifier_AutoApplyOutcomeKinds_SingleAndBatch(t *testing.T) {
 	for _, kind := range []string{KindAutoApplySubmitted, KindAutoApplyBlocked, KindAutoApplyFailed} {
 		t.Run(kind+"/single", func(t *testing.T) {
-			n := NewTelegramNotifier(nil, "https://hireme.example.com")
+			n := NewTelegramNotifier(nil, "https://hiremetoday.ca")
 			got := n.render(kind, []Message{{Kind: kind, JobTitle: "Go Dev", Company: "Acme", Slug: "go-dev-acme"}})
 			if !strings.Contains(got, "Go Dev") || !strings.Contains(got, "Acme") {
 				t.Errorf("render = %q, want the job title and company", got)
@@ -163,7 +163,7 @@ func TestTelegramNotifier_AutoApplyOutcomeKinds_SingleAndBatch(t *testing.T) {
 			}
 		})
 		t.Run(kind+"/batch", func(t *testing.T) {
-			n := NewTelegramNotifier(nil, "https://hireme.example.com")
+			n := NewTelegramNotifier(nil, "https://hiremetoday.ca")
 			got := n.render(kind, batchOf(kind, 2))
 			if !strings.Contains(got, "<b>2</b>") {
 				t.Errorf("render = %q, want the batch count", got)
@@ -180,9 +180,9 @@ func TestTelegramNotifier_AutoApplyOutcomeKinds_SingleAndBatch(t *testing.T) {
 func TestTelegramNotifier_FollowUpAndInterviewPrepSingle_LeadToTheGeneralBoard(t *testing.T) {
 	for _, kind := range []string{KindFollowUp, KindInterviewPrep} {
 		t.Run(kind, func(t *testing.T) {
-			n := NewTelegramNotifier(nil, "https://hireme.example.com")
+			n := NewTelegramNotifier(nil, "https://hiremetoday.ca")
 			got := n.render(kind, []Message{{Kind: kind, JobTitle: "Go Dev", Company: "Acme", Slug: "go-dev-acme"}})
-			if !strings.Contains(got, "https://hireme.example.com/my/tracking\"") {
+			if !strings.Contains(got, "https://hiremetoday.ca/my/tracking\"") {
 				t.Errorf("render = %q, want the bare tracking-board destination", got)
 			}
 			if strings.Contains(got, "/my/tracking/go-dev-acme") {
@@ -193,7 +193,7 @@ func TestTelegramNotifier_FollowUpAndInterviewPrepSingle_LeadToTheGeneralBoard(t
 }
 
 func TestTelegramNotifier_InterviewPrepBatchHeadlinesTheCount(t *testing.T) {
-	n := NewTelegramNotifier(nil, "https://hireme.example.com")
+	n := NewTelegramNotifier(nil, "https://hiremetoday.ca")
 	got := n.render(KindInterviewPrep, batchOf(KindInterviewPrep, 2))
 
 	if !strings.Contains(got, "interviewing for <b>2</b> roles") {
@@ -212,9 +212,9 @@ func TestBatchDestination_IsOneRuleForBothChannels(t *testing.T) {
 		KindAutoApplySubmitted, KindAutoApplyBlocked, KindAutoApplyFailed,
 	} {
 		path, _ := batchDestination(kind)
-		tg := NewTelegramNotifier(nil, "https://hireme.example.com").batchURL(kind)
-		mail, _ := NewEmailNotifier(&captureSender{}, "j@f.me", "https://hireme.example.com", testLinks()).batchCTA(kind)
-		if tg != "https://hireme.example.com"+path || !strings.HasPrefix(mail, "https://hireme.example.com"+path) {
+		tg := NewTelegramNotifier(nil, "https://hiremetoday.ca").batchURL(kind)
+		mail, _ := NewEmailNotifier(&captureSender{}, "j@f.me", "https://hiremetoday.ca", testLinks()).batchCTA(kind)
+		if tg != "https://hiremetoday.ca"+path || !strings.HasPrefix(mail, "https://hiremetoday.ca"+path) {
 			t.Errorf("%s: telegram %q and email %q disagree with %q", kind, tg, mail, path)
 		}
 	}
@@ -224,7 +224,7 @@ func TestBatchDestination_IsOneRuleForBothChannels(t *testing.T) {
 // notify.ListLimit and counts the rest.
 func TestEmailNotifier_BatchOverTheListLimitCountsTheRest(t *testing.T) {
 	sender := &captureSender{}
-	n := NewEmailNotifier(sender, "jobs@hireme.example.com", "https://hireme.example.com", testLinks())
+	n := NewEmailNotifier(sender, "jobs@hiremetoday.ca", "https://hiremetoday.ca", testLinks())
 
 	if err := n.Send(context.Background(), "email", "u@x.com", KindFollowUp, batchOf(KindFollowUp, notify.ListLimit+4)); err != nil {
 		t.Fatalf("Send: %v", err)
@@ -243,7 +243,7 @@ func TestEmailNotifier_BatchOverTheListLimitCountsTheRest(t *testing.T) {
 // A batch of one must be indistinguishable from what shipped before grouping.
 func TestEmailNotifier_SingleNudgeKeepsItsOwnWording(t *testing.T) {
 	sender := &captureSender{}
-	n := NewEmailNotifier(sender, "jobs@hireme.example.com", "https://hireme.example.com", testLinks())
+	n := NewEmailNotifier(sender, "jobs@hiremetoday.ca", "https://hiremetoday.ca", testLinks())
 
 	ms := []Message{{UserID: testUserID, Kind: KindFollowUp, JobTitle: "Go Dev", Company: "Acme", Slug: "go-dev-acme", DaysSilent: 12}}
 	if err := n.Send(context.Background(), "email", "u@x.com", KindFollowUp, ms); err != nil {
@@ -255,7 +255,7 @@ func TestEmailNotifier_SingleNudgeKeepsItsOwnWording(t *testing.T) {
 }
 
 func TestTelegramNotifier_BatchListsJobsAndCountsTheRest(t *testing.T) {
-	n := NewTelegramNotifier(nil, "https://hireme.example.com")
+	n := NewTelegramNotifier(nil, "https://hiremetoday.ca")
 	got := n.render(KindFollowUp, batchOf(KindFollowUp, notify.ListLimit+2))
 
 	if !strings.Contains(got, "+ 2 more") {
@@ -269,7 +269,7 @@ func TestTelegramNotifier_BatchListsJobsAndCountsTheRest(t *testing.T) {
 // An oversized body is rejected deterministically and every retry re-fails, so the
 // message must fit whatever the batch holds.
 func TestTelegramNotifier_BatchStaysUnderTheMessageLimit(t *testing.T) {
-	n := NewTelegramNotifier(nil, "https://hireme.example.com")
+	n := NewTelegramNotifier(nil, "https://hiremetoday.ca")
 	ms := batchOf(KindFollowUp, notify.ListLimit)
 	long := strings.Repeat("Extremely Long Job Title ", 40)
 	for i := range ms {
@@ -283,7 +283,7 @@ func TestTelegramNotifier_BatchStaysUnderTheMessageLimit(t *testing.T) {
 }
 
 func TestTelegramNotifier_BatchEscapesSourceData(t *testing.T) {
-	n := NewTelegramNotifier(nil, "https://hireme.example.com")
+	n := NewTelegramNotifier(nil, "https://hiremetoday.ca")
 	ms := batchOf(KindFollowUp, 2)
 	ms[0].JobTitle = "<script>x</script>"
 
@@ -315,7 +315,7 @@ func TestPushNotifier_BatchIsOneNotificationWithoutADeepLink(t *testing.T) {
 // testLinks signs the unsubscribe URLs these mails carry. The secret only has to
 // clear emailprefs' length floor - nothing here verifies a token.
 func testLinks() *emailprefs.Links {
-	return emailprefs.NewLinks("mail-test-secret-padded-to-32-byte", "https://hireme.example.com")
+	return emailprefs.NewLinks("mail-test-secret-padded-to-32-byte", "https://hiremetoday.ca")
 }
 
 // testUserID is whose mail these samples are. Any positive id will do: the token

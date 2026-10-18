@@ -35,9 +35,9 @@ type Settings struct {
 	CookieSecure bool
 
 	// CookieDomains are the registrable domains the session cookie is scoped to,
-	// one per served domain (e.g. "hireme.dev", "hireme.example.com"). Read from
+	// one per served domain (e.g. "hireme.dev", "hiremetoday.ca"). Read from
 	// COOKIE_DOMAIN as a comma-separated list; a leading dot is accepted and
-	// stripped ("​.hireme.dev,.hireme.example.com"). Empty in dev (host-only cookie).
+	// stripped ("​.hireme.dev,.hiremetoday.ca"). Empty in dev (host-only cookie).
 	// Per request the cookie is scoped to whichever entry the request host falls
 	// under, so one deployment can serve — and keep SSO on — more than one domain
 	// during a migration. This same set gates the OAuth redirect origin (see
@@ -70,7 +70,7 @@ type Settings struct {
 	GmailTokenKey []byte
 
 	// MailboxDomain is the receiving domain hosted mailboxes live on
-	// (<handle>@MailboxDomain, e.g. inbox.hireme.example.com). Empty = the hosted-mailbox
+	// (<handle>@MailboxDomain, e.g. inbox.hiremetoday.ca). Empty = the hosted-mailbox
 	// option is off (claim route unregistered, status reports unavailable). It is
 	// deliberately NOT named MAIL_DOMAIN — that name reads like the SES *sending*
 	// identity (notifications, NOTIFY_EMAIL_FROM), a different, non-receiving domain.
@@ -301,7 +301,7 @@ type Settings struct {
 	OnboardingReplyTo string
 
 	// ServedHosts are the exact hostnames this deployment answers on (e.g.
-	// "hireme.example.com,apply.hireme.example.com"). Only these are honoured as an OAuth redirect
+	// "hiremetoday.ca,apply.hiremetoday.ca"). Only these are honoured as an OAuth redirect
 	// origin; anything else falls back to FrontendOrigin. Empty defaults to the
 	// frontend origin's own host, so a deployment that never sets it keeps working.
 	ServedHosts []string
@@ -640,7 +640,7 @@ func decodeBase64(s string) string {
 }
 
 // splitDomains parses a comma-separated COOKIE_DOMAIN into bare registrable
-// domains, trimming spaces and any leading dot (".hireme.example.com" -> "hireme.example.com").
+// domains, trimming spaces and any leading dot (".hiremetoday.ca" -> "hiremetoday.ca").
 // Empty entries are dropped, so "" yields nil (host-only cookie, no extra origins).
 func splitDomains(s string) []string {
 	var out []string

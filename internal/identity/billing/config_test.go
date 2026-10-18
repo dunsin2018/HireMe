@@ -59,7 +59,7 @@ func TestConfigFromEnvEnabled(t *testing.T) {
 }
 
 func TestConfigFromEnvPriceList(t *testing.T) {
-	setEnv(t, "sk_test", "whsec_test", " price_a , price_b ,, ", "https://hireme.example.com")
+	setEnv(t, "sk_test", "whsec_test", " price_a , price_b ,, ", "https://hiremetoday.ca")
 	cfg := ConfigFromEnv()
 
 	want := []string{"price_a", "price_b"}
@@ -79,8 +79,8 @@ func TestConfigFromEnvPriceList(t *testing.T) {
 func TestReturnURL(t *testing.T) {
 	// A trailing slash is the obvious way to write it in an env file, and a naive join would
 	// produce "//my/plan".
-	setEnv(t, "sk_test", "whsec_test", "price_a", "https://hireme.example.com/")
-	if got := ConfigFromEnv().ReturnURL(); got != "https://hireme.example.com/my/plan" {
-		t.Fatalf("want https://hireme.example.com/my/plan, got %q", got)
+	setEnv(t, "sk_test", "whsec_test", "price_a", "https://hiremetoday.ca/")
+	if got := ConfigFromEnv().ReturnURL(); got != "https://hiremetoday.ca/my/plan" {
+		t.Fatalf("want https://hiremetoday.ca/my/plan, got %q", got)
 	}
 }

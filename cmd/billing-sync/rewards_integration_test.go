@@ -90,7 +90,7 @@ func TestAReferralIsSettledOnceTheInviteeHasPaid(t *testing.T) {
 	t.Setenv("STRIPE_SECRET_KEY", "sk_test")
 	t.Setenv("STRIPE_WEBHOOK_SECRET", "whsec_test")
 	t.Setenv("STRIPE_PRICE_IDS", testPrice)
-	t.Setenv("FRONTEND_ORIGIN", "https://hireme.example.com")
+	t.Setenv("FRONTEND_ORIGIN", "https://hiremetoday.ca")
 	t.Setenv("INVITE_REWARD_MAX_PER_USER", "12")
 
 	queries := db.New(pool)
@@ -174,7 +174,7 @@ func TestTheCeilingStopsAReferrerEarningMore(t *testing.T) {
 	t.Setenv("STRIPE_SECRET_KEY", "sk_test")
 	t.Setenv("STRIPE_WEBHOOK_SECRET", "whsec_test")
 	t.Setenv("STRIPE_PRICE_IDS", testPrice)
-	t.Setenv("FRONTEND_ORIGIN", "https://hireme.example.com")
+	t.Setenv("FRONTEND_ORIGIN", "https://hiremetoday.ca")
 	t.Setenv("INVITE_REWARD_MAX_PER_USER", "1")
 
 	queries := db.New(pool)

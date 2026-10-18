@@ -8,8 +8,8 @@ import "net/url"
 
 // utmSource is the fixed utm_source value stamped on every outbound link, mirroring
 // how the notification builders hardcode "telegram-bot"/"email" for internal links.
-// It is the canonical brand domain (hireme.example.com since the .dev -> .me migration).
-const utmSource = "hireme.example.com"
+// It is the canonical brand domain (hiremetoday.ca since the .dev -> .me migration).
+const utmSource = "hiremetoday.ca"
 
 // Untag removes the utm_source this package adds, returning the URL as the source
 // published it. It exists because the tag is applied on the way OUT of jobview, so a
@@ -39,7 +39,7 @@ func Untag(tagged string) string {
 	return u.String()
 }
 
-// Tag returns raw with utm_source=hireme.example.com set as a query parameter. It parses
+// Tag returns raw with utm_source=hiremetoday.ca set as a query parameter. It parses
 // the URL so an existing query string is preserved (the tag is appended with the
 // correct "?"/"&" separator) and any pre-existing utm_source is overwritten, keeping
 // attribution consistently ours. An empty or unparseable URL is returned unchanged

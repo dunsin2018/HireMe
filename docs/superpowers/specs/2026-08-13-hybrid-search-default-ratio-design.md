@@ -17,7 +17,7 @@ infrastructure for hybrid search is already live and unused by default:
 
 ## Constraint discovered via live testing (2026-08-13)
 
-Querying prod (`https://hireme.example.com/api/v1/jobs/search?q=devops&semantic_ratio=<r>`)
+Querying prod (`https://hiremetoday.ca/api/v1/jobs/search?q=devops&semantic_ratio=<r>`)
 found a hard cliff, not a gradual degradation:
 
 | ratio | total hits for "devops" |

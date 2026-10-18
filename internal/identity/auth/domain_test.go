@@ -3,16 +3,16 @@ package auth
 import "testing"
 
 func TestCookieDomainForHost(t *testing.T) {
-	domains := []string{"hireme.dev", "hireme.example.com"}
+	domains := []string{"hireme.dev", "hiremetoday.ca"}
 	cases := []struct {
 		host string
 		want string
 	}{
 		{"hireme.dev", ".hireme.dev"},       // apex
 		{"apply.hireme.dev", ".hireme.dev"}, // subdomain shares
-		{"hireme.example.com", ".hireme.example.com"},         // second domain
-		{"agent.hireme.example.com", ".hireme.example.com"},   // its subdomain
-		{"hireme.example.com:8080", ".hireme.example.com"},    // :port ignored
+		{"hiremetoday.ca", ".hiremetoday.ca"},         // second domain
+		{"agent.hiremetoday.ca", ".hiremetoday.ca"},   // its subdomain
+		{"hiremetoday.ca:8080", ".hiremetoday.ca"},    // :port ignored
 		{"localhost", ""},                       // dev -> host-only
 		{"evil.com", ""},                        // unknown -> host-only
 		{"nothireme.dev", ""},                 // suffix must be dot-bounded
@@ -27,7 +27,7 @@ func TestCookieDomainForHost(t *testing.T) {
 
 // With no configured domains (dev) every host is host-only.
 func TestCookieDomainForHost_NoDomains(t *testing.T) {
-	if got := CookieDomainForHost("hireme.example.com", nil); got != "" {
+	if got := CookieDomainForHost("hiremetoday.ca", nil); got != "" {
 		t.Errorf("got %q, want empty when no domains configured", got)
 	}
 }

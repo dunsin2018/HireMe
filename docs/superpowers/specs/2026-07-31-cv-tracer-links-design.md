@@ -1,6 +1,6 @@
 # CV tracer links
 
-Rewrite the outbound links in a rendered CV PDF to `hireme.example.com/cv/<token>`, redirect to the
+Rewrite the outbound links in a rendered CV PDF to `hiremetoday.ca/cv/<token>`, redirect to the
 real destination, and count the clicks. Opt-in per CV, off by default.
 
 Prior art: the Tracer Links feature in [DaKheera47/job-ops](https://github.com/DaKheera47/job-ops)
@@ -287,7 +287,7 @@ renders of one source differ byte-for-byte (`internal/candidate/cv/AGENTS.md`).
 ## Risks
 
 - **Redirect domains get flagged.** A redirect in a PDF is a phishing pattern; mail gateways
-  may flag `hireme.example.com`. job-ops pushes this risk onto whoever runs the instance — here the
+  may flag `hiremetoday.ca`. job-ops pushes this risk onto whoever runs the instance — here the
   operator is us, and the domain carries all our other traffic. Mitigation: token-only routing
   with no URL ever accepted in a query parameter, so the endpoint can never act as an open
   redirect.

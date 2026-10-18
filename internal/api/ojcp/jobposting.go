@@ -135,7 +135,7 @@ type Employer struct {
 }
 
 // jobPostingFrom projects one catalogue posting into OJCP's shape. origin is the absolute
-// site origin (e.g. https://hireme.example.com) the posting's own page is served from.
+// site origin (e.g. https://hiremetoday.ca) the posting's own page is served from.
 //
 // A field the posting does not state is OMITTED, never emitted empty: `datePosted` is
 // `format: date` in the schema, so an empty string is both invalid and — worse — reads to

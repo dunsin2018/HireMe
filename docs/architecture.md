@@ -2,7 +2,7 @@
 
 A map of how hireme fits together: where a job posting enters the system, what happens to it on the way to a search result, and what the surfaces built on top of that catalogue — the CV workspace, the application tracker, the in-app assistant — are actually made of.
 
-This is the **map**. The territory is the per-package `AGENTS.md` files, which carry the invariants, the traps, and the reasoning behind specific decisions. Every section here ends with pointers into them. If you want to know *what hireme does* rather than how it is built, [`docs/features.md`](features.md) is the feature reference, and the endpoint documentation lives at [hireme.example.com/docs/api](https://hireme.example.com/docs/api) — neither is reproduced here.
+This is the **map**. The territory is the per-package `AGENTS.md` files, which carry the invariants, the traps, and the reasoning behind specific decisions. Every section here ends with pointers into them. If you want to know *what hireme does* rather than how it is built, [`docs/features.md`](features.md) is the feature reference, and the endpoint documentation lives at [hiremetoday.ca/docs/api](https://hiremetoday.ca/docs/api) — neither is reproduced here.
 
 You do not need to read Go to follow this document.
 
@@ -39,7 +39,7 @@ That batching is not a micro-optimisation. Meilisearch re-merges its inverted in
 
 **Search.** One index. `jobs` is the keyword-and-facet index, and it stores the *complete public wire shape of a job*, not a pointer to one — which is why a search response needs no database round trip to render. `cmd/reindex` rebuilds it from scratch and swaps it in atomically — live reads are never affected by a rebuild — and remains the index's source of truth for settings, compaction, and the removal of closed-job documents. There is no semantic/hybrid search mode: a prior Meilisearch-backed `jobs_semantic` index was removed once its only two real consumers stopped needing a *live* index — `/jobs/:slug/similar` now reads a precomputed nearest-neighbour lookup (`jobs.similar_job_ids`, filled offline by `cmd/similar-backfill` from pgvector queries over `job_semantic_chunks`), and CV-based recommendations were dropped outright rather than migrated. `cmd/embed` still drains `semantic_outbox` (via TEI) into Postgres — writing only `job_semantic_chunks`, the table those pgvector queries read; a legacy single-vector column from the old scheme stays in the schema but is no longer written — but writes no search index.
 
-**The API.** One Fiber server, one public wire shape. `internal/job/jobview` owns the single JSON representation of a job used by the list endpoint, the detail endpoint, and the search index alike, so those surfaces cannot drift apart. Responses use `{"data": ...}` for single items, `{"data": ..., "meta": {...}}` for lists, and `{"error": msg}` for failures. The catalogue is public and keyless — `GET https://hireme.example.com/api/v1/jobs` needs no credential.
+**The API.** One Fiber server, one public wire shape. `internal/job/jobview` owns the single JSON representation of a job used by the list endpoint, the detail endpoint, and the search index alike, so those surfaces cannot drift apart. Responses use `{"data": ...}` for single items, `{"data": ..., "meta": {...}}` for lists, and `{"error": msg}` for failures. The catalogue is public and keyless — `GET https://hiremetoday.ca/api/v1/jobs` needs no credential.
 
 Deeper: [`internal/ingest/pipeline`](../internal/ingest/pipeline/AGENTS.md) · [`internal/ingest/sources`](../internal/ingest/sources/AGENTS.md) · [`internal/search`](../internal/search/AGENTS.md) · [`internal/search/searchdrain`](../internal/search/searchdrain/AGENTS.md) · [`internal/platform/db`](../internal/platform/db/AGENTS.md) · [`internal/api/handler`](../internal/api/handler/AGENTS.md) · [`internal/job/jobview`](../internal/job/jobview/AGENTS.md)
 
@@ -189,6 +189,6 @@ This document is a map; the files below are the territory. [`AGENTS.md`](../AGEN
 | The SPA | [`web/AGENTS.md`](../web/AGENTS.md), [`design-system/AGENTS.md`](../design-system/AGENTS.md) |
 | The browser extension | [`extension/AGENTS.md`](../extension/AGENTS.md) |
 | What a feature does, rather than how | [`docs/features.md`](features.md) |
-| Endpoints and parameters | [hireme.example.com/docs/api](https://hireme.example.com/docs/api) |
+| Endpoints and parameters | [hiremetoday.ca/docs/api](https://hiremetoday.ca/docs/api) |
 
 An older hand-drawn view of the ingest path is kept at [`docs/diagrams/job-pipeline.excalidraw`](diagrams/job-pipeline.excalidraw); the diagrams above supersede it.

@@ -35,17 +35,17 @@ func (f *fakeRepo) Upsert(_ context.Context, cvID uuid.UUID, userID int64, token
 
 func TestMintPointsEveryTraceableLinkAtOurRedirect(t *testing.T) {
 	repo := newFakeRepo()
-	got := NewMinter(repo, ourHosts).Mint(context.Background(), uuid.New(), 7, "https://hireme.example.com", "acme",
+	got := NewMinter(repo, ourHosts).Mint(context.Background(), uuid.New(), 7, "https://hiremetoday.ca", "acme",
 		[]string{"github.com/ada", "mailto:ada@example.com"}, []string{"opensched.dev"})
 
-	if !strings.HasPrefix(got.Header[0], "https://hireme.example.com/cv/acme-") {
+	if !strings.HasPrefix(got.Header[0], "https://hiremetoday.ca/cv/acme-") {
 		t.Errorf("header[0] = %q, want our redirect carrying the company prefix", got.Header[0])
 	}
 	// A mailto: is not traceable, and its position must stay empty rather than shift the rest.
 	if got.Header[1] != "" {
 		t.Errorf("header[1] = %q, want empty — a mailto: cannot be traced", got.Header[1])
 	}
-	if !strings.HasPrefix(got.Projects[0], "https://hireme.example.com/cv/acme-") {
+	if !strings.HasPrefix(got.Projects[0], "https://hiremetoday.ca/cv/acme-") {
 		t.Errorf("projects[0] = %q, want our redirect", got.Projects[0])
 	}
 }
@@ -55,8 +55,8 @@ func TestMintingTheSameCVTwiceYieldsTheSameLinks(t *testing.T) {
 	repo := newFakeRepo()
 	m := NewMinter(repo, ourHosts)
 	id := uuid.New()
-	first := m.Mint(context.Background(), id, 7, "https://hireme.example.com", "acme", []string{"github.com/ada"}, nil)
-	second := m.Mint(context.Background(), id, 7, "https://hireme.example.com", "acme", []string{"github.com/ada"}, nil)
+	first := m.Mint(context.Background(), id, 7, "https://hiremetoday.ca", "acme", []string{"github.com/ada"}, nil)
+	second := m.Mint(context.Background(), id, 7, "https://hiremetoday.ca", "acme", []string{"github.com/ada"}, nil)
 
 	if first.Header[0] != second.Header[0] {
 		t.Errorf("a second download produced %q, want the first download's %q", second.Header[0], first.Header[0])
@@ -67,13 +67,13 @@ func TestMintingTheSameCVTwiceYieldsTheSameLinks(t *testing.T) {
 func TestAFailedMintLeavesTheOtherLinksTraced(t *testing.T) {
 	repo := newFakeRepo()
 	repo.failFor = "https://github.com/ada"
-	got := NewMinter(repo, ourHosts).Mint(context.Background(), uuid.New(), 7, "https://hireme.example.com", "acme",
+	got := NewMinter(repo, ourHosts).Mint(context.Background(), uuid.New(), 7, "https://hiremetoday.ca", "acme",
 		[]string{"github.com/ada", "linkedin.com/in/ada"}, nil)
 
 	if got.Header[0] != "" {
 		t.Errorf("header[0] = %q, want empty — its mint failed", got.Header[0])
 	}
-	if !strings.HasPrefix(got.Header[1], "https://hireme.example.com/cv/") {
+	if !strings.HasPrefix(got.Header[1], "https://hiremetoday.ca/cv/") {
 		t.Errorf("header[1] = %q, want the link that minted fine to still be traced", got.Header[1])
 	}
 }
@@ -81,8 +81,8 @@ func TestAFailedMintLeavesTheOtherLinksTraced(t *testing.T) {
 // A link already pointing at us is left alone: tracing it would nest a token inside a token.
 func TestMintSkipsOurOwnHost(t *testing.T) {
 	repo := newFakeRepo()
-	got := NewMinter(repo, ourHosts).Mint(context.Background(), uuid.New(), 7, "https://hireme.example.com", "acme",
-		[]string{"https://hireme.example.com/cv/acme-x7abc"}, nil)
+	got := NewMinter(repo, ourHosts).Mint(context.Background(), uuid.New(), 7, "https://hiremetoday.ca", "acme",
+		[]string{"https://hiremetoday.ca/cv/acme-x7abc"}, nil)
 
 	if got.Header[0] != "" || repo.upserts != 0 {
 		t.Errorf("header[0] = %q after %d upserts, want neither", got.Header[0], repo.upserts)

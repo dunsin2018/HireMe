@@ -44,7 +44,7 @@ doubles as the burn-down. Legend: ⬜ not started · 🔄 in progress · ✅ mer
             catalogue #39 + #40 (#1494) — the residues only; both verifiers' rejections upheld
             catalogue #11 (#1497) — prose, not an extraction; verifier's rejection upheld |
 
-**S1 · S2 · S3** — merged, released to hireme.example.com (blue/green, zero migrations) and verified
+**S1 · S2 · S3** — merged, released to hiremetoday.ca (blue/green, zero migrations) and verified
 live before archiving in #1398.
 
 - **S1** — `unify-facet-display-labels`, #1393. `CATEGORY_LABELS` is exhaustive over the

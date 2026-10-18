@@ -16,7 +16,7 @@ func TestACompanySearchResultCarriesItsPageAndItsOpenCount(t *testing.T) {
 		Slug: "acme", Name: "Acme", Tagline: "We make things", JobCount: 12,
 	})
 
-	if got.URL != "https://hireme.example.com/companies/acme" {
+	if got.URL != "https://hiremetoday.ca/companies/acme" {
 		t.Errorf("url = %q, want the employer's page on hireme", got.URL)
 	}
 	if got.OpenJobs != 12 {

@@ -5,6 +5,6 @@
  * development needs no env file at all.
  */
 interface ImportMetaEnv {
-  /** Where hire's API and sign-in live, e.g. https://hireme.example.com. */
+  /** Where hire's API and sign-in live, e.g. https://hiremetoday.ca. */
   readonly WXT_HIRE_ORIGIN?: string;
 }

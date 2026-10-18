@@ -15,7 +15,7 @@ entry 6 came back with **every field answered and nothing pending**:
 
 ```
 Full name         Jane Doe
-Email             maintainer@hireme.example.com
+Email             maintainer@hiremetoday.ca
 Phone             +55 48 99653-6547
 Current location  Florianópolis, Brazil
 ```

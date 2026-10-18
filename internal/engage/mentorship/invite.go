@@ -104,7 +104,7 @@ type InviteOptions struct {
 // inviteUID is stable per booking and globally unique, which is what lets a later
 // cancellation refer to the event this one created.
 func inviteUID(b Booking) string {
-	return b.ID.String() + "@mentorship.hireme.example.com"
+	return b.ID.String() + "@mentorship.hiremetoday.ca"
 }
 
 // inviteDescription is what the event body says: the seeker's note, then the link.

@@ -91,7 +91,7 @@
      algorithm still shrinks a column to its CSS min-content width when the table
      does not fit its container, and `word-break: break-word` makes a cell's
      min-content effectively one character wide — so Param/Filter kept breaking
-     mid-word even with `auto` (confirmed live on hireme.example.com at both a 1280px and
+     mid-word even with `auto` (confirmed live on hiremetoday.ca at both a 1280px and
      a 390px viewport: computed `th` width was 51px, one letter per line).
 
      `word-break: normal` restores the real min-content width (a whole word, or a

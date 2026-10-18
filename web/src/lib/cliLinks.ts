@@ -11,4 +11,4 @@ export const MCP_REPO = 'https://github.com/dunsin2018/HireMe-mcp';
  *  Lives here because two pages now offer it to the clipboard: a second spelling would
  *  be a second thing to keep true, and the one that drifted would fail silently — a
  *  copied command that 404s looks like the site is broken, not like a typo. */
-export const CLI_INSTALL = 'curl -fsSL https://hireme.example.com/install.sh | sh';
+export const CLI_INSTALL = 'curl -fsSL https://hiremetoday.ca/install.sh | sh';

@@ -4,8 +4,8 @@ import "testing"
 
 func TestLocalPart(t *testing.T) {
 	cases := []struct{ in, want string }{
-		{"ivan@inbox.hireme.example.com", "ivan"},
-		{"ivan-2@inbox.hireme.example.com", "ivan-2"},
+		{"ivan@inbox.hiremetoday.ca", "ivan"},
+		{"ivan-2@inbox.hiremetoday.ca", "ivan-2"},
 		{"no-at-sign", "no-at-sign"},
 	}
 	for _, c := range cases {

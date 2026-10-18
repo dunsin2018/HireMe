@@ -323,7 +323,7 @@ var shell = template.Must(template.New("shell").Parse(`<!DOCTYPE html>
       {{end}}
 
       <tr><td class="m-muted" style="padding:16px 8px 0 8px;font-size:12px;line-height:1.6;color:` + colorMuted + `;">
-        <a href="{{.SiteURL}}" class="m-muted" style="color:` + colorMuted + `;text-decoration:none;">hireme.example.com</a> — job search without the noise.
+        <a href="{{.SiteURL}}" class="m-muted" style="color:` + colorMuted + `;text-decoration:none;">hiremetoday.ca</a> — job search without the noise.
         {{if .Body.UnsubscribeURL}}<br><a href="{{.Body.UnsubscribeURL}}" class="m-muted" style="color:` + colorMuted + `;text-decoration:underline;">Unsubscribe</a> · <a href="{{.SettingsURL}}" class="m-muted" style="color:` + colorMuted + `;text-decoration:underline;">Manage settings</a>{{end}}
       </td></tr>
 

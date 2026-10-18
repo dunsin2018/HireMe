@@ -165,7 +165,7 @@ func (c *Client) getJSON(ctx context.Context, rawURL string, dest any) error {
 	if err != nil {
 		return fmt.Errorf("wikicompany: build request: %w", err)
 	}
-	req.Header.Set("User-Agent", "hireme-company-info-backfill/1.0 (https://hireme.example.com)")
+	req.Header.Set("User-Agent", "hireme-company-info-backfill/1.0 (https://hiremetoday.ca)")
 
 	resp, err := doWithRetry(c.HTTP, req, c.MaxAttempts, c.Backoff)
 	if err != nil {

@@ -59,7 +59,7 @@ jobs:
       - name: Type check
         run: npm run check
 
-      # Production build (.env.production -> hireme.example.com),
+      # Production build (.env.production -> hiremetoday.ca),
       # zipped exactly as it is uploaded to the Chrome Web Store.
       - name: Build and zip
         run: npm run zip

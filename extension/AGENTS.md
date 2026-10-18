@@ -190,7 +190,7 @@ cd design-system && pnpm install     # once, and after pulling design-system cha
 cd extension && npm install          # runs `wxt prepare` (generates .wxt/)
 cd extension && npm run dev          # dev build with HMR
 cd extension && npm run build        # production build -> .output/chrome-mv3
-                                     # targets hireme.example.com
+                                     # targets hiremetoday.ca
                                      # (extension/.env.production); dev keeps
                                      # the localhost default
 cd extension && npm test             # vitest: lib/**/*.test.ts

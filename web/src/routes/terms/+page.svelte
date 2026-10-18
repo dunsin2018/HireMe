@@ -5,7 +5,7 @@
 
   const repoUrl = 'https://github.com/dunsin2018/HireMe';
   const telegramUrl = 'https://t.me/hiremedev';
-  const contactEmail = 'notifications@hiremetoday.ca';
+  const contactEmail = 'Team@hiremetoday.ca';
 
   const canonical = $derived(`${page.url.origin}/terms`);
 
@@ -31,8 +31,8 @@
 
     <p class="text-base leading-relaxed text-muted-foreground">
       hireme (<a
-        href="https://hireme.example.com"
-        class="font-medium text-foreground underline-offset-4 hover:underline">hireme.example.com</a
+        href="https://hiremetoday.ca"
+        class="font-medium text-foreground underline-offset-4 hover:underline">hiremetoday.ca</a
       >), including our mobile app, is a free, open-source IT job aggregator. By using it, you
       agree to these terms.
     </p>

@@ -30,7 +30,7 @@ func (s *fakeSender) Send(_ context.Context, m emailnotify.Message) error {
 func notice(t *testing.T, d report.Decision) *fakeSender {
 	t.Helper()
 	sender := &fakeSender{}
-	n := report.NewMailNotifier(sender, "hi@hireme.example.com", "https://hireme.example.com", testLinks(), nil)
+	n := report.NewMailNotifier(sender, "hi@hiremetoday.ca", "https://hiremetoday.ca", testLinks(), nil)
 	if err := n.NotifyDecision(context.Background(), d); err != nil {
 		t.Fatalf("NotifyDecision: %v", err)
 	}
@@ -62,7 +62,7 @@ func TestNotice_ResolvedWithTheJobClosed(t *testing.T) {
 	if got.to != "lina@example.test" {
 		t.Errorf("to = %q, want the reporter's address", got.to)
 	}
-	if !strings.Contains(got.from, "hi@hireme.example.com") || !strings.Contains(got.from, "hireme") {
+	if !strings.Contains(got.from, "hi@hiremetoday.ca") || !strings.Contains(got.from, "hireme") {
 		t.Errorf("from = %q, want the configured address behind a readable name", got.from)
 	}
 	if !strings.Contains(strings.ToLower(got.subject), "removed") {
@@ -197,7 +197,7 @@ func TestNotice_TruncationKeepsValidUTF8(t *testing.T) {
 
 func TestNotice_PropagatesTransportFailure(t *testing.T) {
 	sender := &fakeSender{err: errors.New("ses is down")}
-	n := report.NewMailNotifier(sender, "hi@hireme.example.com", "https://hireme.example.com", testLinks(), nil)
+	n := report.NewMailNotifier(sender, "hi@hiremetoday.ca", "https://hiremetoday.ca", testLinks(), nil)
 	if err := n.NotifyDecision(context.Background(), reported()); err == nil {
 		t.Fatal("a transport failure must reach the caller, which decides what it means")
 	}
@@ -206,5 +206,5 @@ func TestNotice_PropagatesTransportFailure(t *testing.T) {
 // testLinks signs the unsubscribe URLs these mails carry. The secret only has to
 // clear emailprefs' length floor - nothing here verifies a token.
 func testLinks() *emailprefs.Links {
-	return emailprefs.NewLinks("mail-test-secret-padded-to-32-byte", "https://hireme.example.com")
+	return emailprefs.NewLinks("mail-test-secret-padded-to-32-byte", "https://hiremetoday.ca")
 }

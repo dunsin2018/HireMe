@@ -1,7 +1,7 @@
 // Command publish-logo-domains writes the company-name-to-domain map the logo proxy
 // consults, then exits.
 //
-// Company logos are requested from logo.hireme.example.com by NAME, and the upstream that
+// Company logos are requested from logo.hiremetoday.ca by NAME, and the upstream that
 // resolves a name answers a confident 200 with a different company's mark often enough to
 // matter. The proxy has accepted a ?domain= since it was written and nothing has ever
 // supplied one, because most of the ~25 call sites that draw a logo — the experience

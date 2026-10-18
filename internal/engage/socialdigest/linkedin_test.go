@@ -32,7 +32,7 @@ func testDigest(items ...Posting) Digest {
 // linkedInPublisherAt builds a publisher pointed at a stub server.
 func linkedInPublisherAt(t *testing.T, url string, tokens TokenSource) *LinkedInPublisher {
 	t.Helper()
-	p := NewLinkedInPublisher(tokens, "urn:li:organization:130854077", "https://hireme.example.com")
+	p := NewLinkedInPublisher(tokens, "urn:li:organization:130854077", "https://hiremetoday.ca")
 	p.postsURL = url
 	return p
 }
@@ -79,7 +79,7 @@ func TestLinkedInLeavesTheJobURLAlone(t *testing.T) {
 	p := linkedInPublisherAt(t, "http://127.0.0.1:1/posts", fakeTokens{token: "t"})
 	got := commentaryOf(t, p, testDigest(Posting{Slug: "acme-go-1", Title: "Go Engineer", Company: "Acme"}))
 
-	want := "https://hireme.example.com/jobs/acme-go-1?utm_source=linkedin"
+	want := "https://hiremetoday.ca/jobs/acme-go-1?utm_source=linkedin"
 	if !strings.Contains(got, want) {
 		t.Errorf("commentary %q does not carry %q", got, want)
 	}
@@ -109,7 +109,7 @@ func TestLinkedInTrimsByWholePostings(t *testing.T) {
 	// A trimmed list ends on a complete URL, never mid-line.
 	lines := strings.Split(strings.TrimRight(got, "\n"), "\n")
 	last := lines[len(lines)-1]
-	if !strings.HasPrefix(last, "https://hireme.example.com/jobs/") || !strings.HasSuffix(last, "?utm_source=linkedin") {
+	if !strings.HasPrefix(last, "https://hiremetoday.ca/jobs/") || !strings.HasSuffix(last, "?utm_source=linkedin") {
 		t.Errorf("the list does not end on a whole link: %q", last)
 	}
 }

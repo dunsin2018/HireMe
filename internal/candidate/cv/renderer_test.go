@@ -734,7 +734,7 @@ func TestRenderPayloadMakesEveryLinkAbsolute(t *testing.T) {
 // be traced still ends up absolute.
 func TestSuppliedHrefsOverrideTheDefaults(t *testing.T) {
 	doc := Document{Header: Header{Links: []string{"github.com/ada", "linkedin.com/in/ada"}}}
-	data, err := renderPayload(doc, false, LinkHrefs{Header: []string{"https://hireme.example.com/cv/acme-x7abc"}})
+	data, err := renderPayload(doc, false, LinkHrefs{Header: []string{"https://hiremetoday.ca/cv/acme-x7abc"}})
 	if err != nil {
 		t.Fatalf("renderPayload: %v", err)
 	}
@@ -744,7 +744,7 @@ func TestSuppliedHrefsOverrideTheDefaults(t *testing.T) {
 	if err := json.Unmarshal(data, &payload); err != nil {
 		t.Fatalf("unmarshal payload: %v", err)
 	}
-	if got := payload.LinkHrefs.Header[0]; got != "https://hireme.example.com/cv/acme-x7abc" {
+	if got := payload.LinkHrefs.Header[0]; got != "https://hiremetoday.ca/cv/acme-x7abc" {
 		t.Errorf("traced href[0] = %q, want the supplied one", got)
 	}
 	if got := payload.LinkHrefs.Header[1]; got != "https://linkedin.com/in/ada" {
@@ -765,7 +765,7 @@ func TestATracedRenderSubstitutesTheTargetAndNotTheText(t *testing.T) {
 		Summary:    "Backend engineer.",
 		Experience: []ExperienceItem{{Role: "Engineer", Company: "Acme", Start: &perioddate.PeriodDate{Year: 2018}, Current: true}},
 	}
-	const traced = "https://hireme.example.com/cv/acme-x7abc"
+	const traced = "https://hiremetoday.ca/cv/acme-x7abc"
 	tmpl, err := ResolveTemplate(DefaultTemplateID)
 	if err != nil {
 		t.Fatalf("resolve: %v", err)
@@ -783,7 +783,7 @@ func TestATracedRenderSubstitutesTheTargetAndNotTheText(t *testing.T) {
 	if !strings.Contains(text, "github.com/ada") {
 		t.Errorf("the reader no longer sees the candidate's own link:\n%s", text)
 	}
-	if strings.Contains(text, "hireme.example.com") {
+	if strings.Contains(text, "hiremetoday.ca") {
 		t.Error("the traced URL leaked into the visible text layer")
 	}
 }
@@ -800,8 +800,8 @@ func TestEveryTemplateHonoursASuppliedHref(t *testing.T) {
 		Projects: []Project{{Name: "opensched", Link: "opensched.dev"}},
 	}
 	hrefs := LinkHrefs{
-		Header:   []string{"https://hireme.example.com/cv/acme-aaaaa"},
-		Projects: []string{"https://hireme.example.com/cv/acme-bbbbb"},
+		Header:   []string{"https://hiremetoday.ca/cv/acme-aaaaa"},
+		Projects: []string{"https://hiremetoday.ca/cv/acme-bbbbb"},
 	}
 	r := NewTypstRenderer(bin)
 	for _, ti := range Templates() {

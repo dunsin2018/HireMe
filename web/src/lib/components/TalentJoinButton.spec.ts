@@ -51,7 +51,7 @@ describe('TalentJoinButton', () => {
     render(TalentJoinButton);
 
     const href = (await joinLink()).getAttribute('href') ?? '';
-    const url = new URL(href, 'https://hireme.example.com');
+    const url = new URL(href, 'https://hiremetoday.ca');
     expect(url.pathname).toBe('/signin');
     expect(url.searchParams.get('returnTo')).toBe('/my/profile');
     expect(getTalentNetwork).not.toHaveBeenCalled();

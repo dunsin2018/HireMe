@@ -28,7 +28,7 @@ func (f *fakeGrantReader) GetMentorCalendarGrant(context.Context, int64) (string
 // refuses BOTH calls the same way, before any network call is attempted.
 func TestGoogleCalendarLinkerNotConnected(t *testing.T) {
 	cipher := mustTokenCipher(t)
-	linker := NewGoogleCalendarLinker(&fakeGrantReader{found: false}, gmailsync.NewConnector("id", "secret", "https://hireme.example.com"), cipher)
+	linker := NewGoogleCalendarLinker(&fakeGrantReader{found: false}, gmailsync.NewConnector("id", "secret", "https://hiremetoday.ca"), cipher)
 
 	if _, _, err := linker.CreateMeetEvent(context.Background(), 1, MeetEventInput{}); err != ErrCalendarNotConnected {
 		t.Errorf("CreateMeetEvent err = %v, want ErrCalendarNotConnected", err)
@@ -43,7 +43,7 @@ func TestGoogleCalendarLinkerNotConnected(t *testing.T) {
 func TestGoogleCalendarLinkerWrongScope(t *testing.T) {
 	cipher := mustTokenCipher(t)
 	reader := &fakeGrantReader{found: true, scopes: []string{gmailsync.CalendarScope}, refreshTokenEnc: mustEncrypt(t, cipher, "refresh")}
-	linker := NewGoogleCalendarLinker(reader, gmailsync.NewConnector("id", "secret", "https://hireme.example.com"), cipher)
+	linker := NewGoogleCalendarLinker(reader, gmailsync.NewConnector("id", "secret", "https://hiremetoday.ca"), cipher)
 
 	if _, _, err := linker.CreateMeetEvent(context.Background(), 1, MeetEventInput{}); err != ErrCalendarNotConnected {
 		t.Errorf("err = %v, want ErrCalendarNotConnected", err)

@@ -158,7 +158,7 @@
         </div>
         <p class="text-sm leading-relaxed text-muted-foreground">
           You get an address like <code
-            class="rounded bg-background/70 px-1.5 py-0.5 font-mono text-xs text-foreground">you@mail.hireme.example.com</code
+            class="rounded bg-background/70 px-1.5 py-0.5 font-mono text-xs text-foreground">you@mail.hiremetoday.ca</code
           >. Use it when you apply and the replies land here directly, or forward the job mail you
           already have. Nothing else reaches it, and you can release it at any time.
         </p>

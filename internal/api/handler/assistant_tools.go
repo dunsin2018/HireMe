@@ -128,7 +128,7 @@ func (h *assistantHandlers) searchJobsTool() assistant.Tool {
 	return assistant.Tool{
 		Name: "search_jobs",
 		Description: "Search open vacancies by keyword and facet filters. Every result carries its full " +
-			"description as markdown and its public_slug — link a vacancy as https://hireme.example.com/jobs/<public_slug>. " +
+			"description as markdown and its public_slug — link a vacancy as https://hiremetoday.ca/jobs/<public_slug>. " +
 			"Take filter names and values from the facets tool.",
 		Schema: map[string]any{
 			"type": "object",

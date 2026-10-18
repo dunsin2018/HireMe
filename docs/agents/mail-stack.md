@@ -146,7 +146,7 @@ the point: it is the tier that costs us nothing. See the `external` bullets belo
   while `mail.destination` is assembled from the To/Cc *headers* — AWS's own reference says
   in as many words that the two may differ. `source_ses.go` read the headers until
   hireme#3027, and that cost two different things. A **forward never arrived**: a Sieve
-  `redirect :copy "<handle>@mail.hireme.example.com"` rewrites the envelope and leaves the headers
+  `redirect :copy "<handle>@mail.hiremetoday.ca"` rewrites the envelope and leaves the headers
   naming the mailbox that forwarded, so the worker found no address on our domain and
   dropped a message SES had accepted, stored in S3 and marked `spf=pass dkim=pass
   dmarc=pass` (13 messages in the week it was measured). And the header list is **the

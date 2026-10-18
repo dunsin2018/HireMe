@@ -86,7 +86,7 @@ func ojcpJobView(t *testing.T, row db.Job) jobview.Job {
 }
 
 func ojcpApp(s searcher, store ojcpStore) *fiber.App {
-	h := newOJCPHandlers(s, store, "https://hireme.example.com", map[string]bool{"greenhouse": true})
+	h := newOJCPHandlers(s, store, "https://hiremetoday.ca", map[string]bool{"greenhouse": true})
 	app := fiber.New(fiber.Config{ErrorHandler: RenderError})
 	app.Post("/ojcp/v1/search", h.OJCPSearchJobs)
 	app.Get("/ojcp/v1/jobs/:slug", h.OJCPJobDetail)
@@ -241,7 +241,7 @@ func TestOJCPJobDetailStatesThePostingRealityVerdict(t *testing.T) {
 	// a verdict is internal/job/ghost's own business and has its own tests.
 	store := fakeOJCPStore{job: db.Job{ID: 7, PublicSlug: "go-dev-x", Title: "Go Dev", Company: "Acme"}}
 
-	h := newOJCPHandlers(&fakeSearcher{}, store, "https://hireme.example.com", nil)
+	h := newOJCPHandlers(&fakeSearcher{}, store, "https://hiremetoday.ca", nil)
 	attached := false
 	h.attachReality = func(_ context.Context, _ db.Job, view *jobview.Job) {
 		attached = true
@@ -273,10 +273,10 @@ func TestOJCPProductionWiringAttachesTheRealityVerdict(t *testing.T) {
 	// The seam above is only worth anything if production fills it. newOJCPHandlers wires the
 	// attacher when the store is the concrete queries — the one path a fake store cannot
 	// exercise, so it is asserted directly.
-	if h := newOJCPHandlers(&fakeSearcher{}, &db.Queries{}, "https://hireme.example.com", nil); h.attachReality == nil {
+	if h := newOJCPHandlers(&fakeSearcher{}, &db.Queries{}, "https://hiremetoday.ca", nil); h.attachReality == nil {
 		t.Error("attachReality is nil for a production store; agent_notes would be silent forever")
 	}
-	if h := newOJCPHandlers(&fakeSearcher{}, fakeOJCPStore{}, "https://hireme.example.com", nil); h.attachReality != nil {
+	if h := newOJCPHandlers(&fakeSearcher{}, fakeOJCPStore{}, "https://hiremetoday.ca", nil); h.attachReality != nil {
 		t.Error("attachReality is set for a store that cannot answer the lookups")
 	}
 }

@@ -111,7 +111,7 @@ func TestLinkPutsAPayingUserOnTheServerWithTheRole(t *testing.T) {
 	discord := &fakeDiscord{token: "user-token", userID: "1000000000000000001"}
 	svc := newTestService(store, discord)
 
-	got, err := svc.Link(context.Background(), 7, "the-code", "https://hireme.example.com/cb")
+	got, err := svc.Link(context.Background(), 7, "the-code", "https://hiremetoday.ca/cb")
 	if err != nil {
 		t.Fatalf("Link: %v", err)
 	}
@@ -140,7 +140,7 @@ func TestLinkOfAFreeUserJoinsWithoutTheRole(t *testing.T) {
 	discord := &fakeDiscord{token: "user-token", userID: "1"}
 	svc := newTestService(store, discord)
 
-	if _, err := svc.Link(context.Background(), 7, "c", "https://hireme.example.com/cb"); err != nil {
+	if _, err := svc.Link(context.Background(), 7, "c", "https://hiremetoday.ca/cb"); err != nil {
 		t.Fatalf("Link: %v", err)
 	}
 	for _, c := range discord.calls {
@@ -161,7 +161,7 @@ func TestLinkReportsAConflictingBinding(t *testing.T) {
 	discord := &fakeDiscord{token: "t", userID: "1"}
 	svc := newTestService(store, discord)
 
-	_, err := svc.Link(context.Background(), 7, "c", "https://hireme.example.com/cb")
+	_, err := svc.Link(context.Background(), 7, "c", "https://hiremetoday.ca/cb")
 	if !errors.Is(err, ErrAlreadyLinkedElsewhere) {
 		t.Fatalf("error = %v, want ErrAlreadyLinkedElsewhere", err)
 	}

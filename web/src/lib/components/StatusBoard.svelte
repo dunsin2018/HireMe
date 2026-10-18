@@ -42,7 +42,7 @@
   };
 
   // The site/API's own status is a separate concern from the ingest fleet above —
-  // one is "is hireme.example.com itself working", the other is "are the crawlers working".
+  // one is "is hiremetoday.ca itself working", the other is "are the crawlers working".
   const SITE_HEADLINE: Record<HealthStatus, string> = {
     operational: 'API operational',
     degraded: 'API degraded',
@@ -155,7 +155,7 @@
   >
     {#if activeSection === 'site'}
       {#if site}
-        <!-- Site status: is hireme.example.com itself working, independent of the ingest fleet tab. -->
+        <!-- Site status: is hiremetoday.ca itself working, independent of the ingest fleet tab. -->
         <div class="flex items-center gap-3 rounded-lg border p-4 {STATUS_META[site.status].pill}">
           <span class="inline-flex h-2.5 w-2.5 shrink-0 rounded-full {STATUS_META[site.status].dot}"></span>
           <div>

@@ -19,13 +19,13 @@ import (
 // writing another user's address into To:, since the header is the sender's to write.
 func TestDecodeNotificationReadsTheEnvelopeRecipientNotTheHeaderOnes(t *testing.T) {
 	note, err := decodeNotification(sesNotificationJSON(t,
-		[]string{"hireme-2@mail.hireme.example.com"}, // envelope: forwarded here
+		[]string{"hireme-2@mail.hiremetoday.ca"}, // envelope: forwarded here
 		[]string{"test@hiring.klavaro.net"},     // headers: the original mailbox
 	))
 	if err != nil {
 		t.Fatalf("decodeNotification() err = %v", err)
 	}
-	if want := []string{"hireme-2@mail.hireme.example.com"}; !slices.Equal(note.Receipt.Recipients, want) {
+	if want := []string{"hireme-2@mail.hiremetoday.ca"}; !slices.Equal(note.Receipt.Recipients, want) {
 		t.Errorf("recipients = %v, want the envelope recipients %v", note.Receipt.Recipients, want)
 	}
 }

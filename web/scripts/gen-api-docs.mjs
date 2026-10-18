@@ -136,7 +136,7 @@ const AUDIENCE_INTRO = {
         'Endpoints that require the browser’s own session cookie — saved ' +
         'searches, notifications, moderator tools, the browser extension — are ' +
         'not reachable with a key alone and are documented separately at ' +
-        '[hireme.example.com/docs/api/internal](https://hireme.example.com/docs/api/internal).',
+        '[hiremetoday.ca/docs/api/internal](https://hiremetoday.ca/docs/api/internal).',
     ],
   },
   internal: {
@@ -146,7 +146,7 @@ const AUDIENCE_INTRO = {
         'cookie — including moderator-only and browser-extension-only endpoints. ' +
         'None of them accept a personal API key, so an external client or agent ' +
         'cannot call them. For the endpoints a key (or no auth at all) can reach, ' +
-        'see [hireme.example.com/docs/api](https://hireme.example.com/docs/api).',
+        'see [hiremetoday.ca/docs/api](https://hiremetoday.ca/docs/api).',
     ],
   },
 };

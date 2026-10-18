@@ -41,7 +41,7 @@ func TestExchangeCode(t *testing.T) {
 		_, _ = io.WriteString(w, `{"access_token":"user-token","token_type":"Bearer"}`)
 	}))
 
-	tok, err := c.ExchangeCode(context.Background(), "the-code", "https://hireme.example.com/cb")
+	tok, err := c.ExchangeCode(context.Background(), "the-code", "https://hiremetoday.ca/cb")
 	if err != nil {
 		t.Fatalf("ExchangeCode: %v", err)
 	}

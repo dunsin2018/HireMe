@@ -140,7 +140,7 @@ type Job struct {
 
 // companyLogoBase is our logo proxy, the same origin the SPA uses (see
 // web/src/lib/logo.ts). It resolves a company mark by name and 404s on a miss.
-const companyLogoBase = "https://logo.hireme.example.com/"
+const companyLogoBase = "https://logo.hiremetoday.ca/"
 
 // NewJob builds a Job, resolving the company's logo URL and its fallback monogram.
 //

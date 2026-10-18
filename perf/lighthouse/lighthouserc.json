@@ -2,10 +2,10 @@
   "ci": {
     "collect": {
       "url": [
-        "https://hireme.example.com/",
-        "https://hireme.example.com/companies",
-        "https://hireme.example.com/companies/starbridge",
-        "https://hireme.example.com/jobs/ai-engineer-emea-latam-starbridge-ijusmrsd"
+        "https://hiremetoday.ca/",
+        "https://hiremetoday.ca/companies",
+        "https://hiremetoday.ca/companies/starbridge",
+        "https://hiremetoday.ca/jobs/ai-engineer-emea-latam-starbridge-ijusmrsd"
       ],
       "numberOfRuns": 3
     },

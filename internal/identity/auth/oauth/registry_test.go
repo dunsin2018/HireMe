@@ -68,7 +68,7 @@ func TestRegistry_ProviderRedirectURLDerivesFromOrigin(t *testing.T) {
 
 	// The redirect URL — and thus the serving domain — comes from the origin
 	// passed at build time, so the same registry answers for either domain.
-	for _, host := range []string{"hireme.dev", "hireme.example.com"} {
+	for _, host := range []string{"hireme.dev", "hiremetoday.ca"} {
 		p, ok := reg.Provider("google", "https://"+host)
 		if !ok {
 			t.Fatalf("google not enabled for host %q", host)
@@ -85,7 +85,7 @@ func TestRegistry_ProviderUnknownIsNotOK(t *testing.T) {
 	reg := NewRegistry(map[string]config.OAuthCredentials{
 		"google": {ClientID: "id", ClientSecret: "secret"},
 	})
-	if _, ok := reg.Provider("github", "https://hireme.example.com"); ok {
+	if _, ok := reg.Provider("github", "https://hiremetoday.ca"); ok {
 		t.Error("github reported enabled; want not ok")
 	}
 }
@@ -106,15 +106,15 @@ func TestRegistry_BothFlowsRedirectToTheSameRegisteredCallback(t *testing.T) {
 	})
 
 	for _, name := range []string{"google", "github"} {
-		signIn, ok := reg.Provider(name, "https://hireme.example.com")
+		signIn, ok := reg.Provider(name, "https://hiremetoday.ca")
 		if !ok {
 			t.Fatalf("%s not enabled for sign-in", name)
 		}
-		reauth, ok := reg.ProviderV2(name, "https://hireme.example.com")
+		reauth, ok := reg.ProviderV2(name, "https://hiremetoday.ca")
 		if !ok {
 			t.Fatalf("%s not enabled for re-authentication", name)
 		}
-		want := "hireme.example.com%2Fapi%2Fv1%2Fauth%2Foauth%2F" + name + "%2Fcallback"
+		want := "hiremetoday.ca%2Fapi%2Fv1%2Fauth%2Foauth%2F" + name + "%2Fcallback"
 		if got := reauth.AuthCodeURL("s"); !strings.Contains(got, want) {
 			t.Errorf("%s re-authentication redirect is not the registered callback:\n got %q\nwant substring %q", name, got, want)
 		}

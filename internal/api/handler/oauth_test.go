@@ -251,8 +251,8 @@ func TestOAuthCallback_ErrorRedirectUsesRequestOrigin(t *testing.T) {
 			oauth:          fakeRegistry{"google": &fakeProvider{name: "google"}},
 			oauthCodes:     oauth.NewCodeStore(time.Minute),
 			frontendOrigin: "https://hireme.dev",
-			cookieDomains:  []string{"hireme.dev", "hireme.example.com"},
-			servedHosts:    []string{"hireme.dev", "hireme.example.com"},
+			cookieDomains:  []string{"hireme.dev", "hiremetoday.ca"},
+			servedHosts:    []string{"hireme.dev", "hiremetoday.ca"},
 		}
 		app.Get("/api/v1/auth/oauth/:provider/callback", h.OAuthCallback)
 		return app
@@ -272,8 +272,8 @@ func TestOAuthCallback_ErrorRedirectUsesRequestOrigin(t *testing.T) {
 		return resp.Header.Get("Location")
 	}
 
-	if loc := callback("hireme.example.com"); loc != "https://hireme.example.com/?auth_error=oauth" {
-		t.Errorf("served-domain callback Location = %q, want host-derived https://hireme.example.com", loc)
+	if loc := callback("hiremetoday.ca"); loc != "https://hiremetoday.ca/?auth_error=oauth" {
+		t.Errorf("served-domain callback Location = %q, want host-derived https://hiremetoday.ca", loc)
 	}
 	if loc := callback("evil.example"); loc != "https://hireme.dev/?auth_error=oauth" {
 		t.Errorf("unknown-host callback Location = %q, want canonical frontendOrigin fallback", loc)
@@ -342,18 +342,18 @@ func TestOAuthExchange_BadBodyIs400(t *testing.T) {
 // hijacked or third-party-hosted one — steer the OAuth redirect.
 func TestRequestOrigin_OnlyTrustsAnExactServedHost(t *testing.T) {
 	h := &authHandlers{
-		frontendOrigin: "https://hireme.example.com",
-		cookieDomains:  []string{"hireme.example.com"},
-		servedHosts:    []string{"hireme.example.com", "apply.hireme.example.com"},
+		frontendOrigin: "https://hiremetoday.ca",
+		cookieDomains:  []string{"hiremetoday.ca"},
+		servedHosts:    []string{"hiremetoday.ca", "apply.hiremetoday.ca"},
 	}
 
 	cases := []struct {
 		host, want string
 	}{
-		{"apply.hireme.example.com", "https://apply.hireme.example.com"},
-		{"hireme.example.com", "https://hireme.example.com"},
-		{"takeover.hireme.example.com", "https://hireme.example.com"},
-		{"evil.example", "https://hireme.example.com"},
+		{"apply.hiremetoday.ca", "https://apply.hiremetoday.ca"},
+		{"hiremetoday.ca", "https://hiremetoday.ca"},
+		{"takeover.hiremetoday.ca", "https://hiremetoday.ca"},
+		{"evil.example", "https://hiremetoday.ca"},
 	}
 	for _, tc := range cases {
 		if got := originForHost(t, h, tc.host); got != tc.want {
@@ -366,10 +366,10 @@ func TestRequestOrigin_OnlyTrustsAnExactServedHost(t *testing.T) {
 // honoured, so a deployment that never sets the variable keeps working.
 func TestRequestOrigin_DefaultsToTheFrontendHost(t *testing.T) {
 	h := &authHandlers{
-		frontendOrigin: "https://hireme.example.com",
-		servedHosts:    servedHostsOrDefault(nil, "https://hireme.example.com"),
+		frontendOrigin: "https://hiremetoday.ca",
+		servedHosts:    servedHostsOrDefault(nil, "https://hiremetoday.ca"),
 	}
-	if got := originForHost(t, h, "hireme.example.com"); got != "https://hireme.example.com" {
+	if got := originForHost(t, h, "hiremetoday.ca"); got != "https://hiremetoday.ca" {
 		t.Errorf("origin = %q, want the frontend host to be served by default", got)
 	}
 }

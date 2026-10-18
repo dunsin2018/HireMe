@@ -50,7 +50,7 @@
 {#if visible}
   <div
     role="complementary"
-    aria-label="Support hireme.example.com"
+    aria-label="Support hiremetoday.ca"
     class={cn(
       'fixed inset-x-4 bottom-4 z-30 rounded-lg border border-border bg-background/95 px-4 py-3 shadow-lg backdrop-blur sm:inset-x-auto sm:right-4 sm:max-w-md',
       // The job page anchors its Apply button to the same corner on the same layer below
@@ -65,7 +65,7 @@
            stacking the sentences makes the break a layout decision instead of a
            consequence of the string's length. -->
       <div class="min-w-0 flex-1 text-sm">
-        <p class="font-medium text-foreground">hireme.example.com is open source.</p>
+        <p class="font-medium text-foreground">hiremetoday.ca is open source.</p>
         <p class="text-muted-foreground">Stars are how people find it.</p>
       </div>
 

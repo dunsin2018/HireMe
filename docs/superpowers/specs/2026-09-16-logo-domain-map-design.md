@@ -6,15 +6,15 @@
 
 ## The problem
 
-`https://hireme.example.com/jobs?company_slug=g2i` draws **two different logos for one
+`https://hiremetoday.ca/jobs?company_slug=g2i` draws **two different logos for one
 company**, and the one most rows get belongs to **a different business**.
 
 Company logos are requested by the company's *name string*:
-`web/src/lib/logo.ts:13` builds `https://logo.hireme.example.com/<name>`. That name comes
+`web/src/lib/logo.ts:13` builds `https://logo.hiremetoday.ca/<name>`. That name comes
 verbatim from whichever adapter ingested the row, and one employer arrives spelled
 several ways:
 
-| `jobs.company` | source | what `logo.hireme.example.com` answers |
+| `jobs.company` | source | what `logo.hiremetoday.ca` answers |
 |---|---|---|
 | `g2i` | ashby (the company's own board) | 1814 B — "G2i Leadership Development", an unrelated business |
 | `G2i` | himalayas, 4dayweek | same 1814 B, same wrong business |

@@ -87,6 +87,6 @@ export function brandFooter(): string {
       <img src="${MARK_DATA_URI}" style="width:34px;height:34px" />
       <div style="display:flex;font-size:30px;font-weight:700;letter-spacing:-0.03em">HireMe</div>
     </div>
-    <div style="display:flex;font-size:22px;color:#a3a3a3">hireme.example.com</div>
+    <div style="display:flex;font-size:22px;color:#a3a3a3">hiremetoday.ca</div>
   </div>`;
 }

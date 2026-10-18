@@ -24,7 +24,7 @@ import (
 )
 
 func mcpappUnder(s searcher, cs companySearcher, store mcpappStore) *mcpappHandlers {
-	return newMCPAppHandlers(s, cs, store, "https://hireme.example.com")
+	return newMCPAppHandlers(s, cs, store, "https://hiremetoday.ca")
 }
 
 func TestTheAppSearchRunsTheSameQueryTheWebsiteRuns(t *testing.T) {
@@ -146,7 +146,7 @@ func TestTheCompanySearchProjectsEachHit(t *testing.T) {
 	if len(got.Companies) != 1 {
 		t.Fatalf("companies = %v, want one", got.Companies)
 	}
-	if got.Companies[0].URL != "https://hireme.example.com/companies/acme" {
+	if got.Companies[0].URL != "https://hiremetoday.ca/companies/acme" {
 		t.Errorf("url = %q, want the employer's page", got.Companies[0].URL)
 	}
 	if got.Companies[0].OpenJobs != 12 {

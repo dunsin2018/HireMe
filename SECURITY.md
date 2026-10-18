@@ -23,7 +23,7 @@ coordinate disclosure as appropriate.
 
 ## In Scope
 
-The hosted service at `hireme.example.com` and the code in this repository, in
+The hosted service at `hiremetoday.ca` and the code in this repository, in
 particular:
 
 - **Authentication and session handling** — bypass of the JWT session cookie,
@@ -39,7 +39,7 @@ particular:
   URLs could be steered at internal addresses or used to exfiltrate metadata.
 - **Injection** reachable through the API or the ingest pipeline.
 - **Secret exposure** — credentials owned by the project or granting access to
-  `hireme.example.com` infrastructure.
+  `hiremetoday.ca` infrastructure.
 
 ## Out of Scope
 

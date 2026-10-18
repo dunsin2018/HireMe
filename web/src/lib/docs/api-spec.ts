@@ -5,7 +5,7 @@
 // the generated contracts so it stays in lock-step with the Go StringFacets.
 
 /** Production base URL for every path below. */
-export const BASE_URL = 'https://hireme.example.com/api/v1';
+export const BASE_URL = 'https://hiremetoday.ca/api/v1';
 
 /** Authentication requirement for an endpoint, rendered as a badge. */
 export type Auth = 'none' | 'cookie-or-key' | 'cookie' | 'moderator' | 'extension';
@@ -78,7 +78,7 @@ export const OVERVIEW: Overview[] = [
       'Authenticated endpoints accept either the browser session cookie (set by ' +
         'sign-in, same-origin) or a personal API key sent as a Bearer token — see the ' +
         'authentication model below. Keys are created in your account, at ' +
-        '[hireme.example.com/my/api-keys](https://hireme.example.com/my/api-keys), not through this API.',
+        '[hiremetoday.ca/my/api-keys](https://hiremetoday.ca/my/api-keys), not through this API.',
     ],
   },
   {
@@ -157,7 +157,7 @@ export const OVERVIEW: Overview[] = [
         'the browser session cookie, and additionally require a freshly proven identity — ' +
         'a password re-entry or a sign-in-provider check — that a script has no way to ' +
         'supply. Create and revoke keys in your account instead, at ' +
-        '[hireme.example.com/my/api-keys](https://hireme.example.com/my/api-keys); the plaintext token is ' +
+        '[hiremetoday.ca/my/api-keys](https://hiremetoday.ca/my/api-keys); the plaintext token is ' +
         'shown exactly once, at creation, so store it then.',
       'The `/jobs/{slug}/fit` endpoints are pre-rename aliases of ' +
         '`/jobs/{slug}/match-analysis` and hit the same handlers. They still work, ' +
@@ -1600,7 +1600,7 @@ data: {"type":"result","stop_reason":"completed"}
           'directly) to negotiate the WebRTC call. `501` when voice mode is not configured.',
         pathParams: [{ name: 'id', type: 'string (UUID)', required: true, description: 'The session id.' }],
         curl: `curl -X POST "${BASE_URL}/assistant/sessions/<id>/voice-token" -H "Authorization: Bearer $HIREME_API_KEY"`,
-        responseExample: `{ "data": { "value": "ek_...", "model": "gpt-realtime", "calls_url": "https://hireme.example.com/api/v1/realtime/calls" } }`,
+        responseExample: `{ "data": { "value": "ek_...", "model": "gpt-realtime", "calls_url": "https://hiremetoday.ca/api/v1/realtime/calls" } }`,
       },
       {
         method: 'POST',
@@ -3739,7 +3739,7 @@ data: {"type":"result","stop_reason":"completed"}
     {
       "source_path": "header.links[0]",
       "destination_url": "https://github.com/you",
-      "traced_url": "https://hireme.example.com/cv/acme-x7abc",
+      "traced_url": "https://hiremetoday.ca/cv/acme-x7abc",
       "clicks": 12,
       "bot_clicks": 3,
       "distinct_visitors": 9,
@@ -4349,7 +4349,7 @@ data: {"type":"result","stop_reason":"completed"}
         summary: 'Your hosted hireme address, and whether the feature is configured.',
         description: '`address` is null until you claim one; `available` is false when the instance runs without a mailbox domain.',
         curl: `curl "${BASE_URL}/me/mailbox" -H "Authorization: Bearer fhk_…"`,
-        responseExample: `{ "data": { "available": true, "address": "you@mail.hireme.example.com" } }`,
+        responseExample: `{ "data": { "available": true, "address": "you@mail.hiremetoday.ca" } }`,
       },
       {
         method: 'POST',
@@ -4357,7 +4357,7 @@ data: {"type":"result","stop_reason":"completed"}
         auth: 'cookie-or-key',
         summary: 'Claim your hosted address.',
         curl: `curl -X POST "${BASE_URL}/me/mailbox" -H "Authorization: Bearer fhk_…"`,
-        responseExample: `{ "data": { "available": true, "address": "you@mail.hireme.example.com" } }`,
+        responseExample: `{ "data": { "available": true, "address": "you@mail.hiremetoday.ca" } }`,
       },
       {
         method: 'DELETE',

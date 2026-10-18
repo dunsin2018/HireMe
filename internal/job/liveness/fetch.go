@@ -7,7 +7,7 @@ import (
 )
 
 // UserAgent identifies the probe to employer sites, matching the ingest client.
-const UserAgent = "hireme/0.1 (+https://hireme.example.com)"
+const UserAgent = "hireme/0.1 (+https://hiremetoday.ca)"
 
 // maxBody caps how much of a response we read: enough to find an expired phrase or
 // judge content length, without buffering a pathologically large page.

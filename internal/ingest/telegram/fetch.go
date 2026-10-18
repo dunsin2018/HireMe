@@ -31,7 +31,7 @@ func NewFetcher() *Fetcher {
 		// transport is defence-in-depth against a redirect to an internal target.
 		httpClient: safehttp.NewClient(15 * time.Second),
 		baseURL:    "https://t.me",
-		userAgent:  "hireme/0.1 (+https://hireme.example.com)",
+		userAgent:  "hireme/0.1 (+https://hiremetoday.ca)",
 	}
 }
 

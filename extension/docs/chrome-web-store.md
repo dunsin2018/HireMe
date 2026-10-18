@@ -17,11 +17,11 @@ when one changes, change the other.
 5. Submit. Expect an in-depth manual review — `<all_urls>` guarantees it.
 6. **After the item exists**, take its extension ID from the dashboard and add
    `https://<id>.chromiumapp.org/` to the redirect-URI allowlist of
-   `hireme.example.com/api/v1/auth/extension/connect`. Until that lands, sign-in fails
+   `hiremetoday.ca/api/v1/auth/extension/connect`. Until that lands, sign-in fails
    for everyone who installs from the store — the published build has no
    `key`, so its ID differs from the pinned dev one.
 
-Still manual, not in the repo: the privacy-policy page on `hireme.example.com` and
+Still manual, not in the repo: the privacy-policy page on `hiremetoday.ca` and
 1–5 screenshots at 1280×800 (side panel over a real job posting).
 
 ## Listing
@@ -79,7 +79,7 @@ Data collected — declare all three:
   `chrome.storage.local`.
 - **Website content** — the URL, title and visible text (capped at 5000
   characters, see `extension/lib/scraper.ts`) of the page open while the user is
-  asking about it, plus the form fields Autofill reads. Sent to `hireme.example.com`,
+  asking about it, plus the form fields Autofill reads. Sent to `hiremetoday.ca`,
   which is the only host this extension contacts.
 
   Two things worth stating plainly, because they changed: the agent now decides

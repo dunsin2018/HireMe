@@ -107,7 +107,7 @@ func candidates(n int) []Candidate {
 func TestRunAnnouncesAndRecords(t *testing.T) {
 	repo := &fakeRepo{candidates: candidates(3)}
 	engine := &fakeEngine{name: "test", accept: 3}
-	runner := New(repo, "https://hireme.example.com/", engine)
+	runner := New(repo, "https://hiremetoday.ca/", engine)
 
 	reports := runner.Run(context.Background(), 10)
 
@@ -120,7 +120,7 @@ func TestRunAnnouncesAndRecords(t *testing.T) {
 	}
 	// The trailing slash on the origin must not survive into the URL — a doubled slash
 	// is a different URL to a search engine, and spends budget teaching it one.
-	if got := engine.offered[0]; got != "https://hireme.example.com/jobs/job-a" {
+	if got := engine.offered[0]; got != "https://hiremetoday.ca/jobs/job-a" {
 		t.Fatalf("first url = %q", got)
 	}
 }
@@ -131,7 +131,7 @@ func TestRunAnnouncesAndRecords(t *testing.T) {
 func TestRunRecordsOnlyWhatTheEngineAccepted(t *testing.T) {
 	repo := &fakeRepo{candidates: candidates(3)}
 	engine := &fakeEngine{name: "test", accept: 2}
-	runner := New(repo, "https://hireme.example.com", engine)
+	runner := New(repo, "https://hiremetoday.ca", engine)
 
 	r := pick(t, runner.Run(context.Background(), 10), "test", KindCreated)
 
@@ -148,7 +148,7 @@ func TestRunRecordsOnlyWhatTheEngineAccepted(t *testing.T) {
 func TestRunRecordsAcceptedEvenWhenTheBatchFailed(t *testing.T) {
 	repo := &fakeRepo{candidates: candidates(3)}
 	engine := &fakeEngine{name: "test", accept: 1, err: errors.New("quota exhausted")}
-	runner := New(repo, "https://hireme.example.com", engine)
+	runner := New(repo, "https://hiremetoday.ca", engine)
 
 	r := pick(t, runner.Run(context.Background(), 10), "test", KindCreated)
 
@@ -165,7 +165,7 @@ func TestRunRecordsAcceptedEvenWhenTheBatchFailed(t *testing.T) {
 func TestRunBoundsTheBatchByWhatIsLeftOfTheDay(t *testing.T) {
 	repo := &fakeRepo{candidates: candidates(10), sentToday: 197}
 	engine := &fakeEngine{name: "google", budget: 200, accept: 10}
-	runner := New(repo, "https://hireme.example.com", engine)
+	runner := New(repo, "https://hiremetoday.ca", engine)
 
 	r := pick(t, runner.Run(context.Background(), 50), "google", KindCreated)
 
@@ -180,7 +180,7 @@ func TestRunBoundsTheBatchByWhatIsLeftOfTheDay(t *testing.T) {
 func TestRunSendsNothingOnceTheDayIsSpent(t *testing.T) {
 	repo := &fakeRepo{candidates: candidates(10), sentToday: 200}
 	engine := &fakeEngine{name: "google", budget: 200, accept: 10}
-	runner := New(repo, "https://hireme.example.com", engine)
+	runner := New(repo, "https://hiremetoday.ca", engine)
 
 	r := pick(t, runner.Run(context.Background(), 50), "google", KindCreated)
 
@@ -198,7 +198,7 @@ func TestUnboundedEngineIsNotConfusedWithASpentOne(t *testing.T) {
 	repo := &fakeRepo{candidates: candidates(2)}
 	engine := &fakeEngine{name: "indexnow", budget: 0, accept: 2}
 
-	r := pick(t, New(repo, "https://hireme.example.com", engine).Run(context.Background(), 50), "indexnow", KindCreated)
+	r := pick(t, New(repo, "https://hiremetoday.ca", engine).Run(context.Background(), 50), "indexnow", KindCreated)
 
 	if r.Remaining != -1 {
 		t.Fatalf("remaining = %d, want -1 for an unbounded engine", r.Remaining)
@@ -211,7 +211,7 @@ func TestOneEngineFailingDoesNotStopAnother(t *testing.T) {
 	broken := &fakeEngine{name: "broken", accept: 0, err: errors.New("boom")}
 	working := &fakeEngine{name: "working", accept: 2}
 
-	reports := New(repo, "https://hireme.example.com", broken, working).Run(context.Background(), 10)
+	reports := New(repo, "https://hiremetoday.ca", broken, working).Run(context.Background(), 10)
 
 	brokenReport := pick(t, reports, "broken", KindCreated)
 	workingReport := pick(t, reports, "working", KindCreated)
@@ -227,7 +227,7 @@ func TestPreviewSendsNothing(t *testing.T) {
 	repo := &fakeRepo{candidates: candidates(2)}
 	engine := &fakeEngine{name: "test", accept: 2}
 
-	r := pick(t, New(repo, "https://hireme.example.com", engine).Preview(context.Background(), 10), "test", KindCreated)
+	r := pick(t, New(repo, "https://hiremetoday.ca", engine).Preview(context.Background(), 10), "test", KindCreated)
 
 	if engine.callSeen {
 		t.Fatal("preview must not call the engine")
@@ -236,7 +236,7 @@ func TestPreviewSendsNothing(t *testing.T) {
 		t.Fatalf("preview recorded %v, want nothing", repo.recorded)
 	}
 	// The URLs, not a count: a dry run exists to catch an address that is wrong.
-	if len(r.URLs) != 2 || r.URLs[0] != "https://hireme.example.com/jobs/job-a" {
+	if len(r.URLs) != 2 || r.URLs[0] != "https://hiremetoday.ca/jobs/job-a" {
 		t.Fatalf("urls = %v", r.URLs)
 	}
 }
@@ -281,7 +281,7 @@ func TestNewPostingsTakeTheBudgetBeforeClosures(t *testing.T) {
 	repo := &fakeRepo{candidates: candidates(10), closed: candidates(10), sentToday: 197}
 	engine := &fakeEngine{name: "google", budget: 200, accept: 10}
 
-	reports := New(repo, "https://hireme.example.com", engine).Run(context.Background(), 50)
+	reports := New(repo, "https://hiremetoday.ca", engine).Run(context.Background(), 50)
 
 	created := pick(t, reports, "google", KindCreated)
 	closed := pick(t, reports, "google", KindClosed)
@@ -299,7 +299,7 @@ func TestClosuresGetWhatTheNewPostingsLeave(t *testing.T) {
 	repo := &fakeRepo{candidates: candidates(2), closed: candidates(10), sentToday: 195}
 	engine := &fakeEngine{name: "google", budget: 200, accept: 10}
 
-	reports := New(repo, "https://hireme.example.com", engine).Run(context.Background(), 50)
+	reports := New(repo, "https://hiremetoday.ca", engine).Run(context.Background(), 50)
 
 	if got := pick(t, reports, "google", KindCreated).Recorded; got != 2 {
 		t.Fatalf("created recorded %d, want 2", got)
@@ -320,7 +320,7 @@ func TestUnboundedEngineGivesEachPassAFullBatch(t *testing.T) {
 	repo := &fakeRepo{candidates: candidates(10), closed: candidates(10)}
 	engine := &fakeEngine{name: "indexnow", budget: 0, accept: 10}
 
-	reports := New(repo, "https://hireme.example.com", engine).Run(context.Background(), 10)
+	reports := New(repo, "https://hiremetoday.ca", engine).Run(context.Background(), 10)
 
 	if got := pick(t, reports, "indexnow", KindCreated).Recorded; got != 10 {
 		t.Fatalf("created recorded %d, want 10", got)
@@ -337,7 +337,7 @@ func TestTheLedgerRecordsWhichEvent(t *testing.T) {
 	repo := &fakeRepo{candidates: candidates(1), closed: candidates(1)}
 	engine := &fakeEngine{name: "indexnow", budget: 0, accept: 1}
 
-	New(repo, "https://hireme.example.com", engine).Run(context.Background(), 10)
+	New(repo, "https://hiremetoday.ca", engine).Run(context.Background(), 10)
 
 	if len(repo.recordedAs) != 2 {
 		t.Fatalf("recorded %d pings, want 2", len(repo.recordedAs))
@@ -351,7 +351,7 @@ func TestPreviewShowsBothPasses(t *testing.T) {
 	repo := &fakeRepo{candidates: candidates(2), closed: candidates(3)}
 	engine := &fakeEngine{name: "indexnow", budget: 0, accept: 5}
 
-	reports := New(repo, "https://hireme.example.com", engine).Preview(context.Background(), 10)
+	reports := New(repo, "https://hiremetoday.ca", engine).Preview(context.Background(), 10)
 
 	if engine.callSeen {
 		t.Fatal("preview must not call the engine")
@@ -376,7 +376,7 @@ func TestBudgetIsChargedForAcceptedNotRecorded(t *testing.T) {
 	}
 	engine := &fakeEngine{name: "google", budget: 200, accept: 3}
 
-	reports := New(repo, "https://hireme.example.com", engine).Run(context.Background(), 50)
+	reports := New(repo, "https://hiremetoday.ca", engine).Run(context.Background(), 50)
 
 	created := pick(t, reports, "google", KindCreated)
 	if created.Accepted != 3 || created.Recorded != 0 {
@@ -395,7 +395,7 @@ func TestAnEngineIsNeverOfferedAKindItRefuses(t *testing.T) {
 	google := &fakeEngine{name: "google", budget: 200, refuses: KindCompany, accept: 10}
 	indexnow := &fakeEngine{name: "indexnow", accept: 10}
 
-	reports := New(repo, "https://hireme.example.com", google, indexnow).Run(context.Background(), 10)
+	reports := New(repo, "https://hiremetoday.ca", google, indexnow).Run(context.Background(), 10)
 
 	for _, r := range reports {
 		if r.Engine == "google" && r.Kind == KindCompany {
@@ -418,9 +418,9 @@ func TestCompanyPagesUseTheCompanyPath(t *testing.T) {
 	repo := &fakeRepo{companies: []Candidate{{Company: "laserfocus", Slug: "laserfocus"}}}
 	engine := &fakeEngine{name: "indexnow", accept: 1}
 
-	r := pick(t, New(repo, "https://hireme.example.com", engine).Preview(context.Background(), 10), "indexnow", KindCompany)
+	r := pick(t, New(repo, "https://hiremetoday.ca", engine).Preview(context.Background(), 10), "indexnow", KindCompany)
 
-	if len(r.URLs) != 1 || r.URLs[0] != "https://hireme.example.com/companies/laserfocus" {
+	if len(r.URLs) != 1 || r.URLs[0] != "https://hiremetoday.ca/companies/laserfocus" {
 		t.Fatalf("urls = %v, want the /companies/ path", r.URLs)
 	}
 }
@@ -430,7 +430,7 @@ func TestCompanyPingIsRecordedBySlug(t *testing.T) {
 	repo := &fakeRepo{companies: []Candidate{{Company: "truebiz", Slug: "truebiz"}}}
 	engine := &fakeEngine{name: "indexnow", accept: 1}
 
-	New(repo, "https://hireme.example.com", engine).Run(context.Background(), 10)
+	New(repo, "https://hiremetoday.ca", engine).Run(context.Background(), 10)
 
 	if len(repo.recordedCo) != 1 || repo.recordedCo[0] != "truebiz" {
 		t.Fatalf("recorded companies = %v, want [truebiz]", repo.recordedCo)
@@ -443,7 +443,7 @@ func TestPostingsStillTakeTheBudgetBeforeCompanies(t *testing.T) {
 	repo := &fakeRepo{candidates: candidates(10), companies: candidates(10), sentToday: 197}
 	engine := &fakeEngine{name: "google", budget: 200, accept: 10}
 
-	reports := New(repo, "https://hireme.example.com", engine).Run(context.Background(), 50)
+	reports := New(repo, "https://hiremetoday.ca", engine).Run(context.Background(), 50)
 
 	if got := pick(t, reports, "google", KindCreated).Recorded; got != 3 {
 		t.Fatalf("created recorded %d, want the 3 left of the day", got)

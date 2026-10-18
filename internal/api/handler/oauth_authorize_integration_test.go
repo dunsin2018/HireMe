@@ -118,7 +118,7 @@ func TestOAuthAuthorize_SignedOutVisitorIsRedirectedToSignIn(t *testing.T) {
 	seedOAuthTestClient(t, queries, "client-3", []string{"http://127.0.0.1:9999/callback"})
 
 	iss := auth.NewIssuer("test-secret", time.Hour)
-	app := oauthAuthorizeApp(&authHandlers{queries: queries, issuer: iss, frontendOrigin: "https://hireme.example.com"}, iss)
+	app := oauthAuthorizeApp(&authHandlers{queries: queries, issuer: iss, frontendOrigin: "https://hiremetoday.ca"}, iss)
 
 	req := httptest.NewRequestWithContext(context.Background(), fiber.MethodGet,
 		"/api/v1/oauth/authorize?"+validAuthorizeQuery("client-3", "http://127.0.0.1:9999/callback"), nil)

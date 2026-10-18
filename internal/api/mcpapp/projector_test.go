@@ -15,7 +15,7 @@ import (
 	"github.com/dunsin2018/HireMe/internal/platform/db"
 )
 
-const testOrigin = "https://hireme.example.com"
+const testOrigin = "https://hiremetoday.ca"
 
 // aJob builds a fixture the way a read path does, through jobview.FromRow.
 //
@@ -77,7 +77,7 @@ func TestEverySearchResultNamesItsSourceAndBothURLs(t *testing.T) {
 	if got.Source != "greenhouse" {
 		t.Errorf("source = %q, want the board it came from", got.Source)
 	}
-	if got.URL != "https://hireme.example.com/jobs/senior-go-engineer-acme-abc123" {
+	if got.URL != "https://hiremetoday.ca/jobs/senior-go-engineer-acme-abc123" {
 		t.Errorf("url = %q, want the posting's page on hireme", got.URL)
 	}
 	// Untagged. jobview stamps utm_source on every URL it serves, and this field is what a

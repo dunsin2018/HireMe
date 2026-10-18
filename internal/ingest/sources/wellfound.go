@@ -301,7 +301,7 @@ func (rj wellfoundResolvedJob) toJob() (Job, bool) {
 
 // wellfoundDescription folds the listing's free-text compensation range into the rendered
 // HTML body. Wellfound's own description field is Markdown, not HTML — confirmed live
-// (hireme.example.com/jobs/ai-engineer-co-founder-role-brandbrahma-pkuqoprb rendered a raw
+// (hiremetoday.ca/jobs/ai-engineer-co-founder-role-brandbrahma-pkuqoprb rendered a raw
 // "**bold**" before this fix) — so it goes through the same markdownToHTML (goldmark)
 // conversion join.go's Join.com adapter already established in this package for exactly
 // this shape of source, before sanitizing. The compensation range is a display string, never

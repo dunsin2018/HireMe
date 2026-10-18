@@ -29,13 +29,13 @@ func sampleDigest() Digest {
 // directly rather than through a setter: the test is in this package, and an exported
 // swapper would be production surface nothing in production calls.
 func discordFor(url string, client *http.Client) *DiscordPublisher {
-	p := NewDiscordPublisher(url, "https://hireme.example.com")
+	p := NewDiscordPublisher(url, "https://hiremetoday.ca")
 	p.http = client
 	return p
 }
 
 func TestDiscordRender(t *testing.T) {
-	out, err := NewDiscordPublisher("https://example.invalid/hook", "https://hireme.example.com").Render(sampleDigest())
+	out, err := NewDiscordPublisher("https://example.invalid/hook", "https://hiremetoday.ca").Render(sampleDigest())
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -54,7 +54,7 @@ func TestDiscordRender(t *testing.T) {
 	}
 	for _, want := range []string{
 		"Senior Go Engineer",
-		"https://hireme.example.com/jobs/acme-go-1?utm_source=discord",
+		"https://hiremetoday.ca/jobs/acme-go-1?utm_source=discord",
 		"Acme",
 		"Berlin",
 		"Rust Developer",
@@ -79,7 +79,7 @@ func TestDiscordRenderEscapesMarkdown(t *testing.T) {
 		Day:   day("2026-09-03"),
 		Items: []Posting{{Slug: "s", Title: "C++ *urgent* [remote]", Company: "a_b_c"}},
 	}
-	out, err := NewDiscordPublisher("https://example.invalid/hook", "https://hireme.example.com").Render(d)
+	out, err := NewDiscordPublisher("https://example.invalid/hook", "https://hiremetoday.ca").Render(d)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -103,7 +103,7 @@ func TestDiscordRenderCollapsesLocationWhitespace(t *testing.T) {
 		Day:   day("2026-09-03"),
 		Items: []Posting{{Slug: "s", Title: "Engineer", Company: "Acme", Location: "  Bengaluru,\n Karnataka \n"}},
 	}
-	out, err := NewDiscordPublisher("https://example.invalid/hook", "https://hireme.example.com").Render(d)
+	out, err := NewDiscordPublisher("https://example.invalid/hook", "https://hiremetoday.ca").Render(d)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -132,7 +132,7 @@ func TestDiscordRenderTruncatesAnOverlongDescription(t *testing.T) {
 			Company: strings.Repeat("Company ", 60),
 		})
 	}
-	out, err := NewDiscordPublisher("https://example.invalid/hook", "https://hireme.example.com").
+	out, err := NewDiscordPublisher("https://example.invalid/hook", "https://hiremetoday.ca").
 		Render(Digest{Day: day("2026-09-03"), Items: items})
 	if err != nil {
 		t.Fatal(err)
@@ -235,7 +235,7 @@ func TestDiscordName(t *testing.T) {
 // Both channels publish the same measurement, so the count has to appear in both — one of
 // them dropping it would make the same digest look like two different lists.
 func TestDiscordCarriesTheViewCount(t *testing.T) {
-	p := NewDiscordPublisher("http://127.0.0.1:1/hook", "https://hireme.example.com")
+	p := NewDiscordPublisher("http://127.0.0.1:1/hook", "https://hiremetoday.ca")
 
 	body, err := p.Render(Digest{
 		Day:   time.Date(2026, 9, 7, 0, 0, 0, 0, time.UTC),

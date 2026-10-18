@@ -1,6 +1,6 @@
 # SEO baseline, August 2026
 
-Measured 2026-08-31 against the `sc-domain:hireme.example.com` Search Console property
+Measured 2026-08-31 against the `sc-domain:hiremetoday.ca` Search Console property
 (period 2026-08-01 → 2026-08-28), the live public API, and DataForSEO.
 
 This document exists because five plausible optimisation hypotheses were tested

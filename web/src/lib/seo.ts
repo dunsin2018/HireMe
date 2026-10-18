@@ -342,7 +342,7 @@ export function foreignContentLang(job: Job | JobCard): string | undefined {
  *  closed posting sets `validThrough` to its close time so it reads as expired,
  *  not open; an open one gets a rolling estimate (see estimatedValidThrough) so
  *  Google doesn't apply its own ~30-day default and drop it while still live.
- *  `origin` is the absolute site origin (e.g. https://hireme.example.com). */
+ *  `origin` is the absolute site origin (e.g. https://hiremetoday.ca). */
 export function jobPostingJsonLd(job: Job, origin: string): Record<string, unknown> {
   const e = job.enrichment ?? {};
   // Our logo proxy resolves a logo from the company name (404s for unknown

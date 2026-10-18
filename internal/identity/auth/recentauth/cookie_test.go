@@ -13,7 +13,7 @@ import (
 func TestRecentAuthCookieAttributes(t *testing.T) {
 	app := fiber.New()
 	app.Get("/set", func(c *fiber.Ctx) error {
-		SetCookie(c, "proof", time.Now().Add(time.Minute), true, "hireme.example.com")
+		SetCookie(c, "proof", time.Now().Add(time.Minute), true, "hiremetoday.ca")
 		return c.SendStatus(204)
 	})
 	resp, err := app.Test(httptest.NewRequestWithContext(context.Background(), "GET", "/set", nil))
@@ -22,7 +22,7 @@ func TestRecentAuthCookieAttributes(t *testing.T) {
 	}
 	header := strings.Join(resp.Header.Values("Set-Cookie"), "\n")
 	lower := strings.ToLower(header)
-	for _, want := range []string{CookieName + "=proof", "path=/", "domain=hireme.example.com", "httponly", "secure", "samesite=lax"} {
+	for _, want := range []string{CookieName + "=proof", "path=/", "domain=hiremetoday.ca", "httponly", "secure", "samesite=lax"} {
 		if !strings.Contains(lower, want) {
 			t.Errorf("Set-Cookie %q missing %q", header, want)
 		}

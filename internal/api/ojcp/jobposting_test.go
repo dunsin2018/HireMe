@@ -11,7 +11,7 @@ import (
 	"github.com/dunsin2018/HireMe/internal/platform/db"
 )
 
-const testOrigin = "https://hireme.example.com"
+const testOrigin = "https://hiremetoday.ca"
 
 // sourceJobURL is the posting's URL as the SOURCE published it. What reaches a projection
 // is never this string: jobview.FromDomain runs outboundurl.Tag over it, so the served

@@ -3,7 +3,7 @@
 // endpoint, which omitted the posting body entirely) or from echojobs.io retiring its public
 // JSON API around 2026-08-13 (see internal/ingest/sources/echojobs.go), which left every newly-
 // discovered posting from that point with an empty description until the adapter was rewritten.
-// Either way the result is the same: a blank, broken job page, reported live on hireme.example.com.
+// Either way the result is the same: a blank, broken job page, reported live on hiremetoday.ca.
 // This one-off worker pages every source='echojobs' row, re-fetches the posting's detail (GET
 // /job/{slug} + its embedded schema.org JobPosting ld+json — see sources.EchoJobsDescription)
 // via the shared HTTP client, and rewrites the description plus a refreshed content_hash so the

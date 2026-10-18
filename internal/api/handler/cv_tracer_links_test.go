@@ -141,7 +141,7 @@ func stubMinter() *tracerlink.Minter {
 // every CV, so a regression here would quietly trace everybody.
 func TestAnUntracedCVSubstitutesNoLinks(t *testing.T) {
 	rec := cv.Record{Document: cv.Document{Header: cv.Header{Links: []string{"github.com/ada"}}}}
-	h := &cvHandlers{tracerBaseURL: "https://hireme.example.com", tracerMinter: stubMinter()}
+	h := &cvHandlers{tracerBaseURL: "https://hiremetoday.ca", tracerMinter: stubMinter()}
 
 	if got := h.tracedHrefs(context.Background(), rec, 7); len(got.Header) != 0 || len(got.Projects) != 0 {
 		t.Errorf("tracedHrefs of an untraced CV = %+v, want nothing", got)

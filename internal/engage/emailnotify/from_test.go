@@ -10,9 +10,9 @@ func TestFrom(t *testing.T) {
 	for _, tc := range []struct {
 		name, display, address, want string
 	}{
-		{"bare address gains a name", "hireme", "notifications@hireme.example.com", `"hireme" <notifications@hireme.example.com>`},
-		{"existing name is replaced", "Ilya from hireme", `hireme <notifications@hireme.example.com>`, `"Ilya from hireme" <notifications@hireme.example.com>`},
-		{"no name leaves the address alone", "", "notifications@hireme.example.com", "notifications@hireme.example.com"},
+		{"bare address gains a name", "hireme", "notifications@hiremetoday.ca", `"hireme" <notifications@hiremetoday.ca>`},
+		{"existing name is replaced", "Ilya from hireme", `hireme <notifications@hiremetoday.ca>`, `"Ilya from hireme" <notifications@hiremetoday.ca>`},
+		{"no name leaves the address alone", "", "notifications@hiremetoday.ca", "notifications@hiremetoday.ca"},
 		{"unparseable value passes through", "hireme", "not-an-address", "not-an-address"},
 	} {
 		t.Run(tc.name, func(t *testing.T) {

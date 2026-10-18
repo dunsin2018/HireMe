@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { blogRssXml } from './rss';
 import type { PostMeta } from './blog';
 
-const ORIGIN = 'https://hireme.example.com';
+const ORIGIN = 'https://hiremetoday.ca';
 
 function post(overrides: Partial<PostMeta> = {}): PostMeta {
   return {
@@ -29,8 +29,8 @@ describe('blogRssXml', () => {
 
   it('builds absolute link + guid and an RFC-822 pubDate from the ISO date', () => {
     const xml = blogRssXml([post({ slug: 'launch', date: '2026-01-15' })], ORIGIN);
-    expect(xml).toContain('<link>https://hireme.example.com/blog/launch</link>');
-    expect(xml).toContain('<guid isPermaLink="true">https://hireme.example.com/blog/launch</guid>');
+    expect(xml).toContain('<link>https://hiremetoday.ca/blog/launch</link>');
+    expect(xml).toContain('<guid isPermaLink="true">https://hiremetoday.ca/blog/launch</guid>');
     expect(xml).toContain('<pubDate>Thu, 15 Jan 2026 00:00:00 GMT</pubDate>');
   });
 

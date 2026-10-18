@@ -44,7 +44,7 @@ func TestNormalizeJobURL_CollapsesCosmeticVariants(t *testing.T) {
 		"http://himalayas.app/companies/mindera/jobs/staff-java-backend-developer",
 		"https://www.himalayas.app/companies/mindera/jobs/staff-java-backend-developer",
 		"https://Himalayas.app/companies/mindera/jobs/Staff-Java-Backend-Developer",
-		himalayasPosting + "?utm_source=hireme.example.com",
+		himalayasPosting + "?utm_source=hiremetoday.ca",
 		himalayasPosting + "#apply",
 		himalayasPosting + "///",
 	}
@@ -87,7 +87,7 @@ func TestFindOpenJobByURL_ResolvesDespiteURLNoise(t *testing.T) {
 	// URL does not. They are the same himalayasPosting.
 	for _, requested := range []string{
 		himalayasPosting,
-		himalayasPosting + "?utm_source=hireme.example.com",
+		himalayasPosting + "?utm_source=hiremetoday.ca",
 		"https://www.himalayas.app/companies/mindera/jobs/staff-java-backend-developer/",
 		"http://himalayas.app/companies/mindera/jobs/staff-java-backend-developer",
 	} {

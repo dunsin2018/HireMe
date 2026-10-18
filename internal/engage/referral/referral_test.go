@@ -168,7 +168,7 @@ func newService(repo *fakeRepo, pinger *fakePinger) *Service {
 }
 
 func newServiceWithBlobs(repo *fakeRepo, pinger *fakePinger, blobs blobstore.Store) *Service {
-	return New(repo, pinger, blobs, Config{DailyRequestCap: 3, CabinetURL: "https://hireme.example.com/my/referrals"})
+	return New(repo, pinger, blobs, Config{DailyRequestCap: 3, CabinetURL: "https://hiremetoday.ca/my/referrals"})
 }
 
 // ownedOffer is a stored offer belonging to userID, carrying a proof object.

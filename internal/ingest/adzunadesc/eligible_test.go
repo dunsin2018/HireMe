@@ -12,25 +12,25 @@ func TestEligible(t *testing.T) {
 		{
 			name:   "gb hosted details page",
 			source: "adzuna",
-			url:    "https://www.adzuna.co.uk/jobs/details/5834162887?utm_medium=api&utm_source=hireme.example.com",
+			url:    "https://www.adzuna.co.uk/jobs/details/5834162887?utm_medium=api&utm_source=hiremetoday.ca",
 			want:   true,
 		},
 		{
 			name:   "au hosted details page, no /jobs/ segment",
 			source: "adzuna",
-			url:    "https://www.adzuna.com.au/details/5834030919?utm_medium=api&utm_source=hireme.example.com",
+			url:    "https://www.adzuna.com.au/details/5834030919?utm_medium=api&utm_source=hiremetoday.ca",
 			want:   true,
 		},
 		{
 			name:   "gb ad-network tracking redirect",
 			source: "adzuna",
-			url:    "https://www.adzuna.co.uk/jobs/land/ad/5834043525?se=mtYwRYiT8RGWPoJqQXFPnw&utm_medium=api&utm_source=hireme.example.com&v=97EBE9964C19BD64F75B0D5F0F51CDAF10E7056A",
+			url:    "https://www.adzuna.co.uk/jobs/land/ad/5834043525?se=mtYwRYiT8RGWPoJqQXFPnw&utm_medium=api&utm_source=hiremetoday.ca&v=97EBE9964C19BD64F75B0D5F0F51CDAF10E7056A",
 			want:   false,
 		},
 		{
 			name:   "de ad-network tracking redirect",
 			source: "adzuna",
-			url:    "https://www.adzuna.de/land/ad/5834070034?se=6B4dRYiT8RG9ks23jnlnsA&utm_medium=api&utm_source=hireme.example.com&v=6E9F8034E47A436F6959A798B38831DAFEFDEBE7",
+			url:    "https://www.adzuna.de/land/ad/5834070034?se=6B4dRYiT8RG9ks23jnlnsA&utm_medium=api&utm_source=hiremetoday.ca&v=6E9F8034E47A436F6959A798B38831DAFEFDEBE7",
 			want:   false,
 		},
 		{

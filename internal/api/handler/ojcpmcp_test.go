@@ -26,7 +26,7 @@ func TestBothTransportsAnswerTheSameQuestionIdentically(t *testing.T) {
 		Hits:  []search.JobDocument{{ID: 7, Job: ojcpJobView(t, db.Job{PublicSlug: "go-dev-x", Title: "Go Dev", Company: "Acme"})}},
 		Total: 3,
 	}}
-	h := newOJCPHandlers(fake, fakeOJCPStore{}, "https://hireme.example.com", map[string]bool{"greenhouse": true})
+	h := newOJCPHandlers(fake, fakeOJCPStore{}, "https://hiremetoday.ca", map[string]bool{"greenhouse": true})
 	app := fiber.New(fiber.Config{ErrorHandler: RenderError})
 	app.Post("/ojcp/v1/search", h.OJCPSearchJobs)
 
@@ -43,7 +43,7 @@ func TestBothTransportsAnswerTheSameQuestionIdentically(t *testing.T) {
 
 func TestBothTransportsAgreeOnAPostingsDetail(t *testing.T) {
 	store := fakeOJCPStore{job: db.Job{ID: 7, PublicSlug: "go-dev-x", Title: "Go Dev", Company: "Acme"}}
-	h := newOJCPHandlers(&fakeSearcher{}, store, "https://hireme.example.com", nil)
+	h := newOJCPHandlers(&fakeSearcher{}, store, "https://hiremetoday.ca", nil)
 	app := fiber.New(fiber.Config{ErrorHandler: RenderError})
 	app.Get("/ojcp/v1/jobs/:slug", h.OJCPJobDetail)
 
@@ -63,7 +63,7 @@ func TestManifestCannotAdvertiseAToolNothingServes(t *testing.T) {
 	// derives the list from the MCP server's own registrations, and this asserts that every
 	// name in it has a method behind it — a tool added to the manifest by hand, or a method
 	// deleted, fails here rather than at an agent.
-	h := newOJCPHandlers(&fakeSearcher{}, fakeOJCPStore{}, "https://hireme.example.com", nil)
+	h := newOJCPHandlers(&fakeSearcher{}, fakeOJCPStore{}, "https://hiremetoday.ca", nil)
 
 	served := map[string]func(){
 		"search_jobs":          func() { _, _ = h.SearchJobs(t.Context(), ojcp.SearchInput{}) },
@@ -90,7 +90,7 @@ func TestManifestIsServedUnderTheAPIPath(t *testing.T) {
 	// nginx routes /api/ to this service and everything else to the Node process, so a Go
 	// route at the well-known path itself never receives a request — found in production,
 	// with the API path answering 200 and the manifest answering 404.
-	h := newOJCPHandlers(&fakeSearcher{}, fakeOJCPStore{}, "https://hireme.example.com", nil)
+	h := newOJCPHandlers(&fakeSearcher{}, fakeOJCPStore{}, "https://hiremetoday.ca", nil)
 	app := fiber.New(fiber.Config{ErrorHandler: RenderError})
 	app.Get("/ojcp/manifest", h.OJCPManifest)
 
@@ -110,7 +110,7 @@ func TestManifestIsServedUnderTheAPIPath(t *testing.T) {
 func TestManifestDeclaresTheLimitTheRoutesEnforce(t *testing.T) {
 	// The spec makes a declared rate limit binding. Declaring one figure and enforcing
 	// another is a conformance failure nothing else in this repo would notice.
-	h := newOJCPHandlers(&fakeSearcher{}, fakeOJCPStore{}, "https://hireme.example.com", nil)
+	h := newOJCPHandlers(&fakeSearcher{}, fakeOJCPStore{}, "https://hiremetoday.ca", nil)
 
 	limits := h.manifest().RateLimits
 	if limits == nil {

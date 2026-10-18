@@ -25,8 +25,8 @@ func calendarConnectApp(t *testing.T) (*fiber.App, string) {
 		t.Fatalf("issue token: %v", err)
 	}
 	h := &inboxHandlers{
-		gmailConnector: gmailsync.NewConnector("client-id", "secret", "https://hireme.example.com"),
-		frontendOrigin: "https://hireme.example.com",
+		gmailConnector: gmailsync.NewConnector("client-id", "secret", "https://hiremetoday.ca"),
+		frontendOrigin: "https://hiremetoday.ca",
 	}
 	app := fiber.New(fiber.Config{ErrorHandler: RenderError})
 	app.Get("/me/calendar/connect", auth.RequireAuth(iss, testVersions), h.CalendarConnect)

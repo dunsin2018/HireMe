@@ -47,7 +47,7 @@ type cvHandlers struct {
 	tracerSalt string
 	// tracerMinter issues the tokens a traced render substitutes in; nil disables tracing.
 	tracerMinter *tracerlink.Minter
-	// tracerBaseURL is the public origin a traced link points at, e.g. "https://hireme.example.com".
+	// tracerBaseURL is the public origin a traced link points at, e.g. "https://hiremetoday.ca".
 	tracerBaseURL string
 	resume        *resume.Store
 	// photos serves the headshot the photo-bearing templates print. Nil-safe: an

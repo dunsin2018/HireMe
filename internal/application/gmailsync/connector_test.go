@@ -7,7 +7,7 @@ import (
 )
 
 func TestAuthCodeURL(t *testing.T) {
-	c := NewConnector("client-123", "secret", "https://hireme.example.com")
+	c := NewConnector("client-123", "secret", "https://hiremetoday.ca")
 	raw := c.AuthCodeURL("state-xyz")
 
 	u, err := url.Parse(raw)
@@ -35,7 +35,7 @@ func TestAuthCodeURL(t *testing.T) {
 	if !strings.Contains(q.Get("scope"), "gmail.readonly") {
 		t.Errorf("scope missing gmail.readonly: %q", q.Get("scope"))
 	}
-	if q.Get("redirect_uri") != "https://hireme.example.com/api/v1/me/gmail/callback" {
+	if q.Get("redirect_uri") != "https://hiremetoday.ca/api/v1/me/gmail/callback" {
 		t.Errorf("redirect_uri = %q", q.Get("redirect_uri"))
 	}
 }
@@ -45,7 +45,7 @@ func TestAuthCodeURL(t *testing.T) {
 // calendar.readonly a sensitive one, and a candidate who wants an inbox and not a
 // calendar has to be able to say so.
 func TestConsentURLsAskForOneThingEach(t *testing.T) {
-	c := NewConnector("id", "secret", "https://hireme.example.com")
+	c := NewConnector("id", "secret", "https://hiremetoday.ca")
 
 	mail := c.AuthCodeURL("state-1")
 	calendar := c.CalendarAuthCodeURL("state-2")
@@ -71,7 +71,7 @@ func TestConsentURLsAskForOneThingEach(t *testing.T) {
 // flow's own URL must be incremental (keeping whatever else the account already holds)
 // and land on its own redirect, distinct from both other flows'.
 func TestMentorCalendarAuthCodeURL(t *testing.T) {
-	c := NewConnector("id", "secret", "https://hireme.example.com")
+	c := NewConnector("id", "secret", "https://hiremetoday.ca")
 
 	mail := c.AuthCodeURL("state-1")
 	calendarRead := c.CalendarAuthCodeURL("state-2")
@@ -95,7 +95,7 @@ func TestMentorCalendarAuthCodeURL(t *testing.T) {
 	if q.Get("include_granted_scopes") != "true" {
 		t.Errorf("include_granted_scopes = %q, want true", q.Get("include_granted_scopes"))
 	}
-	if q.Get("redirect_uri") != "https://hireme.example.com/api/v1/me/mentor-calendar/callback" {
+	if q.Get("redirect_uri") != "https://hiremetoday.ca/api/v1/me/mentor-calendar/callback" {
 		t.Errorf("redirect_uri = %q, want its own callback distinct from the candidate calendar flow's", q.Get("redirect_uri"))
 	}
 }
@@ -105,7 +105,7 @@ func TestMentorCalendarAuthCodeURL(t *testing.T) {
 // candidate's read-only calendar flow, the mentor's write flow, and the mail flow — since
 // that redirect, not the scope, is what a purpose-specific consent depends on here.
 func TestMentorBusyAuthCodeURL(t *testing.T) {
-	c := NewConnector("id", "secret", "https://hireme.example.com")
+	c := NewConnector("id", "secret", "https://hiremetoday.ca")
 
 	mail := c.AuthCodeURL("state-1")
 	calendarRead := c.CalendarAuthCodeURL("state-2")
@@ -126,7 +126,7 @@ func TestMentorBusyAuthCodeURL(t *testing.T) {
 	if q.Get("include_granted_scopes") != "true" {
 		t.Errorf("include_granted_scopes = %q, want true", q.Get("include_granted_scopes"))
 	}
-	if q.Get("redirect_uri") != "https://hireme.example.com/api/v1/me/mentor-busy-sync/callback" {
+	if q.Get("redirect_uri") != "https://hiremetoday.ca/api/v1/me/mentor-busy-sync/callback" {
 		t.Errorf("redirect_uri = %q, want its own callback", q.Get("redirect_uri"))
 	}
 

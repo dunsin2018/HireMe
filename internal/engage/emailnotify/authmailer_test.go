@@ -30,7 +30,7 @@ func (r *recordingSender) Send(_ context.Context, m Message) error {
 
 func TestAuthMailer_SendsTheVerificationCode(t *testing.T) {
 	sender := &recordingSender{}
-	m := NewAuthMailer(sender, "no-reply@hireme.example.com", "https://hireme.example.com")
+	m := NewAuthMailer(sender, "no-reply@hiremetoday.ca", "https://hiremetoday.ca")
 
 	if err := m.SendVerificationCode(context.Background(), "user@example.test", "123456"); err != nil {
 		t.Fatalf("SendVerificationCode: %v", err)
@@ -43,7 +43,7 @@ func TestAuthMailer_SendsTheVerificationCode(t *testing.T) {
 	}
 	// The header carries a display name over the configured address: a message list
 	// showing a bare address renders it as "no-reply", which identifies nobody.
-	if !strings.Contains(sender.from, "no-reply@hireme.example.com") || !strings.Contains(sender.from, "hireme") {
+	if !strings.Contains(sender.from, "no-reply@hiremetoday.ca") || !strings.Contains(sender.from, "hireme") {
 		t.Errorf("from = %q, want the configured address behind a readable name", sender.from)
 	}
 	if !strings.Contains(sender.text, "123456") {
@@ -59,7 +59,7 @@ func TestAuthMailer_SendsTheVerificationCode(t *testing.T) {
 
 func TestAuthMailer_SendsTheResetCode(t *testing.T) {
 	sender := &recordingSender{}
-	m := NewAuthMailer(sender, "no-reply@hireme.example.com", "https://hireme.example.com")
+	m := NewAuthMailer(sender, "no-reply@hiremetoday.ca", "https://hiremetoday.ca")
 
 	if err := m.SendPasswordResetCode(context.Background(), "user@example.test", "654321"); err != nil {
 		t.Fatalf("SendPasswordResetCode: %v", err)
@@ -74,7 +74,7 @@ func TestAuthMailer_SendsTheResetCode(t *testing.T) {
 
 func TestAuthMailer_SendsTheEmployerClaimCode(t *testing.T) {
 	sender := &recordingSender{}
-	m := NewAuthMailer(sender, "no-reply@hireme.example.com", "https://hireme.example.com")
+	m := NewAuthMailer(sender, "no-reply@hiremetoday.ca", "https://hiremetoday.ca")
 
 	if err := m.SendClaimVerificationCode(context.Background(), "hr@acme.test", "789012"); err != nil {
 		t.Fatalf("SendClaimVerificationCode: %v", err)
@@ -89,15 +89,15 @@ func TestAuthMailer_SendsTheEmployerClaimCode(t *testing.T) {
 
 func TestAuthMailer_TheThreeMailsAreDistinguishable(t *testing.T) {
 	verify, reset, claim := &recordingSender{}, &recordingSender{}, &recordingSender{}
-	if err := NewAuthMailer(verify, "f@x.test", "https://hireme.example.com").
+	if err := NewAuthMailer(verify, "f@x.test", "https://hiremetoday.ca").
 		SendVerificationCode(context.Background(), "u@x.test", "111111"); err != nil {
 		t.Fatalf("SendVerificationCode: %v", err)
 	}
-	if err := NewAuthMailer(reset, "f@x.test", "https://hireme.example.com").
+	if err := NewAuthMailer(reset, "f@x.test", "https://hiremetoday.ca").
 		SendPasswordResetCode(context.Background(), "u@x.test", "222222"); err != nil {
 		t.Fatalf("SendPasswordResetCode: %v", err)
 	}
-	if err := NewAuthMailer(claim, "f@x.test", "https://hireme.example.com").
+	if err := NewAuthMailer(claim, "f@x.test", "https://hiremetoday.ca").
 		SendClaimVerificationCode(context.Background(), "hr@acme.test", "333333"); err != nil {
 		t.Fatalf("SendClaimVerificationCode: %v", err)
 	}
@@ -107,7 +107,7 @@ func TestAuthMailer_TheThreeMailsAreDistinguishable(t *testing.T) {
 }
 
 func TestAuthMailer_PropagatesASendFailure(t *testing.T) {
-	m := NewAuthMailer(&recordingSender{err: errors.New("ses throttled")}, "f@x.test", "https://hireme.example.com")
+	m := NewAuthMailer(&recordingSender{err: errors.New("ses throttled")}, "f@x.test", "https://hiremetoday.ca")
 
 	if err := m.SendVerificationCode(context.Background(), "u@x.test", "123456"); err == nil {
 		t.Error("a transport failure must reach the caller, which decides whether it is fatal")
@@ -118,7 +118,7 @@ func TestAuthMailer_PropagatesASendFailure(t *testing.T) {
 // client (or a proxy) might prefetch.
 func TestAuthMailer_DoesNotPutTheCodeInAURL(t *testing.T) {
 	sender := &recordingSender{}
-	m := NewAuthMailer(sender, "f@x.test", "https://hireme.example.com")
+	m := NewAuthMailer(sender, "f@x.test", "https://hiremetoday.ca")
 
 	if err := m.SendVerificationCode(context.Background(), "u@x.test", "123456"); err != nil {
 		t.Fatalf("SendVerificationCode: %v", err)

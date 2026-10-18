@@ -24,7 +24,7 @@ SOURCES_DIR = REPO / "sources"
 # SOURCES_DIR — that directory was retired by #2406, and cmd/harvest-boards writes into the
 # `boards` table directly, not a YAML file.
 SEED_DIR = REPO / "scripts" / ".harvest-seeds"
-UA = "hireme-harvest/1.0 (+https://hireme.example.com)"
+UA = "hireme-harvest/1.0 (+https://hiremetoday.ca)"
 
 # (compiled regex, provider). Group 1 (first non-empty group) is the board slug.
 SLUG_PATTERNS = [

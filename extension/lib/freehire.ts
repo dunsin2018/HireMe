@@ -5,7 +5,7 @@ import { HIRE_ORIGIN } from './auth';
  * hireme.dev stays on purpose: it is the pre-migration domain, and a user can
  * still land on one of its job pages from an old link or bookmark. This list
  * recognises what a tab might show, so it must outlive the canonical domain. */
-const JOB_HOSTS = ['hireme.example.com', 'www.hireme.example.com', 'hireme.dev', 'localhost'];
+const JOB_HOSTS = ['hiremetoday.ca', 'www.hiremetoday.ca', 'hireme.dev', 'localhost'];
 
 /**
  * Returns the hireme job slug for a page URL, or null if the URL is not a
@@ -25,12 +25,12 @@ export function hiremeSlugFromUrl(rawUrl: string): string | null {
 
 /** hireme's company-logo proxy URL for a company name (404s → placeholder).
  *
- * logo.hireme.example.com, matching the web app's COMPANY_LOGO_BASE. Both hosts serve,
+ * logo.hiremetoday.ca, matching the web app's COMPANY_LOGO_BASE. Both hosts serve,
  * so this was not broken — only divergent, and divergence is what leaves one of
  * two call sites behind on the next change. */
 export function companyLogoUrl(company: string): string | null {
   const c = company.trim();
-  return c ? `https://logo.hireme.example.com/${encodeURIComponent(c)}` : null;
+  return c ? `https://logo.hiremetoday.ca/${encodeURIComponent(c)}` : null;
 }
 
 /** The slice of a hireme job the card renders. Facet fields mirror

@@ -25,7 +25,7 @@ func (s *captureSender) Send(_ context.Context, m emailnotify.Message) error {
 
 func TestEmailNotifier_RendersSubjectAndOnPlatformLink(t *testing.T) {
 	sender := &captureSender{}
-	n := NewEmailNotifier(sender, "jobs@hireme.example.com", "https://hireme.example.com/", testLinks())
+	n := NewEmailNotifier(sender, "jobs@hiremetoday.ca", "https://hiremetoday.ca/", testLinks())
 	msg := ReminderMessage{UserID: testUserID, JobTitle: "Go Dev", Company: "Acme", Slug: "go-dev-acme", URL: "https://ats/x"}
 
 	if err := n.Send(context.Background(), "email", "u@x.com", []ReminderMessage{msg}); err != nil {
@@ -36,13 +36,13 @@ func TestEmailNotifier_RendersSubjectAndOnPlatformLink(t *testing.T) {
 	if sender.to != "u@x.com" {
 		t.Errorf("to = %q, want the recipient", sender.to)
 	}
-	if !strings.Contains(sender.from, "jobs@hireme.example.com") || !strings.Contains(sender.from, "hireme") {
+	if !strings.Contains(sender.from, "jobs@hiremetoday.ca") || !strings.Contains(sender.from, "hireme") {
 		t.Errorf("from = %q, want the configured address behind a readable name", sender.from)
 	}
 	if !strings.Contains(sender.subject, "Go Dev") || !strings.Contains(sender.subject, "Acme") {
 		t.Errorf("subject = %q, want job + company", sender.subject)
 	}
-	if !strings.Contains(sender.html, "https://hireme.example.com/jobs/go-dev-acme") {
+	if !strings.Contains(sender.html, "https://hiremetoday.ca/jobs/go-dev-acme") {
 		t.Errorf("html link must point on-platform, got %q", sender.html)
 	}
 	if strings.Contains(sender.html, "https://ats/x") {
@@ -52,7 +52,7 @@ func TestEmailNotifier_RendersSubjectAndOnPlatformLink(t *testing.T) {
 
 func TestEmailNotifier_EscapesUserData(t *testing.T) {
 	sender := &captureSender{}
-	n := NewEmailNotifier(sender, "jobs@hireme.example.com", "https://hireme.example.com", testLinks())
+	n := NewEmailNotifier(sender, "jobs@hiremetoday.ca", "https://hiremetoday.ca", testLinks())
 	msg := ReminderMessage{UserID: testUserID, JobTitle: "<script>x</script>", Company: "Acme", Slug: "s", URL: "u"}
 
 	if err := n.Send(context.Background(), "email", "u@x.com", []ReminderMessage{msg}); err != nil {
@@ -64,9 +64,9 @@ func TestEmailNotifier_EscapesUserData(t *testing.T) {
 }
 
 func TestTelegramNotifier_RendersOnPlatformLink(t *testing.T) {
-	n := NewTelegramNotifier(nil, "https://hireme.example.com/")
+	n := NewTelegramNotifier(nil, "https://hiremetoday.ca/")
 	got := n.render([]ReminderMessage{{JobTitle: "Go Dev", Company: "Acme", Slug: "go-dev-acme"}})
-	if !strings.Contains(got, "https://hireme.example.com/jobs/go-dev-acme") {
+	if !strings.Contains(got, "https://hiremetoday.ca/jobs/go-dev-acme") {
 		t.Errorf("telegram render missing on-platform link: %q", got)
 	}
 	if !strings.Contains(got, "Go Dev") || !strings.Contains(got, "Acme") {
@@ -75,7 +75,7 @@ func TestTelegramNotifier_RendersOnPlatformLink(t *testing.T) {
 }
 
 func TestTelegramNotifier_InvalidChatIDErrors(t *testing.T) {
-	n := NewTelegramNotifier(nil, "https://hireme.example.com")
+	n := NewTelegramNotifier(nil, "https://hiremetoday.ca")
 	if err := n.Send(context.Background(), "telegram", "not-a-number", []ReminderMessage{{Slug: "s"}}); err == nil {
 		t.Error("want an error for a non-numeric chat id")
 	}
@@ -94,7 +94,7 @@ func batchOf(n int) []ReminderMessage {
 
 func TestEmailNotifier_BatchListsEveryJobUnderTheListLimit(t *testing.T) {
 	sender := &captureSender{}
-	n := NewEmailNotifier(sender, "jobs@hireme.example.com", "https://hireme.example.com", testLinks())
+	n := NewEmailNotifier(sender, "jobs@hiremetoday.ca", "https://hiremetoday.ca", testLinks())
 
 	if err := n.Send(context.Background(), "email", "u@x.com", batchOf(4)); err != nil {
 		t.Fatalf("Send: %v", err)
@@ -116,7 +116,7 @@ func TestEmailNotifier_BatchListsEveryJobUnderTheListLimit(t *testing.T) {
 // notify.ListLimit and counts the rest, while the record behind it holds them all.
 func TestEmailNotifier_BatchOverTheListLimitCountsTheRest(t *testing.T) {
 	sender := &captureSender{}
-	n := NewEmailNotifier(sender, "jobs@hireme.example.com", "https://hireme.example.com", testLinks())
+	n := NewEmailNotifier(sender, "jobs@hiremetoday.ca", "https://hiremetoday.ca", testLinks())
 
 	size := notify.ListLimit + 5
 	if err := n.Send(context.Background(), "email", "u@x.com", batchOf(size)); err != nil {
@@ -134,7 +134,7 @@ func TestEmailNotifier_BatchOverTheListLimitCountsTheRest(t *testing.T) {
 }
 
 func TestTelegramNotifier_BatchListsJobsAndCountsTheRest(t *testing.T) {
-	n := NewTelegramNotifier(nil, "https://hireme.example.com")
+	n := NewTelegramNotifier(nil, "https://hiremetoday.ca")
 	got := n.render(batchOf(notify.ListLimit + 3))
 
 	if !strings.Contains(got, "+ 3 more") {
@@ -148,7 +148,7 @@ func TestTelegramNotifier_BatchListsJobsAndCountsTheRest(t *testing.T) {
 // An oversized body is rejected deterministically and every retry re-fails, so the
 // message must fit whatever the batch holds.
 func TestTelegramNotifier_BatchStaysUnderTheMessageLimit(t *testing.T) {
-	n := NewTelegramNotifier(nil, "https://hireme.example.com")
+	n := NewTelegramNotifier(nil, "https://hiremetoday.ca")
 	ms := batchOf(notify.ListLimit)
 	long := strings.Repeat("Extremely Long Job Title ", 40)
 	for i := range ms {
@@ -164,7 +164,7 @@ func TestTelegramNotifier_BatchStaysUnderTheMessageLimit(t *testing.T) {
 // testLinks signs the unsubscribe URLs these mails carry. The secret only has to
 // clear emailprefs' length floor - nothing here verifies a token.
 func testLinks() *emailprefs.Links {
-	return emailprefs.NewLinks("mail-test-secret-padded-to-32-byte", "https://hireme.example.com")
+	return emailprefs.NewLinks("mail-test-secret-padded-to-32-byte", "https://hiremetoday.ca")
 }
 
 // testUserID is whose mail these samples are. Any positive id will do: the token

@@ -4,7 +4,7 @@ import "strings"
 
 // CookieDomainForHost returns the Domain attribute for a session cookie served
 // on host, given the configured registrable domains (each bare, like
-// "hireme.example.com"). It returns "." + domain for the first domain the host falls
+// "hiremetoday.ca"). It returns "." + domain for the first domain the host falls
 // under — so the cookie is shared across that domain's subdomains
 // (apply./agent. unified SSO) — or "" (host-only) when the host matches none.
 //

@@ -2,7 +2,7 @@ import { browser } from 'wxt/browser';
 
 /**
  * Where the hire session lives. Set `WXT_HIRE_ORIGIN` to build against a
- * deployment (`.env.production` points at hireme.example.com); the default is the local
+ * deployment (`.env.production` points at hiremetoday.ca); the default is the local
  * SPA origin, not the API port, so the launchWebAuthFlow popup carries the
  * session cookie and the /api proxy forwards it — mirroring production, where
  * SPA and API are one origin.

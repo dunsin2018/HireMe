@@ -40,7 +40,7 @@ func TestDisabledServiceRefusesEverything(t *testing.T) {
 }
 
 func TestAcceptVerifiesBeforeParsing(t *testing.T) {
-	setEnv(t, "sk_test", testSecret, "price_pro_monthly", "https://hireme.example.com")
+	setEnv(t, "sk_test", testSecret, "price_pro_monthly", "https://hiremetoday.ca")
 	s := New(ConfigFromEnv(), nil)
 
 	now := time.Date(2026, time.September, 3, 12, 0, 0, 0, time.UTC)

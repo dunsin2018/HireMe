@@ -2,7 +2,7 @@
 
 # hireme API
 
-Base URL: `https://hireme.example.com/api/v1`
+Base URL: `https://hiremetoday.ca/api/v1`
 
 ## Contents
 
@@ -41,9 +41,9 @@ Base URL: `https://hireme.example.com/api/v1`
 
 ## Base URL
 
-All endpoints are served under `https://hireme.example.com/api/v1`. The API is read-first and open: the job, search, facet, and company endpoints need no authentication and may be called cross-origin.
+All endpoints are served under `https://hiremetoday.ca/api/v1`. The API is read-first and open: the job, search, facet, and company endpoints need no authentication and may be called cross-origin.
 
-Authenticated endpoints accept either the browser session cookie (set by sign-in, same-origin) or a personal API key sent as a Bearer token — see the authentication model below. Keys are created in your account, at [hireme.example.com/my/api-keys](https://hireme.example.com/my/api-keys), not through this API.
+Authenticated endpoints accept either the browser session cookie (set by sign-in, same-origin) or a personal API key sent as a Bearer token — see the authentication model below. Keys are created in your account, at [hiremetoday.ca/my/api-keys](https://hiremetoday.ca/my/api-keys), not through this API.
 
 ## Response envelope
 
@@ -79,13 +79,13 @@ Endpoints marked “Session or API key” accept either; endpoints marked “Ses
 
 ## External vs internal endpoints
 
-This reference covers every endpoint a client can call from outside the browser: public reads, and endpoints that also accept a personal API key. Endpoints that require the browser’s own session cookie — saved searches, notifications, moderator tools, the browser extension — are not reachable with a key alone and are documented separately at [hireme.example.com/docs/api/internal](https://hireme.example.com/docs/api/internal).
+This reference covers every endpoint a client can call from outside the browser: public reads, and endpoints that also accept a personal API key. Endpoints that require the browser’s own session cookie — saved searches, notifications, moderator tools, the browser extension — are not reachable with a key alone and are documented separately at [hiremetoday.ca/docs/api/internal](https://hiremetoday.ca/docs/api/internal).
 
 ## What is not here
 
 This reference covers every endpoint you can call. A handful are deliberately left out because calling them directly is meaningless: the Gmail and calendar consent redirects (`/me/gmail/connect`, `/me/calendar/connect`, and their callbacks), which only a browser can complete; the Telegram bot webhook; the browser-tool websocket relay; the sitemap-cursor helpers behind `/sitemap.xml`; and the `/og/*.png` social-preview cards, which render an image rather than answer with JSON.
 
-Managing API keys (`POST`, `GET` and `DELETE` on `/me/api-keys`) is not documented here, because no API client can call it. Those endpoints accept only the browser session cookie, and additionally require a freshly proven identity — a password re-entry or a sign-in-provider check — that a script has no way to supply. Create and revoke keys in your account instead, at [hireme.example.com/my/api-keys](https://hireme.example.com/my/api-keys); the plaintext token is shown exactly once, at creation, so store it then.
+Managing API keys (`POST`, `GET` and `DELETE` on `/me/api-keys`) is not documented here, because no API client can call it. Those endpoints accept only the browser session cookie, and additionally require a freshly proven identity — a password re-entry or a sign-in-provider check — that a script has no way to supply. Create and revoke keys in your account instead, at [hiremetoday.ca/my/api-keys](https://hiremetoday.ca/my/api-keys); the plaintext token is shown exactly once, at creation, so store it then.
 
 The `/jobs/{slug}/fit` endpoints are pre-rename aliases of `/jobs/{slug}/match-analysis` and hit the same handlers. They still work, so existing clients do not break — use the match-analysis paths in new code.
 
@@ -177,7 +177,7 @@ Takes no filters at all — `limit` and `offset` are the whole vocabulary. Anyth
 | `offset` | integer | no | Rows to skip. (e.g. `0`) |
 
 ```bash
-curl "https://hireme.example.com/api/v1/jobs?limit=20&offset=0"
+curl "https://hiremetoday.ca/api/v1/jobs?limit=20&offset=0"
 ```
 
 ```json
@@ -263,7 +263,7 @@ Combine free-text `q` with any of the filter params below. Repeated facet params
 Plus every filter in [Filtering jobs](#filtering-jobs).
 
 ```bash
-curl "https://hireme.example.com/api/v1/jobs/search?q=golang&seniority=senior&work_mode=remote&regions=cis&sort=posted_at"
+curl "https://hiremetoday.ca/api/v1/jobs/search?q=golang&seniority=senior&work_mode=remote&regions=cis&sort=posted_at"
 ```
 
 ```json
@@ -296,7 +296,7 @@ Same query and filters as `/jobs/search`, but each result carries the `descripti
 Plus every filter in [Filtering jobs](#filtering-jobs).
 
 ```bash
-curl "https://hireme.example.com/api/v1/agent/jobs/search?q=golang&work_mode=remote&description_format=markdown"
+curl "https://hiremetoday.ca/api/v1/agent/jobs/search?q=golang&work_mode=remote&description_format=markdown"
 ```
 
 ```json
@@ -322,7 +322,7 @@ Takes the same `q` and filter params as search, but returns the distribution of 
 | `(any filter)` | string | no | Any search filter param narrows the counted set. (e.g. `work_mode=remote`) |
 
 ```bash
-curl "https://hireme.example.com/api/v1/jobs/facets?work_mode=remote"
+curl "https://hiremetoday.ca/api/v1/jobs/facets?work_mode=remote"
 ```
 
 ```json
@@ -353,7 +353,7 @@ A single job by its public slug (serves closed jobs too).
 | `slug` | string | yes | The job `public_slug`. (e.g. `senior-go-engineer-acme-1a2b`) |
 
 ```bash
-curl "https://hireme.example.com/api/v1/jobs/senior-go-engineer-acme-1a2b"
+curl "https://hiremetoday.ca/api/v1/jobs/senior-go-engineer-acme-1a2b"
 ```
 
 ```json
@@ -381,7 +381,7 @@ Backed by the optional semantic index. Returns an empty list (not an error) when
 | `limit` | integer | no | Max similar jobs. (e.g. `10`) |
 
 ```bash
-curl "https://hireme.example.com/api/v1/jobs/senior-go-engineer-acme-1a2b/similar?limit=10"
+curl "https://hiremetoday.ca/api/v1/jobs/senior-go-engineer-acme-1a2b/similar?limit=10"
 ```
 
 ```json
@@ -410,7 +410,7 @@ The per-city openings folded under one canonical card by content-dedup — each 
 | `offset` | integer | no | Rows to skip. (e.g. `0`) |
 
 ```bash
-curl "https://hireme.example.com/api/v1/jobs/senior-go-engineer-acme-1a2b/copies"
+curl "https://hiremetoday.ca/api/v1/jobs/senior-go-engineer-acme-1a2b/copies"
 ```
 
 ```json
@@ -442,7 +442,7 @@ The questions a candidate will have to answer, shaped for reading. Only captured
 | `slug` | string | yes | The job `public_slug`. (e.g. `senior-go-engineer-acme-1a2b`) |
 
 ```bash
-curl "https://hireme.example.com/api/v1/jobs/senior-go-engineer-acme-1a2b/apply-form"
+curl "https://hiremetoday.ca/api/v1/jobs/senior-go-engineer-acme-1a2b/apply-form"
 ```
 
 ```json
@@ -474,7 +474,7 @@ How well the job’s skills are covered by your profile skills — exact, adjace
 | `slug` | string | yes | The job `public_slug`. |
 
 ```bash
-curl "https://hireme.example.com/api/v1/jobs/<slug>/match" -H "Authorization: Bearer $HIREME_API_KEY"
+curl "https://hiremetoday.ca/api/v1/jobs/<slug>/match" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ```json
@@ -506,7 +506,7 @@ Returns the cached analysis, flagged `stale` when your CV or the job changed sin
 | `slug` | string | yes | The job `public_slug`. |
 
 ```bash
-curl "https://hireme.example.com/api/v1/jobs/<slug>/match-analysis" -H "Authorization: Bearer $HIREME_API_KEY"
+curl "https://hiremetoday.ca/api/v1/jobs/<slug>/match-analysis" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ```json
@@ -544,7 +544,7 @@ Runs the match prompt-chain over your stored CV and the job, caches the result, 
 | `slug` | string | yes | The job `public_slug`. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/jobs/<slug>/match-analysis" -H "Authorization: Bearer $HIREME_API_KEY"
+curl -X POST "https://hiremetoday.ca/api/v1/jobs/<slug>/match-analysis" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ```json
@@ -572,7 +572,7 @@ The same three-stage chain as `POST /jobs/{slug}/match-analysis`, streamed as SS
 | `slug` | string | yes | The job `public_slug`. |
 
 ```bash
-curl -N "https://hireme.example.com/api/v1/jobs/<slug>/match-analysis/stream" -H "Authorization: Bearer $HIREME_API_KEY"
+curl -N "https://hiremetoday.ca/api/v1/jobs/<slug>/match-analysis/stream" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ```json
@@ -604,7 +604,7 @@ Stateless sibling of the CV verdict: skills come from the request body, the mark
 | `skills` | string[] | yes | The skill list to score (max 100). (e.g. `["go","postgresql"]`) |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/market/coverage?category=backend" \
+curl -X POST "https://hiremetoday.ca/api/v1/market/coverage?category=backend" \
   -H "Authorization: Bearer $HIREME_API_KEY" \
   -H 'Content-Type: application/json' \
   -d '{"skills":["go","postgresql"]}'
@@ -661,7 +661,7 @@ Most active first. Facet params are repeatable and filter by array overlap (OR w
 | `offset` | integer | no | Rows to skip. (e.g. `0`) |
 
 ```bash
-curl "https://hireme.example.com/api/v1/companies?q=acme&collections=yc"
+curl "https://hiremetoday.ca/api/v1/companies?q=acme&collections=yc"
 ```
 
 ```json
@@ -716,7 +716,7 @@ A company and a page of its open jobs.
 | `offset` | integer | no | Rows to skip in the jobs list. (e.g. `0`) |
 
 ```bash
-curl "https://hireme.example.com/api/v1/companies/acme"
+curl "https://hiremetoday.ca/api/v1/companies/acme"
 ```
 
 ```json
@@ -760,7 +760,7 @@ Distinct company subindustry vocabulary with company counts.
 Backs the searchable “Industry” facet’s option list, most common first. Counts are unconditional (they do not reflect other active list filters).
 
 ```bash
-curl "https://hireme.example.com/api/v1/companies/subindustries"
+curl "https://hiremetoday.ca/api/v1/companies/subindustries"
 ```
 
 ```json
@@ -787,7 +787,7 @@ Population-ranked prefix search over the embedded city dictionary, optionally na
 | `country` | string | no | ISO 3166-1 alpha-2 code to narrow to. (e.g. `DE`) |
 
 ```bash
-curl "https://hireme.example.com/api/v1/geo/cities?q=berl&country=DE"
+curl "https://hiremetoday.ca/api/v1/geo/cities?q=berl&country=DE"
 ```
 
 ```json
@@ -818,7 +818,7 @@ List a company's feedback, newest first.
 | `offset` | integer | no | Rows to skip. (e.g. `0`) |
 
 ```bash
-curl "https://hireme.example.com/api/v1/companies/acme/feedback"
+curl "https://hiremetoday.ca/api/v1/companies/acme/feedback"
 ```
 
 ```json
@@ -856,7 +856,7 @@ Create an account and start a session.
 | `password` | string | yes | Account password. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/auth/register" \
+curl -X POST "https://hiremetoday.ca/api/v1/auth/register" \
   -H 'Content-Type: application/json' \
   -c cookies.txt \
   -d '{"email":"me@example.com","password":"hunter2hunter2"}'
@@ -880,7 +880,7 @@ Sign in and start a session.
 | `password` | string | yes | Account password. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/auth/login" \
+curl -X POST "https://hiremetoday.ca/api/v1/auth/login" \
   -H 'Content-Type: application/json' \
   -c cookies.txt \
   -d '{"email":"me@example.com","password":"hunter2hunter2"}'
@@ -897,7 +897,7 @@ curl -X POST "https://hireme.example.com/api/v1/auth/login" \
 Clear the session cookie.
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/auth/logout" -b cookies.txt
+curl -X POST "https://hiremetoday.ca/api/v1/auth/logout" -b cookies.txt
 ```
 
 ```json
@@ -911,7 +911,7 @@ curl -X POST "https://hireme.example.com/api/v1/auth/logout" -b cookies.txt
 The current user (cookie or API key).
 
 ```bash
-curl "https://hireme.example.com/api/v1/auth/me" -H "Authorization: Bearer $HIREME_API_KEY"
+curl "https://hiremetoday.ca/api/v1/auth/me" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ```json
@@ -925,7 +925,7 @@ curl "https://hireme.example.com/api/v1/auth/me" -H "Authorization: Bearer $HIRE
 List the enabled OAuth providers.
 
 ```bash
-curl "https://hireme.example.com/api/v1/auth/oauth/providers"
+curl "https://hiremetoday.ca/api/v1/auth/oauth/providers"
 ```
 
 ```json
@@ -948,7 +948,7 @@ Browser-only: redirects to the provider, then back to `/auth/oauth/{provider}/ca
 
 ```bash
 # open in a browser:
-https://hireme.example.com/api/v1/auth/oauth/google/start
+https://hiremetoday.ca/api/v1/auth/oauth/google/start
 ```
 
 ### `POST /auth/password/forgot`
@@ -966,7 +966,7 @@ Always answers `202`, whether or not the address has an account — this is deli
 | `email` | string | yes | Account email. (e.g. `me@example.com`) |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/auth/password/forgot" \
+curl -X POST "https://hiremetoday.ca/api/v1/auth/password/forgot" \
   -H 'Content-Type: application/json' \
   -d '{"email":"me@example.com"}'
 ```
@@ -988,7 +988,7 @@ Public — the code is the credential. Success revokes every existing session, s
 | `password` | string | yes | New password. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/auth/password/reset" \
+curl -X POST "https://hiremetoday.ca/api/v1/auth/password/reset" \
   -H 'Content-Type: application/json' \
   -d '{"email":"me@example.com","code":"123456","password":"hunter2hunter2"}'
 ```
@@ -1012,7 +1012,7 @@ Mobile-only: the app’s custom-scheme OAuth callback carries a single-use code 
 | `code` | string | yes | The one-time code from the mobile callback redirect. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/auth/oauth/exchange" \
+curl -X POST "https://hiremetoday.ca/api/v1/auth/oauth/exchange" \
   -H 'Content-Type: application/json' -c cookies.txt \
   -d '{"code":"..."}'
 ```
@@ -1038,7 +1038,7 @@ Record that you viewed the job.
 | `slug` | string | yes | The job `public_slug`. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/jobs/<slug>/view" -H "Authorization: Bearer $HIREME_API_KEY"
+curl -X POST "https://hiremetoday.ca/api/v1/jobs/<slug>/view" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ```json
@@ -1066,7 +1066,7 @@ Send `applied_on` to record an application on the day it was actually sent — i
 | `applied_on` | string | no | The day the application was sent (`YYYY-MM-DD`). Defaults to today. (e.g. `2026-07-27`) |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/jobs/<slug>/apply" \
+curl -X POST "https://hiremetoday.ca/api/v1/jobs/<slug>/apply" \
   -H "Authorization: Bearer $HIREME_API_KEY" -H 'Content-Type: application/json' \
   -d '{"applied_on":"2026-07-27"}'
 ```
@@ -1088,7 +1088,7 @@ Save (bookmark) the job.
 | `slug` | string | yes | The job `public_slug`. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/jobs/<slug>/save" -H "Authorization: Bearer $HIREME_API_KEY"
+curl -X POST "https://hiremetoday.ca/api/v1/jobs/<slug>/save" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ```json
@@ -1108,7 +1108,7 @@ Unsave the job (no-op if not saved).
 | `slug` | string | yes | The job `public_slug`. |
 
 ```bash
-curl -X DELETE "https://hireme.example.com/api/v1/jobs/<slug>/save" -H "Authorization: Bearer $HIREME_API_KEY"
+curl -X DELETE "https://hiremetoday.ca/api/v1/jobs/<slug>/save" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ```json
@@ -1137,7 +1137,7 @@ A null field is left unchanged. `stage` is a controlled vocabulary: `preparing`,
 | `notes` | string | no | Free-text notes. |
 
 ```bash
-curl -X PATCH "https://hireme.example.com/api/v1/jobs/<slug>/track" \
+curl -X PATCH "https://hiremetoday.ca/api/v1/jobs/<slug>/track" \
   -H "Authorization: Bearer $HIREME_API_KEY" \
   -H 'Content-Type: application/json' \
   -d '{"stage":"interview","notes":"call on Friday"}'
@@ -1160,7 +1160,7 @@ Clear the application stage.
 | `slug` | string | yes | The job `public_slug`. |
 
 ```bash
-curl -X DELETE "https://hireme.example.com/api/v1/jobs/<slug>/stage" -H "Authorization: Bearer $HIREME_API_KEY"
+curl -X DELETE "https://hiremetoday.ca/api/v1/jobs/<slug>/stage" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ```json
@@ -1180,7 +1180,7 @@ Remove the interaction record entirely.
 | `slug` | string | yes | The job `public_slug`. |
 
 ```bash
-curl -X DELETE "https://hireme.example.com/api/v1/jobs/<slug>/track" -H "Authorization: Bearer $HIREME_API_KEY"
+curl -X DELETE "https://hiremetoday.ca/api/v1/jobs/<slug>/track" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ```json
@@ -1209,7 +1209,7 @@ Same as `PATCH /jobs/{slug}/track`, but addressed by the tracking-board row id i
 | `notes` | string | no | Free-text notes. |
 
 ```bash
-curl -X PATCH "https://hireme.example.com/api/v1/me/applications/42" \
+curl -X PATCH "https://hiremetoday.ca/api/v1/me/applications/42" \
   -H "Authorization: Bearer $HIREME_API_KEY" \
   -H 'Content-Type: application/json' \
   -d '{"stage":"interview"}'
@@ -1232,7 +1232,7 @@ Remove the interaction record entirely, addressed by row id.
 | `id` | integer | yes | The tracking row id. (e.g. `42`) |
 
 ```bash
-curl -X DELETE "https://hireme.example.com/api/v1/me/applications/42" -H "Authorization: Bearer $HIREME_API_KEY"
+curl -X DELETE "https://hiremetoday.ca/api/v1/me/applications/42" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ```json
@@ -1252,7 +1252,7 @@ Clear the application stage, addressed by row id.
 | `id` | integer | yes | The tracking row id. (e.g. `42`) |
 
 ```bash
-curl -X DELETE "https://hireme.example.com/api/v1/me/applications/42/stage" -H "Authorization: Bearer $HIREME_API_KEY"
+curl -X DELETE "https://hiremetoday.ca/api/v1/me/applications/42/stage" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ```json
@@ -1274,7 +1274,7 @@ Only keeps the job out of the swipe deck; it stays visible in the public `/jobs`
 | `slug` | string | yes | The job `public_slug`. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/jobs/<slug>/dismiss" -H "Authorization: Bearer $HIREME_API_KEY"
+curl -X POST "https://hiremetoday.ca/api/v1/jobs/<slug>/dismiss" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ```json
@@ -1294,7 +1294,7 @@ Undismiss the job (no-op if not dismissed).
 | `slug` | string | yes | The job `public_slug`. |
 
 ```bash
-curl -X DELETE "https://hireme.example.com/api/v1/jobs/<slug>/dismiss" -H "Authorization: Bearer $HIREME_API_KEY"
+curl -X DELETE "https://hiremetoday.ca/api/v1/jobs/<slug>/dismiss" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ```json
@@ -1318,7 +1318,7 @@ Each item carries a card of the job with your interaction timestamps alongside i
 | `offset` | integer | no | Rows to skip. (e.g. `0`) |
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/tracking?filter=applied" -H "Authorization: Bearer $HIREME_API_KEY"
+curl "https://hiremetoday.ca/api/v1/me/tracking?filter=applied" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ```json
@@ -1349,7 +1349,7 @@ curl "https://hireme.example.com/api/v1/me/tracking?filter=applied" -H "Authoriz
 Slugs of jobs you have viewed.
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/tracking/viewed" -H "Authorization: Bearer $HIREME_API_KEY"
+curl "https://hiremetoday.ca/api/v1/me/tracking/viewed" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ```json
@@ -1365,7 +1365,7 @@ Jobs you have run the AI match analysis on.
 Newest first, closed jobs included (with `closed: true`). Each item carries the overall score and verdict; `stale` marks an analysis whose CV, job, or model has changed since. `meta.allowance` reports where you stand on the day’s analyses. Never runs the LLM.
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/tracking/analyses" -H "Authorization: Bearer $HIREME_API_KEY"
+curl "https://hiremetoday.ca/api/v1/me/tracking/analyses" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ```json
@@ -1395,7 +1395,7 @@ Your plan and what it allows today.
 Which plan you are on and, for every metered AI feature, how much of today you have used against what the day allows. Every plan offers every feature; what differs is the daily amount, and it resets at `resets_at`. A pro caller reads as `unlimited` rather than as a number. `enforced` says whether that ceiling turns anybody away yet — while it is `false` a spent allowance is counted and the action still runs, so do not refuse on `used >= limit` alone. Never runs the LLM. A pro caller also carries `pro_until` and `pro_source` — `stripe`, `revenuecat` or `granted` — both absent on the free plan and on a plan that has ended. `pro_source` is behavioural: a client offering an in-app purchase must not offer one to a `stripe` subscriber, who would be charged twice for one plan, and a `revenuecat` subscriber must be sent to their store to cancel rather than to a web page. A tie resolves in the order `stripe`, `revenuecat`, `granted`.
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/plan" -H "Authorization: Bearer $HIREME_API_KEY"
+curl "https://hiremetoday.ca/api/v1/me/plan" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ```json
@@ -1420,7 +1420,7 @@ Slugs of jobs you have saved.
 Lets the SPA render the save toggle as filled without authenticating the public job reads.
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/tracking/saved" -H "Authorization: Bearer $HIREME_API_KEY"
+curl "https://hiremetoday.ca/api/v1/me/tracking/saved" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ```json
@@ -1436,7 +1436,7 @@ Your application-pipeline snapshot (counts per stage).
 The total application count and the count at each stage, aggregated server-side over all of your applications. Every stage of the vocabulary is present, zero included, and the counts always sum to `applications`. An application with `applied_at` set but no explicit stage counts as `applied`. `reply_rate` compares your own employer-reply rate against the rate across every candidate — both sides counted only from applications whose owner has a connected mailbox, so a reply would have been seen. It is present only once both your own count and the global count reach a minimum sample size; absent otherwise, never a zero or an estimate.
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/tracking/pipeline" -H "Authorization: Bearer $HIREME_API_KEY"
+curl "https://hiremetoday.ca/api/v1/me/tracking/pipeline" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ```json
@@ -1478,7 +1478,7 @@ Runs the same query as search (same facets, `q`, and sort), then excludes the jo
 | `offset` | integer | no | Rows to skip; `offset + limit` ≤ 10000. (e.g. `0`) |
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/tracking/swipe" -H "Authorization: Bearer $HIREME_API_KEY"
+curl "https://hiremetoday.ca/api/v1/me/tracking/swipe" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ```json
@@ -1504,7 +1504,7 @@ The application-event ledger as a dated series, oldest first: applications sent,
 | `to` | string (RFC3339) | yes | Upper bound, inclusive. (e.g. `2026-08-31T23:59:59Z`) |
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/timeline?from=2026-08-01T00:00:00Z&to=2026-08-31T23:59:59Z" -H "Authorization: Bearer $HIREME_API_KEY"
+curl "https://hiremetoday.ca/api/v1/me/timeline?from=2026-08-01T00:00:00Z&to=2026-08-31T23:59:59Z" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ```json
@@ -1555,7 +1555,7 @@ The calendar’s second layer beside `/me/timeline`: a meeting is arranged and c
 | `to` | string (RFC3339) | yes | Upper bound, inclusive. (e.g. `2026-08-31T23:59:59Z`) |
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/interviews?from=2026-08-01T00:00:00Z&to=2026-08-31T23:59:59Z" -H "Authorization: Bearer $HIREME_API_KEY"
+curl "https://hiremetoday.ca/api/v1/me/interviews?from=2026-08-01T00:00:00Z&to=2026-08-31T23:59:59Z" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ```json
@@ -1596,7 +1596,7 @@ Start a new conversation.
 | `job` | string | no | Public slug of an application you hold. Required for `interview`/`debrief`, ignored otherwise. (e.g. `senior-go-engineer-acme-1a2b`) |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/assistant/sessions?preset=chat" -H "Authorization: Bearer $HIREME_API_KEY"
+curl -X POST "https://hiremetoday.ca/api/v1/assistant/sessions?preset=chat" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ```json
@@ -1612,7 +1612,7 @@ List your chat conversations, newest activity first.
 Tailoring conversations are not chats — each belongs to a CV — so they never appear here.
 
 ```bash
-curl "https://hireme.example.com/api/v1/assistant/sessions" -H "Authorization: Bearer $HIREME_API_KEY"
+curl "https://hiremetoday.ca/api/v1/assistant/sessions" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ```json
@@ -1637,7 +1637,7 @@ One owned conversation with its full transcript.
 | `id` | string (UUID) | yes | The session id. (e.g. `b2f1c2b0-6e2a-4c9e-9c2e-0a1b2c3d4e5f`) |
 
 ```bash
-curl "https://hireme.example.com/api/v1/assistant/sessions/<id>" -H "Authorization: Bearer $HIREME_API_KEY"
+curl "https://hiremetoday.ca/api/v1/assistant/sessions/<id>" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ```json
@@ -1667,7 +1667,7 @@ Returns `204 No Content`.
 | `id` | string (UUID) | yes | The session id. |
 
 ```bash
-curl -X DELETE "https://hireme.example.com/api/v1/assistant/sessions/<id>" -H "Authorization: Bearer $HIREME_API_KEY"
+curl -X DELETE "https://hiremetoday.ca/api/v1/assistant/sessions/<id>" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ### `POST /assistant/sessions/{id}/messages`
@@ -1691,7 +1691,7 @@ Body is `{"text": "..."}` (max ~8000 characters, deployment-configured). The res
 | `text` | string | yes | Your message. (e.g. `Should I relocate for this role?`) |
 
 ```bash
-curl -N -X POST "https://hireme.example.com/api/v1/assistant/sessions/<id>/messages" \
+curl -N -X POST "https://hiremetoday.ca/api/v1/assistant/sessions/<id>/messages" \
   -H "Authorization: Bearer $HIREME_API_KEY" -H 'Content-Type: application/json' \
   -d '{"text":"Should I relocate for this role?"}'
 ```
@@ -1724,7 +1724,7 @@ A no-op (still `204`) when nothing is running — you cannot see whether a turn 
 | `id` | string (UUID) | yes | The session id. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/assistant/sessions/<id>/cancel" -H "Authorization: Bearer $HIREME_API_KEY"
+curl -X POST "https://hiremetoday.ca/api/v1/assistant/sessions/<id>/cancel" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ### `POST /assistant/sessions/{id}/opening`
@@ -1742,7 +1742,7 @@ Streams one turn under a server-side brief (no body), the same SSE shape as `...
 | `id` | string (UUID) | yes | The session id. |
 
 ```bash
-curl -N -X POST "https://hireme.example.com/api/v1/assistant/sessions/<id>/opening" -H "Authorization: Bearer $HIREME_API_KEY"
+curl -N -X POST "https://hiremetoday.ca/api/v1/assistant/sessions/<id>/opening" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ### `POST /assistant/sessions/{id}/retry`
@@ -1760,7 +1760,7 @@ Re-runs the loop over the existing history (no body) — the same SSE shape as `
 | `id` | string (UUID) | yes | The session id. |
 
 ```bash
-curl -N -X POST "https://hireme.example.com/api/v1/assistant/sessions/<id>/retry" -H "Authorization: Bearer $HIREME_API_KEY"
+curl -N -X POST "https://hiremetoday.ca/api/v1/assistant/sessions/<id>/retry" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ### `POST /assistant/sessions/{id}/extend`
@@ -1778,7 +1778,7 @@ A CV editing session is bounded by a turn ceiling as well as by the daily sessio
 | `id` | string (UUID) | yes | The session id. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/assistant/sessions/<id>/extend" -H "Authorization: Bearer $HIREME_API_KEY"
+curl -X POST "https://hiremetoday.ca/api/v1/assistant/sessions/<id>/extend" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ```json
@@ -1807,11 +1807,11 @@ Only on an `interview` session; `409` otherwise. Rate-limited to 20 calls starte
 | `id` | string (UUID) | yes | The session id. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/assistant/sessions/<id>/voice-token" -H "Authorization: Bearer $HIREME_API_KEY"
+curl -X POST "https://hiremetoday.ca/api/v1/assistant/sessions/<id>/voice-token" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ```json
-{ "data": { "value": "ek_...", "model": "gpt-realtime", "calls_url": "https://hireme.example.com/api/v1/realtime/calls" } }
+{ "data": { "value": "ek_...", "model": "gpt-realtime", "calls_url": "https://hiremetoday.ca/api/v1/realtime/calls" } }
 ```
 
 ### `POST /assistant/sessions/{id}/voice-turns`
@@ -1836,7 +1836,7 @@ Only on an `interview` session. Lets a call continued by typing carry the spoken
 | `content` | string | yes | The transcribed/spoken text. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/assistant/sessions/<id>/voice-turns" \
+curl -X POST "https://hiremetoday.ca/api/v1/assistant/sessions/<id>/voice-turns" \
   -H "Authorization: Bearer $HIREME_API_KEY" -H 'Content-Type: application/json' \
   -d '{"role":"user","content":"I led the migration to Kubernetes."}'
 ```
@@ -1865,7 +1865,7 @@ Submit a vacancy for review.
 | `posted_at` | string (RFC3339) | no | Original posting date (optional). |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/submissions" \
+curl -X POST "https://hiremetoday.ca/api/v1/submissions" \
   -H "Authorization: Bearer $HIREME_API_KEY" \
   -H 'Content-Type: application/json' \
   -d '{"url":"https://acme.com/careers/123","title":"Senior Go Engineer","company":"Acme","remote":true}'
@@ -1890,7 +1890,7 @@ Uses the same ATS-recognition registry as `/jobs/resolve`, but writes nothing �
 | `url` | string | yes | The job posting URL to parse. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/submissions/prefill" \
+curl -X POST "https://hiremetoday.ca/api/v1/submissions/prefill" \
   -H "Authorization: Bearer $HIREME_API_KEY" -H 'Content-Type: application/json' \
   -d '{"url":"https://boards.greenhouse.io/acme/jobs/123"}'
 ```
@@ -1906,7 +1906,7 @@ curl -X POST "https://hireme.example.com/api/v1/submissions/prefill" \
 Your own submission queue.
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/submissions" -H "Authorization: Bearer $HIREME_API_KEY"
+curl "https://hiremetoday.ca/api/v1/me/submissions" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ```json
@@ -1938,7 +1938,7 @@ Report a problem with a job.
 | `contact_telegram` | string | no | Optional contact handle. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/jobs/<slug>/reports" \
+curl -X POST "https://hiremetoday.ca/api/v1/jobs/<slug>/reports" \
   -H "Authorization: Bearer $HIREME_API_KEY" \
   -H 'Content-Type: application/json' \
   -d '{"reason":"expired","details":"posting returns 404"}'
@@ -1973,7 +1973,7 @@ An unproven (unverified) address is a `403`; a closed job or a claim you already
 | `applied_on` | string | yes | The day you applied (`YYYY-MM-DD`). (e.g. `2026-07-29`) |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/jobs/<slug>/ghost-report" \
+curl -X POST "https://hiremetoday.ca/api/v1/jobs/<slug>/ghost-report" \
   -H "Authorization: Bearer $HIREME_API_KEY" -H 'Content-Type: application/json' \
   -d '{"applied_on":"2026-07-29"}'
 ```
@@ -1997,7 +1997,7 @@ A claim that is absent or already withdrawn is a `404`.
 | `slug` | string | yes | The job `public_slug`. |
 
 ```bash
-curl -X DELETE "https://hireme.example.com/api/v1/jobs/<slug>/ghost-report" -H "Authorization: Bearer $HIREME_API_KEY"
+curl -X DELETE "https://hiremetoday.ca/api/v1/jobs/<slug>/ghost-report" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ```json
@@ -2015,7 +2015,7 @@ The six candidate-stated facts that repeat across ATS application forms and no C
 Your stored screening answers, or `null` if you have stated none.
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/screening-answers" -H "Authorization: Bearer $HIREME_API_KEY"
+curl "https://hiremetoday.ca/api/v1/me/screening-answers" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ```json
@@ -2044,7 +2044,7 @@ What you told us about your search when you signed up: how far along it is, the 
 Your stored survey answers. Every field is absent until you answer it.
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/survey" -H "Authorization: Bearer $HIREME_API_KEY"
+curl "https://hiremetoday.ca/api/v1/me/survey" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ```json
@@ -2080,7 +2080,7 @@ Aggregated to the requested granularity over a date range; the series is dense (
 | `to` | string (YYYY-MM-DD) | no | End date (UTC). Defaults to today. (e.g. `2026-06-30`) |
 
 ```bash
-curl "https://hireme.example.com/api/v1/stats/jobs-activity?granularity=week"
+curl "https://hiremetoday.ca/api/v1/stats/jobs-activity?granularity=week"
 ```
 
 ```json
@@ -2108,7 +2108,7 @@ Public, no owner-scoping — returns display fields (`name`, `description`) plus
 | `slug` | string | yes | The job-list public slug. (e.g. `backend-jobs-a3f1`) |
 
 ```bash
-curl "https://hireme.example.com/api/v1/lists/backend-jobs-a3f1"
+curl "https://hiremetoday.ca/api/v1/lists/backend-jobs-a3f1"
 ```
 
 ```json
@@ -2128,7 +2128,7 @@ What you spent your allowances on, newest first.
 Each entry is labelled with what it bought — the job an analysis was run on, the vacancy a CV editing session was opened for — rather than an opaque reference. A `release` entry is one that was given back because the work produced nothing.
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/plan/history" -H "Authorization: Bearer fhk_…"
+curl "https://hiremetoday.ca/api/v1/me/plan/history" -H "Authorization: Bearer fhk_…"
 ```
 
 ```json
@@ -2144,7 +2144,7 @@ Your AI request activity today.
 Counts and token usage, not cost — the gateway’s dollar figure is a list price against a mixed upstream pool, not what you pay; what you spend is a plan allowance, reported by `/me/plan` over this same day. Never fails for a reason you could act on: no usage yet, or an unreachable gateway, both answer 200 with zeroes.
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/usage" -H "Authorization: Bearer $HIREME_API_KEY"
+curl "https://hiremetoday.ca/api/v1/me/usage" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ```json
@@ -2166,7 +2166,7 @@ One tracked application, with the mail linked to it and its history.
 | `slug` | string | yes | The job `public_slug`. |
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/tracking/senior-backend-engineer-acme-1a2b" -H "Authorization: Bearer fhk_…"
+curl "https://hiremetoday.ca/api/v1/me/tracking/senior-backend-engineer-acme-1a2b" -H "Authorization: Bearer fhk_…"
 ```
 
 ```json
@@ -2191,7 +2191,7 @@ curl "https://hireme.example.com/api/v1/me/tracking/senior-backend-engineer-acme
 The slugs you dismissed, so a client can hide them.
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/tracking/dismissed" -H "Authorization: Bearer fhk_…"
+curl "https://hiremetoday.ca/api/v1/me/tracking/dismissed" -H "Authorization: Bearer fhk_…"
 ```
 
 ```json
@@ -2214,7 +2214,7 @@ The same deterministic skill coverage as `GET /jobs/{slug}/match`, but for a pag
 | `text` | string | yes | The scraped posting text. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/match-text" \
+curl -X POST "https://hiremetoday.ca/api/v1/me/match-text" \
   -H "Authorization: Bearer fhk_…" -H 'Content-Type: application/json' \
   -d '{"title":"Senior Backend Engineer","text":"We are looking for …"}'
 ```
@@ -2232,7 +2232,7 @@ Your contact details in canonical autofill fields.
 Projected from your CV header, with the account email as a fallback — what the extension writes into application forms.
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/autofill-profile" -H "Authorization: Bearer fhk_…"
+curl "https://hiremetoday.ca/api/v1/me/autofill-profile" -H "Authorization: Bearer fhk_…"
 ```
 
 ```json
@@ -2258,7 +2258,7 @@ Answers `{"data": null}` when the posting cannot be identified, rather than 404 
 | `url` | string | yes | The posting's URL in the wild. (e.g. `https://boards.greenhouse.io/acme/jobs/123`) |
 
 ```bash
-curl "https://hireme.example.com/api/v1/jobs/find?url=https%3A%2F%2Fboards.greenhouse.io%2Facme%2Fjobs%2F123"
+curl "https://hiremetoday.ca/api/v1/jobs/find?url=https%3A%2F%2Fboards.greenhouse.io%2Facme%2Fjobs%2F123"
 ```
 
 ```json
@@ -2281,7 +2281,7 @@ Five outcomes in one shape, distinguished by status: **200 found** — the catal
 | `surface` | string | no | Where the link came from (website, extension, cli, bot) — recorded, not validated against a whitelist. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/jobs/resolve" \
+curl -X POST "https://hiremetoday.ca/api/v1/jobs/resolve" \
   -H "Authorization: Bearer fhk_…" -H 'Content-Type: application/json' \
   -d '{"url":"https://boards.greenhouse.io/acme/jobs/123","surface":"cli"}'
 ```
@@ -2297,7 +2297,7 @@ curl -X POST "https://hireme.example.com/api/v1/jobs/resolve" \
 The boards you contributed, and their onboarding state.
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/contributions" -H "Authorization: Bearer fhk_…"
+curl "https://hiremetoday.ca/api/v1/me/contributions" -H "Authorization: Bearer fhk_…"
 ```
 
 ```json
@@ -2327,7 +2327,7 @@ Vote on a job.
 | `value` | integer | yes | `1` or `-1`. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/jobs/senior-backend-engineer-acme-1a2b/vote" \
+curl -X POST "https://hiremetoday.ca/api/v1/jobs/senior-backend-engineer-acme-1a2b/vote" \
   -H "Authorization: Bearer fhk_…" -H 'Content-Type: application/json' -d '{"value":1}'
 ```
 
@@ -2348,7 +2348,7 @@ Clear your vote on a job.
 | `slug` | string | yes | The job `public_slug`. |
 
 ```bash
-curl -X DELETE "https://hireme.example.com/api/v1/jobs/senior-backend-engineer-acme-1a2b/vote" -H "Authorization: Bearer fhk_…"
+curl -X DELETE "https://hiremetoday.ca/api/v1/jobs/senior-backend-engineer-acme-1a2b/vote" -H "Authorization: Bearer fhk_…"
 ```
 
 ```json
@@ -2374,7 +2374,7 @@ Vote on a company.
 | `value` | integer | yes | `1` or `-1`. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/companies/acme/vote" \
+curl -X POST "https://hiremetoday.ca/api/v1/companies/acme/vote" \
   -H "Authorization: Bearer fhk_…" -H 'Content-Type: application/json' -d '{"value":1}'
 ```
 
@@ -2395,7 +2395,7 @@ Clear your vote on a company.
 | `slug` | string | yes | The company slug. |
 
 ```bash
-curl -X DELETE "https://hireme.example.com/api/v1/companies/acme/vote" -H "Authorization: Bearer fhk_…"
+curl -X DELETE "https://hiremetoday.ca/api/v1/companies/acme/vote" -H "Authorization: Bearer fhk_…"
 ```
 
 ```json
@@ -2416,7 +2416,7 @@ Public discussion threads.
 | `offset` | integer | no | Page offset. |
 
 ```bash
-curl "https://hireme.example.com/api/v1/threads?limit=20"
+curl "https://hiremetoday.ca/api/v1/threads?limit=20"
 ```
 
 ```json
@@ -2430,7 +2430,7 @@ curl "https://hireme.example.com/api/v1/threads?limit=20"
 How many threads there are.
 
 ```bash
-curl "https://hireme.example.com/api/v1/threads/count"
+curl "https://hiremetoday.ca/api/v1/threads/count"
 ```
 
 ```json
@@ -2450,7 +2450,7 @@ One thread with its replies.
 | `id` | integer | yes | The thread id. |
 
 ```bash
-curl "https://hireme.example.com/api/v1/threads/31"
+curl "https://hiremetoday.ca/api/v1/threads/31"
 ```
 
 ```json
@@ -2470,7 +2470,7 @@ The headline catalogue-scale figures (open jobs, companies, sources, …).
 The canonical numbers behind every "how big is this" figure on the site (the jobs list total, the /about and /open pages). Backed by one snapshot `cmd/rollup-stats` republishes periodically, not a live count. `exact: false` means the cache was cold and the figures fell back to a planner estimate — treat them as approximate when it is false.
 
 ```bash
-curl "https://hireme.example.com/api/v1/stats/catalog"
+curl "https://hiremetoday.ca/api/v1/stats/catalog"
 ```
 
 ```json
@@ -2503,7 +2503,7 @@ Roles (category × seniority) ranked by openings or growth.
 | `category` | string | no | Scope to one job category. (e.g. `backend`) |
 
 ```bash
-curl "https://hireme.example.com/api/v1/insights/roles?country=de&sort=growth&limit=20"
+curl "https://hiremetoday.ca/api/v1/insights/roles?country=de&sort=growth&limit=20"
 ```
 
 ```json
@@ -2528,7 +2528,7 @@ Scope by category or by country, but not both — the rollup behind it is single
 | `limit` | integer | no | How many rows. |
 
 ```bash
-curl "https://hireme.example.com/api/v1/insights/skills?category=backend&sort=growth"
+curl "https://hiremetoday.ca/api/v1/insights/skills?category=backend&sort=growth"
 ```
 
 ```json
@@ -2551,7 +2551,7 @@ Salary bands by category, seniority and country.
 | `limit` | integer | no | How many rows. |
 
 ```bash
-curl "https://hireme.example.com/api/v1/insights/salary?category=backend&seniority=senior"
+curl "https://hiremetoday.ca/api/v1/insights/salary?category=backend&seniority=senior"
 ```
 
 ```json
@@ -2575,7 +2575,7 @@ How fast a slice of the market is hiring, over time.
 | `seniority` | string | no | Scope to one seniority. |
 
 ```bash
-curl "https://hireme.example.com/api/v1/insights/velocity?granularity=week&category=backend"
+curl "https://hiremetoday.ca/api/v1/insights/velocity?granularity=week&category=backend"
 ```
 
 ```json
@@ -2597,7 +2597,7 @@ Companies ranked by hiring activity.
 | `limit` | integer | no | How many rows. |
 
 ```bash
-curl "https://hireme.example.com/api/v1/insights/companies?sort=growth&min_open=10"
+curl "https://hiremetoday.ca/api/v1/insights/companies?sort=growth&min_open=10"
 ```
 
 ```json
@@ -2613,7 +2613,7 @@ Facet distribution snapshot: countries, skills, seniority, work mode.
 Served from the facet rollup rather than a live Meilisearch facet count, so a page can show "what's inside" without paying search for it.
 
 ```bash
-curl "https://hireme.example.com/api/v1/stats/facets"
+curl "https://hiremetoday.ca/api/v1/stats/facets"
 ```
 
 ```json
@@ -2629,7 +2629,7 @@ Cumulative member growth per UTC day, plus each day's own new-signup count.
 Aggregate-only — no user identifier is exposed.
 
 ```bash
-curl "https://hireme.example.com/api/v1/stats/user-growth"
+curl "https://hiremetoday.ca/api/v1/stats/user-growth"
 ```
 
 ```json
@@ -2645,7 +2645,7 @@ Jobs saved, applied to and viewed across all users, plus CV and inbox usage.
 `viewed` is the only field here that is not a signed-in count: it is bot-filtered job-page opens by every visitor, signed in or not, so it is orders of magnitude larger than the rest. It is also the only one that is not all-time — `viewed_since` is the first day it covers (null before the first rollup), because the bot-filtered counter shipped without a backfill of the days before it. Every other field is all-time. Aggregate-only — no user identifier is exposed.
 
 ```bash
-curl "https://hireme.example.com/api/v1/stats/engagement"
+curl "https://hiremetoday.ca/api/v1/stats/engagement"
 ```
 
 ```json
@@ -2661,7 +2661,7 @@ Ingest-fleet health, per provider.
 Sanitized: which boards are healthy, cooled or failing, without error text or internal identifiers.
 
 ```bash
-curl "https://hireme.example.com/api/v1/status"
+curl "https://hiremetoday.ca/api/v1/status"
 ```
 
 ```json
@@ -2689,7 +2689,7 @@ The proof (an offer letter, badge, anything showing you work there) is stored pr
 | `proof` | file (form field) | yes | Evidence you work there. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/referrals/offers" \
+curl -X POST "https://hiremetoday.ca/api/v1/me/referrals/offers" \
   -H "Authorization: Bearer fhk_…" \
   -F company_slug=acme -F linkedin_url=https://linkedin.com/in/you -F proof=@badge.pdf
 ```
@@ -2705,7 +2705,7 @@ curl -X POST "https://hireme.example.com/api/v1/me/referrals/offers" \
 Your referral offers and their moderation state.
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/referrals/offers" -H "Authorization: Bearer fhk_…"
+curl "https://hiremetoday.ca/api/v1/me/referrals/offers" -H "Authorization: Bearer fhk_…"
 ```
 
 ```json
@@ -2725,7 +2725,7 @@ Withdraw an offer.
 | `id` | string (uuid) | yes | The offer id. |
 
 ```bash
-curl -X DELETE "https://hireme.example.com/api/v1/me/referrals/offers/b71e…" -H "Authorization: Bearer fhk_…"
+curl -X DELETE "https://hiremetoday.ca/api/v1/me/referrals/offers/b71e…" -H "Authorization: Bearer fhk_…"
 ```
 
 ### `POST /me/referrals/requests`
@@ -2750,7 +2750,7 @@ Validation failures answer 422; a company with no approved referrer answers 409;
 | `note` | string | no | A short message to the referrer. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/referrals/requests" \
+curl -X POST "https://hiremetoday.ca/api/v1/me/referrals/requests" \
   -H "Authorization: Bearer fhk_…" -H 'Content-Type: application/json' \
   -d '{"company_slug":"acme","cv_kind":"stored","contact_email":"you@example.com"}'
 ```
@@ -2766,7 +2766,7 @@ curl -X POST "https://hireme.example.com/api/v1/me/referrals/requests" \
 The intros you asked for, and where they stand.
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/referrals/requests" -H "Authorization: Bearer fhk_…"
+curl "https://hiremetoday.ca/api/v1/me/referrals/requests" -H "Authorization: Bearer fhk_…"
 ```
 
 ```json
@@ -2780,7 +2780,7 @@ curl "https://hireme.example.com/api/v1/me/referrals/requests" -H "Authorization
 Requests waiting on you as an approved referrer.
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/referrals/incoming" -H "Authorization: Bearer fhk_…"
+curl "https://hiremetoday.ca/api/v1/me/referrals/incoming" -H "Authorization: Bearer fhk_…"
 ```
 
 ```json
@@ -2800,7 +2800,7 @@ View the candidate's CV for one incoming request.
 | `id` | string (uuid) | yes | The request id. |
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/referrals/incoming/c92f…/cv" -H "Authorization: Bearer fhk_…" -o candidate.pdf
+curl "https://hiremetoday.ca/api/v1/me/referrals/incoming/c92f…/cv" -H "Authorization: Bearer fhk_…" -o candidate.pdf
 ```
 
 ### `POST /me/referrals/incoming/{id}/resolve`
@@ -2822,7 +2822,7 @@ Mark an incoming request contacted or declined.
 | `status` | string | yes | `contacted` or `declined`. (e.g. `contacted`) |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/referrals/incoming/c92f…/resolve" \
+curl -X POST "https://hiremetoday.ca/api/v1/me/referrals/incoming/c92f…/resolve" \
   -H "Authorization: Bearer fhk_…" -H 'Content-Type: application/json' -d '{"status":"contacted"}'
 ```
 
@@ -2843,7 +2843,7 @@ Your current Talent Network visibility and shareable id.
 A caller who has never touched the setting reads `"off"` — the column default, not a sentinel. `talent_handle` is absent until the first time they join: it is minted then, and kept forever after, so leaving and rejoining never changes the URL somebody already shared.
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/talent-network" -H "Authorization: Bearer $HIREME_API_KEY"
+curl "https://hiremetoday.ca/api/v1/me/talent-network" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ```json
@@ -2873,7 +2873,7 @@ Every filter takes values from a closed vocabulary or a number; there is no free
 | `offset` | integer | no | Rows to skip. (e.g. `0`) |
 
 ```bash
-curl "https://hireme.example.com/api/v1/talent?categories=backend&min_years=5"
+curl "https://hiremetoday.ca/api/v1/talent?categories=backend&min_years=5"
 ```
 
 ```json
@@ -2912,7 +2912,7 @@ Each facet is counted with its OWN selection removed, while every other filter s
 A value nobody carries is absent rather than reported as zero. A value carried by fewer members than the floor is offered with its number withheld: the option stays usable, and the number does not become a way to name somebody. Counts describe the filter you sent and never the whole membership.
 
 ```bash
-curl "https://hireme.example.com/api/v1/talent/facets?categories=backend"
+curl "https://hiremetoday.ca/api/v1/talent/facets?categories=backend"
 ```
 
 ```json
@@ -2944,7 +2944,7 @@ Four ways of being absent — a member who left, one whose CV extract has gone s
 | `handle` | string | yes | The member’s minted catalogue handle. (e.g. `backend-7f2a`) |
 
 ```bash
-curl "https://hireme.example.com/api/v1/talent/backend-7f2a"
+curl "https://hiremetoday.ca/api/v1/talent/backend-7f2a"
 ```
 
 ```json
@@ -2978,7 +2978,7 @@ One CV with its full document.
 | `id` | string (uuid) | yes | The CV id. |
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/cvs/0f2c…" -H "Authorization: Bearer fhk_…"
+curl "https://hiremetoday.ca/api/v1/me/cvs/0f2c…" -H "Authorization: Bearer fhk_…"
 ```
 
 ```json
@@ -3012,7 +3012,7 @@ An edit is a `kind` (`set`, `insert`, `remove`, `move`) and a `path` into the CV
 | `note` | string | no | One line on why, shown beside the entry in the history. |
 
 ```bash
-curl -X PATCH "https://hireme.example.com/api/v1/me/cvs/0f2c…" \
+curl -X PATCH "https://hiremetoday.ca/api/v1/me/cvs/0f2c…" \
   -H "Authorization: Bearer fhk_…" \
   -H 'Content-Type: application/json' \
   -d '{"ops":[{"kind":"set","path":"experience[0].bullets[1]","value":"Cut p99 checkout latency 40% by …","evidence_id":"a71f…"}]}'
@@ -3037,7 +3037,7 @@ Answers 501 on a deployment with no typst binary configured; everything else sti
 | `id` | string (uuid) | yes | The CV id. |
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/cvs/0f2c…/pdf" -H "Authorization: Bearer fhk_…" -o cv.pdf
+curl "https://hiremetoday.ca/api/v1/me/cvs/0f2c…/pdf" -H "Authorization: Bearer fhk_…" -o cv.pdf
 ```
 
 ### `GET /me/cvs/{id}/tailor-context`
@@ -3055,7 +3055,7 @@ The split that keeps tailoring honest: `missing_have` are requirements your hist
 | `id` | string (uuid) | yes | The tailored CV id. |
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/cvs/7d1a…/tailor-context" -H "Authorization: Bearer fhk_…"
+curl "https://hiremetoday.ca/api/v1/me/cvs/7d1a…/tailor-context" -H "Authorization: Bearer fhk_…"
 ```
 
 ```json
@@ -3095,7 +3095,7 @@ Bind an agent session to a CV.
 | `session_id` | string | yes | The agent session to bind. |
 
 ```bash
-curl -X PUT "https://hireme.example.com/api/v1/me/cvs/7d1a…/session" -H "Authorization: Bearer fhk_…" \
+curl -X PUT "https://hiremetoday.ca/api/v1/me/cvs/7d1a…/session" -H "Authorization: Bearer fhk_…" \
   -H 'Content-Type: application/json' -d '{"session_id":"s_9f…"}'
 ```
 
@@ -3114,7 +3114,7 @@ The durable record a CV is built from: employments, and the evidence atoms under
 Your employments and their evidence atoms.
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/experience" -H "Authorization: Bearer fhk_…"
+curl "https://hiremetoday.ca/api/v1/me/experience" -H "Authorization: Bearer fhk_…"
 ```
 
 ```json
@@ -3145,7 +3145,7 @@ An employment carries no claim of its own (only the atoms attached to it do), so
 | `stack` | string[] | no | Technologies used, printed on the CV’s per-role stack line. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/experience/employments" \
+curl -X POST "https://hiremetoday.ca/api/v1/me/experience/employments" \
   -H "Authorization: Bearer $HIREME_API_KEY" -H 'Content-Type: application/json' \
   -d '{"kind":"job","company":"Acme","role":"Senior Backend Engineer","start":"2023-02","current":true}'
 ```
@@ -3174,7 +3174,7 @@ The only route besides the assistant’s own tool that can add evidence outside 
 | `source_ref` | string | no | Where this came from, for your own reference. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/experience/atoms" \
+curl -X POST "https://hiremetoday.ca/api/v1/me/experience/atoms" \
   -H "Authorization: Bearer $HIREME_API_KEY" -H 'Content-Type: application/json' \
   -d '{"claim":"Cut p99 checkout latency 40%","employment_id":"3fa8…","metrics":["40%","12k rps"]}'
 ```
@@ -3202,7 +3202,7 @@ Offered only when the application is in the silent state the tracking board’s 
 | `slug` | string | yes | The job `public_slug`. |
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/tracking/<slug>/followup" -H "Authorization: Bearer $HIREME_API_KEY"
+curl "https://hiremetoday.ca/api/v1/me/tracking/<slug>/followup" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ```json
@@ -3224,7 +3224,7 @@ Does not itself affect the silence calculation — that reads when the other sid
 | `slug` | string | yes | The job `public_slug`. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/tracking/<slug>/followup" -H "Authorization: Bearer $HIREME_API_KEY"
+curl -X POST "https://hiremetoday.ca/api/v1/me/tracking/<slug>/followup" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ### `POST /me/tracking/{slug}/mail-recall`
@@ -3242,7 +3242,7 @@ For an application whose mail arrived before you connected an inbox, or that a s
 | `slug` | string | yes | The job `public_slug`. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/tracking/<slug>/mail-recall" -H "Authorization: Bearer $HIREME_API_KEY"
+curl -X POST "https://hiremetoday.ca/api/v1/me/tracking/<slug>/mail-recall" -H "Authorization: Bearer $HIREME_API_KEY"
 ```
 
 ```json
@@ -3278,7 +3278,7 @@ Imports the message from your mailbox by `provider_id` (from a mail-recall respo
 | `provider_id` | string | yes | The message’s `provider_id`, from a mail-recall response. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/tracking/<slug>/mail-recall/link" \
+curl -X POST "https://hiremetoday.ca/api/v1/me/tracking/<slug>/mail-recall/link" \
   -H "Authorization: Bearer $HIREME_API_KEY" -H 'Content-Type: application/json' \
   -d '{"provider_id":"18f2a…"}'
 ```
@@ -3311,7 +3311,7 @@ List your mail, newest first, excluding deleted.
 | `offset` | integer | no | Page offset. |
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/inbox?unclassified=1&body=1&limit=50" \
+curl "https://hiremetoday.ca/api/v1/me/inbox?unclassified=1&body=1&limit=50" \
   -H "Authorization: Bearer fhk_…"
 ```
 
@@ -3352,7 +3352,7 @@ Use `GET /me/inbox?body=1` instead when sweeping a backlog — `read_at` means "
 | `id` | integer | yes | The message id. (e.g. `4821`) |
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/emails/4821" -H "Authorization: Bearer fhk_…"
+curl "https://hiremetoday.ca/api/v1/me/emails/4821" -H "Authorization: Bearer fhk_…"
 ```
 
 ```json
@@ -3382,7 +3382,7 @@ Stored under source `external`. hireme provides no transport here and never clas
 | `messages[].received_at` | string (RFC3339) | no | When the message arrived. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/emails" \
+curl -X POST "https://hiremetoday.ca/api/v1/me/emails" \
   -H "Authorization: Bearer fhk_…" \
   -H 'Content-Type: application/json' \
   -d '{"messages":[{"external_id":"<CAF...@mail.gmail.com>","from_addr":"no-reply@us.greenhouse-mail.io","subject":"Thank you for applying","received_at":"2026-07-24T09:12:00Z"}]}'
@@ -3415,7 +3415,7 @@ The vocabulary is closed: `acknowledgement`, `screening`, `interview_invitation`
 | `confidence` | number | no | Your confidence in the verdict, 0–1. Below the stage threshold the message is classified but the card does not move. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/emails/4821/triage" \
+curl -X POST "https://hiremetoday.ca/api/v1/me/emails/4821/triage" \
   -H "Authorization: Bearer fhk_…" \
   -H 'Content-Type: application/json' \
   -d '{"signal":"interview_invitation","slug":"tech-lead-web-core-speechify-a1b2","confidence":0.9}'
@@ -3444,7 +3444,7 @@ Attach a message to one of your applications.
 | `slug` | string | yes | The job `public_slug` to attach to. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/emails/4821/link" \
+curl -X POST "https://hiremetoday.ca/api/v1/me/emails/4821/link" \
   -H "Authorization: Bearer fhk_…" \
   -H 'Content-Type: application/json' -d '{"slug":"tech-lead-web-core-speechify-a1b2"}'
 ```
@@ -3466,7 +3466,7 @@ Clear a message's application link; its classification stays.
 | `id` | integer | yes | The message id. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/emails/4821/unlink" -H "Authorization: Bearer fhk_…"
+curl -X POST "https://hiremetoday.ca/api/v1/me/emails/4821/unlink" -H "Authorization: Bearer fhk_…"
 ```
 
 ```json
@@ -3488,7 +3488,7 @@ Only a deterministic match — the mail thread, or the company name in the sende
 | `id` | integer | yes | The message id. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/emails/4821/confirm" -H "Authorization: Bearer fhk_…"
+curl -X POST "https://hiremetoday.ca/api/v1/me/emails/4821/confirm" -H "Authorization: Bearer fhk_…"
 ```
 
 ```json
@@ -3508,7 +3508,7 @@ Dismiss a suggested link without attaching it.
 | `id` | integer | yes | The message id. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/emails/4821/reject" -H "Authorization: Bearer fhk_…"
+curl -X POST "https://hiremetoday.ca/api/v1/me/emails/4821/reject" -H "Authorization: Bearer fhk_…"
 ```
 
 ```json
@@ -3536,7 +3536,7 @@ The way out of `?link=unlinked`: mail about a job you never tracked. The applica
 | `slug` | string | yes | The job `public_slug` to record an application for. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/emails/4821/application" \
+curl -X POST "https://hiremetoday.ca/api/v1/me/emails/4821/application" \
   -H "Authorization: Bearer fhk_…" \
   -H 'Content-Type: application/json' -d '{"slug":"tech-lead-web-core-speechify-a1b2"}'
 ```
@@ -3565,7 +3565,7 @@ It takes the same filters as `GET /me/inbox` and marks exactly what that listing
 | `q` | string | no | Narrow by search. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/inbox/read-all" -H "Authorization: Bearer fhk_…"
+curl -X POST "https://hiremetoday.ca/api/v1/me/inbox/read-all" -H "Authorization: Bearer fhk_…"
 ```
 
 ```json
@@ -3587,7 +3587,7 @@ A later re-sync will not resurrect it — deletion is reader state, not mail-ser
 | `id` | integer | yes | The message id. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/emails/4821/delete" -H "Authorization: Bearer fhk_…"
+curl -X POST "https://hiremetoday.ca/api/v1/me/emails/4821/delete" -H "Authorization: Bearer fhk_…"
 ```
 
 ### `POST /me/emails/{id}/restore`
@@ -3603,7 +3603,7 @@ Undo a soft-delete. Answers 204.
 | `id` | integer | yes | The message id. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/emails/4821/restore" -H "Authorization: Bearer fhk_…"
+curl -X POST "https://hiremetoday.ca/api/v1/me/emails/4821/restore" -H "Authorization: Bearer fhk_…"
 ```
 
 ### `GET /me/mailbox`
@@ -3615,11 +3615,11 @@ Your hosted hireme address, and whether the feature is configured.
 `address` is null until you claim one; `available` is false when the instance runs without a mailbox domain.
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/mailbox" -H "Authorization: Bearer fhk_…"
+curl "https://hiremetoday.ca/api/v1/me/mailbox" -H "Authorization: Bearer fhk_…"
 ```
 
 ```json
-{ "data": { "available": true, "address": "you@mail.hireme.example.com" } }
+{ "data": { "available": true, "address": "you@mail.hiremetoday.ca" } }
 ```
 
 ### `POST /me/mailbox`
@@ -3629,11 +3629,11 @@ curl "https://hireme.example.com/api/v1/me/mailbox" -H "Authorization: Bearer fh
 Claim your hosted address.
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/mailbox" -H "Authorization: Bearer fhk_…"
+curl -X POST "https://hiremetoday.ca/api/v1/me/mailbox" -H "Authorization: Bearer fhk_…"
 ```
 
 ```json
-{ "data": { "available": true, "address": "you@mail.hireme.example.com" } }
+{ "data": { "available": true, "address": "you@mail.hiremetoday.ca" } }
 ```
 
 ### `DELETE /me/mailbox`
@@ -3643,7 +3643,7 @@ curl -X POST "https://hireme.example.com/api/v1/me/mailbox" -H "Authorization: B
 Release the address; it stops receiving.
 
 ```bash
-curl -X DELETE "https://hireme.example.com/api/v1/me/mailbox" -H "Authorization: Bearer fhk_…"
+curl -X DELETE "https://hiremetoday.ca/api/v1/me/mailbox" -H "Authorization: Bearer fhk_…"
 ```
 
 ```json
@@ -3659,7 +3659,7 @@ Gmail connection status.
 `available` reflects whether the instance has Gmail OAuth configured. `status` is `needs_reconsent` when Google revoked the grant. Connecting itself is a browser redirect (`/me/gmail/connect`), so it is session-only and not part of the key-driven surface.
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/gmail" -H "Authorization: Bearer fhk_…"
+curl "https://hiremetoday.ca/api/v1/me/gmail" -H "Authorization: Bearer fhk_…"
 ```
 
 ```json
@@ -3675,7 +3675,7 @@ Start an incremental sync.
 Returns as soon as the sync is queued — a full backfill outlives the request — so poll the inbox for results rather than reading counts here.
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/gmail/sync" -H "Authorization: Bearer fhk_…"
+curl -X POST "https://hiremetoday.ca/api/v1/me/gmail/sync" -H "Authorization: Bearer fhk_…"
 ```
 
 ```json
@@ -3691,7 +3691,7 @@ Disconnect Gmail and purge the mail it synced.
 Best-effort revokes the grant at Google, deletes the stored token, and removes the Gmail-sourced mail. Mail from the hosted address stays.
 
 ```bash
-curl -X DELETE "https://hireme.example.com/api/v1/me/gmail" -H "Authorization: Bearer fhk_…"
+curl -X DELETE "https://hiremetoday.ca/api/v1/me/gmail" -H "Authorization: Bearer fhk_…"
 ```
 
 ```json
@@ -3711,7 +3711,7 @@ Transcribe one short audio recording to text.
 Multipart upload of the `file` part — webm, mp4, m4a, ogg, wav, or mp3, capped at ~8 minutes of audio (2 MB) and rate-limited to 60 recordings/hour per caller. `501` when no speech gateway is configured, `502` if the gateway call itself fails, `400` for an empty recording.
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/speech/transcriptions" \
+curl -X POST "https://hiremetoday.ca/api/v1/speech/transcriptions" \
   -H "Authorization: Bearer $HIREME_API_KEY" \
   -F "file=@dictation.webm"
 ```

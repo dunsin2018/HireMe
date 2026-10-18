@@ -870,7 +870,7 @@ func Register(app *fiber.App, cfg Config) {
 	app.Get("/health", a.Health)
 
 	// The public side of CV link tracing. It sits beside /health rather than under /api/v1
-	// because it lives inside a PDF a recruiter opens by hand: "hireme.example.com/cv/acme-x7abc" is a
+	// because it lives inside a PDF a recruiter opens by hand: "hiremetoday.ca/cv/acme-x7abc" is a
 	// URL a person may read off a hover tooltip, and "/api/v1/..." would not be.
 	//
 	// Optional cookie auth, never a key: it is what lets a candidate's own click be recognised

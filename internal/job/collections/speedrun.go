@@ -20,7 +20,7 @@ const speedrunSourceTag = "hireme"
 // drops the connection for Go's default `Go-http-client/2.0` while serving any
 // identified agent, so an unnamed request fails with a bare 500. Matches the agent
 // string the liveness prober uses.
-const speedrunUserAgent = "hireme/0.1 (+https://hireme.example.com)"
+const speedrunUserAgent = "hireme/0.1 (+https://hiremetoday.ca)"
 
 // speedrunPageLimit bounds the walk. The directory reports its own page count, but a
 // malformed or hostile response could report an unbounded one; 9 pages is the live

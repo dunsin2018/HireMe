@@ -54,7 +54,7 @@ function company(overrides: Partial<Company> = {}): Company {
   };
 }
 
-const ORIGIN = 'https://hireme.example.com';
+const ORIGIN = 'https://hiremetoday.ca';
 
 describe('metaDescription', () => {
   it('strips tags and collapses whitespace without truncating short text', () => {
@@ -147,7 +147,7 @@ describe('organizationJsonLd', () => {
 
     expect(ld['@type']).toBe('Organization');
     expect(ld.name).toBe('Acme');
-    expect(ld.url).toBe('https://hireme.example.com/companies/acme');
+    expect(ld.url).toBe('https://hiremetoday.ca/companies/acme');
     expect(ld.logo).toBe('https://logo.dev/acme.png');
     expect(ld.description).toBe('Acme builds rockets.');
     expect(ld.sameAs).toEqual([
@@ -172,7 +172,7 @@ describe('organizationJsonLd', () => {
       '@context': 'https://schema.org',
       '@type': 'Organization',
       name: 'Acme',
-      url: 'https://hireme.example.com/companies/acme',
+      url: 'https://hiremetoday.ca/companies/acme',
     });
   });
 
@@ -531,7 +531,7 @@ describe('companyPageTitle', () => {
 });
 
 describe('collectionPageJsonLd', () => {
-  const URL = 'https://hireme.example.com/collections/react';
+  const URL = 'https://hiremetoday.ca/collections/react';
 
   it('wraps the jobs in a CollectionPage → ItemList of summary ListItems', () => {
     const ld = collectionPageJsonLd(
@@ -555,13 +555,13 @@ describe('collectionPageJsonLd', () => {
           '@type': 'ListItem',
           position: 1,
           name: 'Senior React Engineer',
-          url: 'https://hireme.example.com/jobs/senior-react-engineer-abc',
+          url: 'https://hiremetoday.ca/jobs/senior-react-engineer-abc',
         },
         {
           '@type': 'ListItem',
           position: 2,
           name: 'React Native Dev',
-          url: 'https://hireme.example.com/jobs/react-native-dev-xyz',
+          url: 'https://hiremetoday.ca/jobs/react-native-dev-xyz',
         },
       ],
     });
@@ -579,7 +579,7 @@ describe('collectionPageJsonLd', () => {
     const ld = collectionPageJsonLd(
       'Companies hiring in tech',
       'Browse companies hiring in tech.',
-      'https://hireme.example.com/companies',
+      'https://hiremetoday.ca/companies',
       companyListItems(
         [
           { name: 'Acme', slug: 'acme' },
@@ -593,15 +593,15 @@ describe('collectionPageJsonLd', () => {
     expect(ld.mainEntity).toEqual({
       '@type': 'ItemList',
       itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Acme', url: 'https://hireme.example.com/companies/acme' },
-        { '@type': 'ListItem', position: 2, name: 'Globex', url: 'https://hireme.example.com/companies/globex' },
+        { '@type': 'ListItem', position: 1, name: 'Acme', url: 'https://hiremetoday.ca/companies/acme' },
+        { '@type': 'ListItem', position: 2, name: 'Globex', url: 'https://hiremetoday.ca/companies/globex' },
       ],
     });
   });
 });
 
 describe('datasetJsonLd', () => {
-  const URL = 'https://hireme.example.com/insights/salary/engineering';
+  const URL = 'https://hiremetoday.ca/insights/salary/engineering';
 
   // The insights pages are aggregate-only: an empty `distribution` array would be a
   // dead end for a crawler, so the key must be absent rather than empty.
@@ -623,7 +623,7 @@ describe('datasetJsonLd', () => {
         '@type': 'DataDownload',
         name: 'Jobs API',
         encodingFormat: 'application/json',
-        contentUrl: 'https://hireme.example.com/api/v1/jobs',
+        contentUrl: 'https://hiremetoday.ca/api/v1/jobs',
       },
     ]);
   });
@@ -644,7 +644,7 @@ function post(overrides: Partial<PostMeta> = {}): PostMeta {
 }
 
 describe('articleJsonLd', () => {
-  const ORIGIN = 'https://hireme.example.com';
+  const ORIGIN = 'https://hiremetoday.ca';
 
   it('builds an Article with headline, description, date, url and keywords', () => {
     const ld = articleJsonLd(post(), ORIGIN);
@@ -652,7 +652,7 @@ describe('articleJsonLd', () => {
     expect(ld.headline).toBe('Launch');
     expect(ld.description).toBe('We shipped it.');
     expect(ld.datePublished).toBe('2026-01-15');
-    expect(ld.url).toBe('https://hireme.example.com/blog/launch');
+    expect(ld.url).toBe('https://hiremetoday.ca/blog/launch');
     expect(ld.keywords).toBe('product, launch');
   });
 
@@ -726,16 +726,16 @@ describe('definedTermJsonLd', () => {
   it('names the term, its definition and the set it belongs to', () => {
     const ld = definedTermJsonLd(
       { slug: 'dbt', label: 'dbt', description: 'A SQL transformation tool.' },
-      'https://hireme.example.com',
+      'https://hiremetoday.ca',
     ) as Record<string, unknown>;
 
     expect(ld['@type']).toBe('DefinedTerm');
     expect(ld.name).toBe('dbt');
     expect(ld.description).toBe('A SQL transformation tool.');
-    expect(ld['@id']).toBe('https://hireme.example.com/skills/dbt');
+    expect(ld['@id']).toBe('https://hiremetoday.ca/skills/dbt');
     expect(ld.inDefinedTermSet).toMatchObject({
       '@type': 'DefinedTermSet',
-      '@id': 'https://hireme.example.com/skills',
+      '@id': 'https://hiremetoday.ca/skills',
     });
   });
 });

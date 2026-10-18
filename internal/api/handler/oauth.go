@@ -19,7 +19,7 @@ import (
 // Host, a subdomain we do not serve) falls back to the canonical frontendOrigin.
 //
 // The exact match is the point. This used to accept any suffix of a cookie domain,
-// which meant a hijacked or third-party-hosted subdomain of hireme.example.com could steer
+// which meant a hijacked or third-party-hosted subdomain of hiremetoday.ca could steer
 // the provider redirect and the post-login redirect. Cookie scope still uses the
 // suffix rule — that is what SSO across subdomains needs — but a redirect target is
 // not a cookie scope, and conflating them is what produced the finding.

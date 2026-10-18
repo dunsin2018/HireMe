@@ -4,8 +4,8 @@
   import { CLI_REPO, MCP_REPO } from '$lib/cliLinks';
   import { Button, SectionLabel } from '$lib/ui';
 
-  const LLMS_TXT = 'https://hireme.example.com/llms.txt';
-  const OPENAPI = 'https://hireme.example.com/openapi.yaml';
+  const LLMS_TXT = 'https://hiremetoday.ca/llms.txt';
+  const OPENAPI = 'https://hiremetoday.ca/openapi.yaml';
   const GPT_URL = 'https://chatgpt.com/g/g-6a5281b64948819193bf3a1021e075da-hireme';
 
   // The whole point of the page: one block you paste into whatever agent you
@@ -14,9 +14,9 @@
   // that would then drift from them.
   const HANDOFF = `Install hireme and use it to run my job search.
 
-  curl -fsSL https://hireme.example.com/install.sh | sh
+  curl -fsSL https://hiremetoday.ca/install.sh | sh
 
-Then read https://hireme.example.com/llms.txt for the conventions,
+Then read https://hiremetoday.ca/llms.txt for the conventions,
 and \`hireme --help\` for the commands.`;
 
   // What an agent can actually do, each pointing at the feature that owns it.
@@ -161,9 +161,9 @@ and \`hireme --help\` for the commands.`;
           </figcaption>
           <pre class="overflow-x-auto p-4 leading-relaxed">Install hireme and use it to run my job search.
 
-  curl -fsSL <span class="text-foreground">https://hireme.example.com/install.sh</span> | sh
+  curl -fsSL <span class="text-foreground">https://hiremetoday.ca/install.sh</span> | sh
 
-Then read <span class="text-foreground">https://hireme.example.com/llms.txt</span> for the conventions,
+Then read <span class="text-foreground">https://hiremetoday.ca/llms.txt</span> for the conventions,
 and <span class="text-foreground">`hireme --help`</span> for the commands.</pre>
         </figure>
         <p class="mt-3 pl-1 font-mono text-xs text-muted-foreground">
@@ -226,7 +226,7 @@ and <span class="text-foreground">`hireme --help`</span> for the commands.</pre>
             terminal
           </figcaption>
           <pre class="overflow-x-auto p-4 leading-relaxed"><span class="text-muted-foreground"># no Go toolchain needed</span>
-curl -fsSL <span class="text-foreground">https://hireme.example.com/install.sh</span> | sh
+curl -fsSL <span class="text-foreground">https://hiremetoday.ca/install.sh</span> | sh
 
 <span class="text-muted-foreground"># only for the account half</span>
 hireme auth login --token <span class="text-foreground">fhk_…</span>

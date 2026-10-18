@@ -126,7 +126,7 @@ func RenderCatalogCard(heading, tagline string, stats Stats) ([]byte, error) {
 
 	drawStatStrip(img, numberFace, labelFace, stats)
 
-	footer := "hireme.example.com"
+	footer := "hiremetoday.ca"
 	drawText(img, labelFace, colorMuted, width-marginX-textWidth(labelFace, footer), 566, footer)
 
 	var buf bytes.Buffer

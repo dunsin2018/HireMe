@@ -155,7 +155,7 @@
           </button>
         </figcaption>
         <pre class="overflow-x-auto p-4 leading-relaxed"><span class="text-muted-foreground"># install — no Go needed</span>
-curl -fsSL <span class="text-foreground">https://hireme.example.com/install.sh</span> | sh
+curl -fsSL <span class="text-foreground">https://hiremetoday.ca/install.sh</span> | sh
 
 <span class="text-muted-foreground"># authenticate once (key from /my/api-keys)</span>
 hireme auth login --token <span class="text-foreground">fhk_…</span>

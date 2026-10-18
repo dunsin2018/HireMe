@@ -128,7 +128,7 @@ func TestAppleClientSecret_InvalidPEM(t *testing.T) {
 func TestApple_AuthCodeURL(t *testing.T) {
 	p := &appleProvider{
 		clientID:    "me.hireme.web",
-		redirectURL: "https://hireme.example.com/api/v1/auth/oauth/apple/callback",
+		redirectURL: "https://hiremetoday.ca/api/v1/auth/oauth/apple/callback",
 		authURL:     "https://appleid.apple.com/auth/authorize",
 	}
 	u := p.AuthCodeURL("the-state")
@@ -140,7 +140,7 @@ func TestApple_AuthCodeURL(t *testing.T) {
 	q := parsed.Query()
 	for key, want := range map[string]string{
 		"client_id":     "me.hireme.web",
-		"redirect_uri":  "https://hireme.example.com/api/v1/auth/oauth/apple/callback",
+		"redirect_uri":  "https://hiremetoday.ca/api/v1/auth/oauth/apple/callback",
 		"response_type": "code",
 		"response_mode": "form_post",
 		"scope":         "email",

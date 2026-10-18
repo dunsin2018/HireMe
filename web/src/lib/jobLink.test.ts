@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { linkInText, pastedJobLink } from './jobLink';
 
-const ORIGIN = 'https://hireme.example.com';
+const ORIGIN = 'https://hiremetoday.ca';
 
 describe('linkInText', () => {
   it('takes a URL that says so itself', () => {
@@ -70,7 +70,7 @@ describe('pastedJobLink', () => {
   // Pasting one of our own links back in is a thing people do, and there is nothing to
   // look up: the slug is in the path.
   it('reads the slug out of one of our own posting links', () => {
-    expect(pastedJobLink('https://hireme.example.com/jobs/go-dev-acme', ORIGIN)?.ownSlug).toBe(
+    expect(pastedJobLink('https://hiremetoday.ca/jobs/go-dev-acme', ORIGIN)?.ownSlug).toBe(
       'go-dev-acme',
     );
   });
@@ -83,22 +83,22 @@ describe('pastedJobLink', () => {
   });
 
   it('decodes a slug the path escaped', () => {
-    expect(pastedJobLink('https://hireme.example.com/jobs/c%2B%2B-dev', ORIGIN)?.ownSlug).toBe('c++-dev');
+    expect(pastedJobLink('https://hiremetoday.ca/jobs/c%2B%2B-dev', ORIGIN)?.ownSlug).toBe('c++-dev');
   });
 
   // A lone `%` is a legal path and an illegal escape. This runs in a $derived on every
   // keystroke in the header, so a throw here would take the page down, not the row.
   it('survives a path that cannot be decoded', () => {
-    expect(() => pastedJobLink('https://hireme.example.com/jobs/100%', ORIGIN)).not.toThrow();
-    expect(pastedJobLink('https://hireme.example.com/jobs/100%', ORIGIN)?.ownSlug).toBe('100%');
+    expect(() => pastedJobLink('https://hiremetoday.ca/jobs/100%', ORIGIN)).not.toThrow();
+    expect(pastedJobLink('https://hiremetoday.ca/jobs/100%', ORIGIN)?.ownSlug).toBe('100%');
   });
 
   // Our own pages that are not postings take the ordinary path: the intake finding them
   // uninteresting is the honest answer, and guessing a slug from them would not be.
   it.each([
-    'https://hireme.example.com/companies/acme',
-    'https://hireme.example.com/jobs',
-    'https://hireme.example.com/jobs/go-dev-acme/apply',
+    'https://hiremetoday.ca/companies/acme',
+    'https://hiremetoday.ca/jobs',
+    'https://hiremetoday.ca/jobs/go-dev-acme/apply',
   ])('claims no slug for %o', (url) => {
     expect(pastedJobLink(url, ORIGIN)?.ownSlug).toBeNull();
   });

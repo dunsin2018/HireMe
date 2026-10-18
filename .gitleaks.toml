@@ -55,6 +55,6 @@ regexes = [
 ]
 
 [[allowlists]]
-description = "logo.dev publishable key, history only. It was a `pk_` token — the kind designed to ship to a browser — and the code no longer carries it: company logos now go through our own logo.hireme.example.com proxy, which holds the credential server-side. Kept because the finding is in the history, where it stays."
+description = "logo.dev publishable key, history only. It was a `pk_` token — the kind designed to ship to a browser — and the code no longer carries it: company logos now go through our own logo.hiremetoday.ca proxy, which holds the credential server-side. Kept because the finding is in the history, where it stays."
 regexTarget = "secret"
 regexes = ['''^pk_fKgOEo0OT4KXvUshjPMGAQ$''']

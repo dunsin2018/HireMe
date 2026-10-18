@@ -20,7 +20,7 @@ func pricedService(t *testing.T, h http.HandlerFunc) (*Service, *int) {
 		APIKey:        "sk_test",
 		WebhookSecret: testSecret,
 		Prices:        []string{"price_pro_monthly"},
-		SiteURL:       "https://hireme.example.com",
+		SiteURL:       "https://hiremetoday.ca",
 	}}
 	s.client = testClient(t, func(w http.ResponseWriter, r *http.Request) {
 		mu.Lock()

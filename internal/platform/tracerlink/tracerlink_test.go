@@ -7,7 +7,7 @@ import (
 )
 
 // The hosts a deployment serves, as configuration would supply them.
-var ourHosts = []string{"hireme.example.com", "hireme.dev"}
+var ourHosts = []string{"hiremetoday.ca", "hireme.dev"}
 
 func TestTargetsFindsHeaderAndProjectLinks(t *testing.T) {
 	got := Targets(ourHosts,
@@ -86,14 +86,14 @@ func TestTargetsKeepsIndexesOfTheOriginalSlice(t *testing.T) {
 // fact rather than a code change.
 func TestTargetsSkipsEveryHostWeServe(t *testing.T) {
 	for _, in := range []string{
-		"hireme.example.com/cv/acme-x7abc",
+		"hiremetoday.ca/cv/acme-x7abc",
 		"https://hireme.dev/jobs",
-		"https://www.hireme.example.com/jobs",
+		"https://www.hiremetoday.ca/jobs",
 		"HTTPS://HireMe.me/jobs",
 		// A trailing dot names the same host to DNS, and is the cheapest way past a
 		// string comparison.
-		"https://hireme.example.com./jobs",
-		"https://hireme.example.com:443/jobs",
+		"https://hiremetoday.ca./jobs",
+		"https://hiremetoday.ca:443/jobs",
 	} {
 		if got := Targets(ourHosts, []string{in}, nil); len(got) != 0 {
 			t.Errorf("Targets(%q) = %+v, want none — that is a host we serve", in, got)
@@ -103,7 +103,7 @@ func TestTargetsSkipsEveryHostWeServe(t *testing.T) {
 
 // A host that merely contains ours is somebody else's.
 func TestTargetsTracesLookalikeHosts(t *testing.T) {
-	for _, in := range []string{"https://hireme.example.com.evil.com/x", "https://nothireme.example.com/x"} {
+	for _, in := range []string{"https://hiremetoday.ca.evil.com/x", "https://nothiremetoday.ca/x"} {
 		if got := Targets(ourHosts, []string{in}, nil); len(got) != 1 {
 			t.Errorf("Targets(%q) = %+v, want it traced — that host is not ours", in, got)
 		}
@@ -114,7 +114,7 @@ func TestTargetsTracesLookalikeHosts(t *testing.T) {
 // pasted it into a CV serves nobody.
 func TestTargetsRejectsEmbeddedCredentials(t *testing.T) {
 	for _, in := range []string{
-		"https://hireme.example.com@evil.com/",
+		"https://hiremetoday.ca@evil.com/",
 		"https://user:pass@example.org/cv",
 	} {
 		if got := Targets(ourHosts, []string{in}, nil); len(got) != 0 {

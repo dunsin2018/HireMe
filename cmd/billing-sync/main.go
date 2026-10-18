@@ -61,7 +61,7 @@ func run() int {
 	// Gate before Bootstrap, not after. With no provider credentials there is nothing to
 	// reconcile against, and the spec requires an unconfigured deployment to run without
 	// touching the database at all — which is also what keeps this binary harmless in a
-	// checkout that is not hireme.example.com.
+	// checkout that is not hiremetoday.ca.
 	stripeCfg := billing.ConfigFromEnv()
 	storeCfg := billing.RevenueCatConfigFromEnv()
 	if !stripeCfg.Enabled() && !storeCfg.Enabled() {

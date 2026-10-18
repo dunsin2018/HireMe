@@ -64,7 +64,7 @@ func (f *fakeSender) to(t *testing.T, address string) sentMail {
 // their meeting is, and getting that wrong means missing it.
 func TestBothPartiesAreToldTheTimeInTheirOwnZone(t *testing.T) {
 	sender := &fakeSender{}
-	notifier := NewMailNotifier(sender, "mentors@example.test", "https://hireme.example.com/my/sessions")
+	notifier := NewMailNotifier(sender, "mentors@example.test", "https://hiremetoday.ca/my/sessions")
 
 	if err := notifier.BookingConfirmed(context.Background(), crossZoneBooking(t)); err != nil {
 		t.Fatalf("BookingConfirmed: %v", err)

@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { DISALLOWED, SEARCH_CRAWLERS, robotsBody } from './robots';
 
-const BODY = robotsBody('https://hireme.example.com');
+const BODY = robotsBody('https://hiremetoday.ca');
 
 // Parse the way a crawler does: a User-agent line opens a group, and the directives
 // under it belong to that group until the next one. Asserting on the raw string
@@ -73,8 +73,8 @@ describe('robots.txt', () => {
   // The API pointer is aimed at agents, which read the wildcard group — a crawler
   // that follows it is the cheap outcome the comment block argues for.
   it('still advertises the API and the sitemap', () => {
-    expect(BODY).toContain('Sitemap: https://hireme.example.com/sitemap.xml');
-    expect(BODY).toContain('https://hireme.example.com/api/v1/jobs/search?q=golang');
-    expect(BODY).toContain('https://hireme.example.com/llms.txt');
+    expect(BODY).toContain('Sitemap: https://hiremetoday.ca/sitemap.xml');
+    expect(BODY).toContain('https://hiremetoday.ca/api/v1/jobs/search?q=golang');
+    expect(BODY).toContain('https://hiremetoday.ca/llms.txt');
   });
 });

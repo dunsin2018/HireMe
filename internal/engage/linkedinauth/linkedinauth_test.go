@@ -39,7 +39,7 @@ func testCredentials() Credentials {
 	return Credentials{
 		ClientID:     "client",
 		ClientSecret: "secret",
-		RedirectURI:  "https://hireme.example.com/oauth/linkedin",
+		RedirectURI:  "https://hiremetoday.ca/oauth/linkedin",
 	}
 }
 
@@ -54,7 +54,7 @@ func TestAuthorizeURLCarriesWhatLinkedInRequires(t *testing.T) {
 	for param, want := range map[string]string{
 		"response_type": "code",
 		"client_id":     "client",
-		"redirect_uri":  "https://hireme.example.com/oauth/linkedin",
+		"redirect_uri":  "https://hiremetoday.ca/oauth/linkedin",
 		"scope":         Scope,
 		"state":         "state-1",
 	} {
@@ -82,7 +82,7 @@ func TestExchangeReadsBothGrantShapes(t *testing.T) {
 				t.Errorf("code = %q", got)
 			}
 			// LinkedIn compares the redirect_uri across both legs and refuses a mismatch.
-			if got := r.Form.Get("redirect_uri"); got != "https://hireme.example.com/oauth/linkedin" {
+			if got := r.Form.Get("redirect_uri"); got != "https://hiremetoday.ca/oauth/linkedin" {
 				t.Errorf("redirect_uri = %q", got)
 			}
 			writeBody(t, w, `{"access_token":"AQV","expires_in":5184000,`+

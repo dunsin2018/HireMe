@@ -1,6 +1,6 @@
 // Package logodomain builds the name-to-domain map the logo proxy consults.
 //
-// Company logos are requested from logo.hireme.example.com by the company's NAME, taken verbatim
+// Company logos are requested from logo.hiremetoday.ca by the company's NAME, taken verbatim
 // from whichever adapter ingested the row. One employer arrives spelled several ways
 // ("g2i", "G2i", "G2i Inc."), and the upstream that resolves a name answers a confident
 // 200 with a DIFFERENT company's mark often enough to matter — g2i's name resolves to an

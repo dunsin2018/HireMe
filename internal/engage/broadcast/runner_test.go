@@ -52,7 +52,7 @@ func (f *fakeSender) Send(_ context.Context, m emailnotify.Message) error {
 }
 
 func newRunner(store *fakeStore, sender *fakeSender, max int32) *broadcast.Runner {
-	m := broadcast.NewMailer(sender, "notifications@hireme.example.com", "ilya@example.test", "https://hireme.example.com", testLinks("https://hireme.example.com"))
+	m := broadcast.NewMailer(sender, "notifications@hiremetoday.ca", "ilya@example.test", "https://hiremetoday.ca", testLinks("https://hiremetoday.ca"))
 	return broadcast.New(store, m, max)
 }
 
@@ -130,7 +130,7 @@ func TestPending_SendsNothing(t *testing.T) {
 }
 
 // A campaign must take the origin from the Mailer rather than spelling it out: the
-// previews render against a relative base, and a hard-coded https://hireme.example.com
+// previews render against a relative base, and a hard-coded https://hiremetoday.ca
 // would show the production host there while still looking right.
 //
 // Every registered campaign is checked, and the body assertion is a negative: a
@@ -141,7 +141,7 @@ func TestPending_SendsNothing(t *testing.T) {
 func TestSend_LinksBackThroughTheConfiguredOrigin(t *testing.T) {
 	for _, name := range broadcast.Names() {
 		sender := &fakeSender{}
-		m := broadcast.NewMailer(sender, "notifications@hireme.example.com", "ilya@example.test", "https://preview.test", testLinks("https://preview.test"))
+		m := broadcast.NewMailer(sender, "notifications@hiremetoday.ca", "ilya@example.test", "https://preview.test", testLinks("https://preview.test"))
 		c := campaign(t, name)
 		if err := m.Send(context.Background(), c, 1, "someone@example.com"); err != nil {
 			t.Fatalf("Send %s: %v", c.Name, err)
@@ -151,7 +151,7 @@ func TestSend_LinksBackThroughTheConfiguredOrigin(t *testing.T) {
 		if !strings.Contains(sent.html, "https://preview.test") {
 			t.Errorf("%s: the HTML body does not link through the configured origin", c.Name)
 		}
-		if strings.Contains(sent.html, "https://hireme.example.com") || strings.Contains(sent.text, "https://hireme.example.com") {
+		if strings.Contains(sent.html, "https://hiremetoday.ca") || strings.Contains(sent.text, "https://hiremetoday.ca") {
 			t.Errorf("%s: a body spells the production origin out instead of taking it from the Mailer", c.Name)
 		}
 		if !strings.Contains(sent.from, "Ilya") {

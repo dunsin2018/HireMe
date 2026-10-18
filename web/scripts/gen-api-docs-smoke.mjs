@@ -27,7 +27,7 @@ async function main() {
   assert('ends with single newline', a.endsWith('\n') && !a.endsWith('\n\n'));
 
   // Base URL and core sections.
-  assert('has base URL', a.includes('https://hireme.example.com/api/v1'));
+  assert('has base URL', a.includes('https://hiremetoday.ca/api/v1'));
   assert('has filtering section', a.includes('## Filtering jobs'));
   assert('documents the search endpoint', a.includes('GET /jobs/search'));
   assert('documents the facets endpoint', a.includes('GET /jobs/facets'));
@@ -56,7 +56,7 @@ async function main() {
   // prose while saying they are unavailable. A green check that had come to mean the
   // opposite of its name is worse than no check.
   assert('does not document key management as an endpoint', !a.includes('## API keys'));
-  assert('sends the reader to the account surface', a.includes('hireme.example.com/my/api-keys'));
+  assert('sends the reader to the account surface', a.includes('hiremetoday.ca/my/api-keys'));
 
   // Deprecated endpoints render a note naming the replacement. No shipped endpoint
   // currently carries `deprecated`, so this exercises the mechanism on a synthetic
@@ -82,11 +82,11 @@ async function main() {
   assert('internal doc omits GET /jobs', !internal.includes('`GET /jobs`'));
   assert('internal doc keeps the Moderator jobs group', internal.includes('## Moderator jobs'));
 
-  assert('external doc cross-links to the internal reference', external.includes('hireme.example.com/docs/api/internal'));
-  assert('internal doc cross-links back to the external reference', internal.includes('hireme.example.com/docs/api'));
+  assert('external doc cross-links to the internal reference', external.includes('hiremetoday.ca/docs/api/internal'));
+  assert('internal doc cross-links back to the external reference', internal.includes('hiremetoday.ca/docs/api'));
   assert(
     'internal doc cross-link is not confused for the external doc\'s own link',
-    !internal.includes('hireme.example.com/docs/api/internal'),
+    !internal.includes('hiremetoday.ca/docs/api/internal'),
   );
 
   assert('unknown audience throws', (() => {

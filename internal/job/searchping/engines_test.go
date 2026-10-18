@@ -117,14 +117,14 @@ func TestIndexNowSubmitsTheWholeBatchInOneCall(t *testing.T) {
 	}))
 	defer srv.Close()
 
-	engine, err := NewIndexNowEngine("https://hireme.example.com", "abc123", time.Second)
+	engine, err := NewIndexNowEngine("https://hiremetoday.ca", "abc123", time.Second)
 	if err != nil {
 		t.Fatalf("build: %v", err)
 	}
 	engine.endpoint = srv.URL
 	engine.client = srv.Client()
 
-	accepted, err := engine.Announce(context.Background(), []string{"https://hireme.example.com/jobs/a", "https://hireme.example.com/jobs/b"})
+	accepted, err := engine.Announce(context.Background(), []string{"https://hiremetoday.ca/jobs/a", "https://hiremetoday.ca/jobs/b"})
 
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
@@ -135,10 +135,10 @@ func TestIndexNowSubmitsTheWholeBatchInOneCall(t *testing.T) {
 	if len(accepted) != 2 {
 		t.Fatalf("accepted %d, want 2", len(accepted))
 	}
-	if payload["host"] != "hireme.example.com" {
+	if payload["host"] != "hiremetoday.ca" {
 		t.Fatalf("host = %v, want the origin's host", payload["host"])
 	}
-	if payload["keyLocation"] != "https://hireme.example.com/abc123.txt" {
+	if payload["keyLocation"] != "https://hiremetoday.ca/abc123.txt" {
 		t.Fatalf("keyLocation = %v", payload["keyLocation"])
 	}
 }
@@ -150,10 +150,10 @@ func TestIndexNowTreats202AsAccepted(t *testing.T) {
 	}))
 	defer srv.Close()
 
-	engine, _ := NewIndexNowEngine("https://hireme.example.com", "abc123", time.Second)
+	engine, _ := NewIndexNowEngine("https://hiremetoday.ca", "abc123", time.Second)
 	engine.endpoint, engine.client = srv.URL, srv.Client()
 
-	accepted, err := engine.Announce(context.Background(), []string{"https://hireme.example.com/jobs/a"})
+	accepted, err := engine.Announce(context.Background(), []string{"https://hiremetoday.ca/jobs/a"})
 
 	if err != nil || len(accepted) != 1 {
 		t.Fatalf("accepted=%v err=%v, want the url accepted", accepted, err)
@@ -196,7 +196,7 @@ func TestIndexNowVerifyKeyAcceptsAMatch(t *testing.T) {
 
 // A missing key is "this engine is off", not a misconfiguration — the fleet's rollback.
 func TestIndexNowIsOffWithoutAKey(t *testing.T) {
-	engine, err := NewIndexNowEngine("https://hireme.example.com", "  ", time.Second)
+	engine, err := NewIndexNowEngine("https://hiremetoday.ca", "  ", time.Second)
 
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)

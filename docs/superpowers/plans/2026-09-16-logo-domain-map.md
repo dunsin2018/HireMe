@@ -206,7 +206,7 @@ Create `internal/job/logodomain/logodomain.go`:
 ```go
 // Package logodomain builds the name-to-domain map the logo proxy consults.
 //
-// Company logos are requested from logo.hireme.example.com by the company's NAME, taken
+// Company logos are requested from logo.hiremetoday.ca by the company's NAME, taken
 // verbatim from whichever adapter ingested the row. One employer arrives spelled several
 // ways ("g2i", "G2i", "G2i Inc."), and the upstream that resolves a name answers a
 // confident 200 with a DIFFERENT company's mark often enough to matter — g2i's name
@@ -717,7 +717,7 @@ Create `cmd/publish-logo-domains/main.go`:
 // Command publish-logo-domains writes the company-name-to-domain map the logo proxy
 // consults, then exits.
 //
-// Company logos are requested from logo.hireme.example.com by NAME, and the upstream that
+// Company logos are requested from logo.hiremetoday.ca by NAME, and the upstream that
 // resolves a name answers a confident 200 with a different company's mark often enough to
 // matter. The proxy has accepted a ?domain= since it was written and nothing has ever
 // supplied one, because most of the ~25 call sites that draw a logo — the experience
@@ -929,7 +929,7 @@ In `CLAUDE.md`, add a bullet to the worker-gotchas list (the one that starts
 `backfill-company-info-wikipedia` bullet:
 
 ```markdown
-- `publish-logo-domains` — daily: writes the company-name-to-domain map `logo.hireme.example.com` consults, so a logo is resolved by the employer's own domain instead of by a name string. Company logos are requested by NAME (`web/src/lib/logo.ts`), taken verbatim from whichever adapter ingested the row, and one employer arrives spelled several ways — `g2i`, `G2i`, `G2i Inc.` all carry `company_slug = 'g2i'` and the first two resolved to an unrelated leadership-training firm, at HTTP 200, so no consumer could detect it and fall back to its monogram. The proxy has accepted `?domain=` since it was written and folds it into its cache key; nothing ever supplied one. **The fix is not at the call sites**: of ~25 places that draw a logo, roughly fifteen never see a company slug (the experience bank, search suggestions, community subjects, the tailored-CV list), so threading a domain would fix a third of the surfaces. Covers the **17,859** of 239,879 job-carrying companies whose `company_info` records a website; the rest keep today's name guess, and `backfill-company-info-wikipedia` grows that population daily. A name two DIFFERENT companies share while disagreeing about the domain is dropped, never resolved — a wrong domain returns a confident logo belonging to someone else, which is the failure this removes. **The spellings query is a deliberate sequential scan** (53s, 412,648 rows): joining it to the companies that have a website is four times slower (200s), because the narrow plan drives 17,859 index searches fetching ~102 heap rows each at random. Fewer rows, more I/O. A run that would publish an empty map refuses to swap. Needs `DATABASE_URL`; without `LOGO_DOMAIN_MAP_OUT` it is a **no-op that never opens the pool**, which is also the rollback. **The consumer is a different repository** (`hireme-logo`) that `release.sh` does not carry, so this half alone changes nothing visible.
+- `publish-logo-domains` — daily: writes the company-name-to-domain map `logo.hiremetoday.ca` consults, so a logo is resolved by the employer's own domain instead of by a name string. Company logos are requested by NAME (`web/src/lib/logo.ts`), taken verbatim from whichever adapter ingested the row, and one employer arrives spelled several ways — `g2i`, `G2i`, `G2i Inc.` all carry `company_slug = 'g2i'` and the first two resolved to an unrelated leadership-training firm, at HTTP 200, so no consumer could detect it and fall back to its monogram. The proxy has accepted `?domain=` since it was written and folds it into its cache key; nothing ever supplied one. **The fix is not at the call sites**: of ~25 places that draw a logo, roughly fifteen never see a company slug (the experience bank, search suggestions, community subjects, the tailored-CV list), so threading a domain would fix a third of the surfaces. Covers the **17,859** of 239,879 job-carrying companies whose `company_info` records a website; the rest keep today's name guess, and `backfill-company-info-wikipedia` grows that population daily. A name two DIFFERENT companies share while disagreeing about the domain is dropped, never resolved — a wrong domain returns a confident logo belonging to someone else, which is the failure this removes. **The spellings query is a deliberate sequential scan** (53s, 412,648 rows): joining it to the companies that have a website is four times slower (200s), because the narrow plan drives 17,859 index searches fetching ~102 heap rows each at random. Fewer rows, more I/O. A run that would publish an empty map refuses to swap. Needs `DATABASE_URL`; without `LOGO_DOMAIN_MAP_OUT` it is a **no-op that never opens the pool**, which is also the rollback. **The consumer is a different repository** (`hireme-logo`) that `release.sh` does not carry, so this half alone changes nothing visible.
 ```
 
 - [ ] **Step 6: Verify nothing broke**
@@ -1576,14 +1576,14 @@ git commit -m "Document the domain map and its rollback"
 - [ ] **Step 1: Record the current wrong answer**
 
 ```bash
-curl -s -o /dev/null -w "%{http_code} %{size_download}\n" https://logo.hireme.example.com/g2i
+curl -s -o /dev/null -w "%{http_code} %{size_download}\n" https://logo.hiremetoday.ca/g2i
 ```
 Expected today: `200 1814` — the wrong company.
 
 - [ ] **Step 2: Prove the correct answer is reachable**
 
 ```bash
-curl -s -o /dev/null -w "%{http_code} %{size_download}\n" "https://logo.hireme.example.com/g2i?domain=g2i.co"
+curl -s -o /dev/null -w "%{http_code} %{size_download}\n" "https://logo.hiremetoday.ca/g2i?domain=g2i.co"
 ```
 Expected: `200 2984` — the correct mark. This is the target state for step 5.
 
@@ -1633,14 +1633,14 @@ worker owns. If the log says the file could not be read, check the directory mod
 ```bash
 for u in g2i G2i "G2i%20Inc."; do
   echo -n "$u -> "
-  curl -s -o /dev/null -w "%{http_code} %{size_download}\n" "https://logo.hireme.example.com/$u"
+  curl -s -o /dev/null -w "%{http_code} %{size_download}\n" "https://logo.hiremetoday.ca/$u"
 done
 ```
 
 Expected: all three answer `200 2984`. Before this change they answered `200 1814`,
 `200 1814`, `200 2984`.
 
-Then open `https://hireme.example.com/jobs?company_slug=g2i&cb=$RANDOM` in a browser — the cache
+Then open `https://hiremetoday.ca/jobs?company_slug=g2i&cb=$RANDOM` in a browser — the cache
 buster matters, `max-age=3600` will otherwise serve the old page for an hour — and confirm
 one logo across all rows.
 

@@ -30,7 +30,7 @@ func TestClient_SendBuildsSimpleEmail(t *testing.T) {
 	c := &Client{ses: fake}
 
 	err := c.Send(context.Background(), Message{
-		From: "from@hireme.example.com", To: "to@acme.com", Subject: "Subj",
+		From: "from@hiremetoday.ca", To: "to@acme.com", Subject: "Subj",
 		HTML: "<b>hi</b>", Text: "hi", Group: emailprefs.GroupEssential,
 	})
 	if err != nil {
@@ -39,8 +39,8 @@ func TestClient_SendBuildsSimpleEmail(t *testing.T) {
 	if fake.in == nil {
 		t.Fatal("SendEmail was not called")
 	}
-	if got := deref(fake.in.FromEmailAddress); got != "from@hireme.example.com" {
-		t.Errorf("from = %q, want from@hireme.example.com", got)
+	if got := deref(fake.in.FromEmailAddress); got != "from@hiremetoday.ca" {
+		t.Errorf("from = %q, want from@hiremetoday.ca", got)
 	}
 	if len(fake.in.Destination.ToAddresses) != 1 || fake.in.Destination.ToAddresses[0] != "to@acme.com" {
 		t.Errorf("to = %v, want [to@acme.com]", fake.in.Destination.ToAddresses)
@@ -101,7 +101,7 @@ func TestClient_RefusesAnEssentialMailCarryingAnUnsubscribeURL(t *testing.T) {
 	c := &Client{ses: fake}
 	m := Message{
 		From: "f", To: "t", Subject: "s", HTML: "h", Text: "x",
-		Group: emailprefs.GroupEssential, UnsubscribeURL: "https://hireme.example.com/unsubscribe?t=x",
+		Group: emailprefs.GroupEssential, UnsubscribeURL: "https://hiremetoday.ca/unsubscribe?t=x",
 	}
 	if err := c.Send(context.Background(), m); err == nil {
 		t.Error("an essential mail carrying an unsubscribe URL should be refused")
@@ -116,7 +116,7 @@ func TestClient_RefusesAnEssentialMailCarryingAnUnsubscribeURL(t *testing.T) {
 func TestClient_SendsTheOneClickHeaders(t *testing.T) {
 	fake := &fakeSES{}
 	c := &Client{ses: fake}
-	const url = "https://hireme.example.com/unsubscribe?t=abc"
+	const url = "https://hiremetoday.ca/unsubscribe?t=abc"
 
 	err := c.Send(context.Background(), Message{
 		From: "f", To: "t", Subject: "s", HTML: "h", Text: "x",

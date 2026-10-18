@@ -343,8 +343,8 @@ func TestServiceDispatch(t *testing.T) {
 }
 
 func TestJobURL(t *testing.T) {
-	got := jobURL("https://hireme.example.com/", "acme-engineer-123", "discord")
-	want := "https://hireme.example.com/jobs/acme-engineer-123?utm_source=discord"
+	got := jobURL("https://hiremetoday.ca/", "acme-engineer-123", "discord")
+	want := "https://hiremetoday.ca/jobs/acme-engineer-123?utm_source=discord"
 	if got != want {
 		t.Errorf("got %q, want %q", got, want)
 	}

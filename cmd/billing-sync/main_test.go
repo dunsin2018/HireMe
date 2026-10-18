@@ -28,7 +28,7 @@ func clearProviders(t *testing.T) {
 // DATABASE_URL is deliberately cleared: if run() reached Bootstrap it would fail to open a
 // pool and return 1, so a zero here is proof that it never tried. That is the property the
 // spec asks for — an unconfigured deployment must run without touching the database — and
-// it is also what makes this binary harmless in a checkout that is not hireme.example.com.
+// it is also what makes this binary harmless in a checkout that is not hiremetoday.ca.
 func TestRunIsANoOpWithoutCredentials(t *testing.T) {
 	clearProviders(t)
 

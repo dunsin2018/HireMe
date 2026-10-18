@@ -121,7 +121,7 @@ func newGmailCallbackApp(t *testing.T) (*fiber.App, string) {
 	if err != nil {
 		t.Fatalf("cipher: %v", err)
 	}
-	const frontend = "https://hireme.example.com"
+	const frontend = "https://hiremetoday.ca"
 	h := newInboxHandlers(nil, nil, gmailsync.NewConnector("id", "secret", frontend), cipher, frontend, true, "")
 
 	iss := auth.NewIssuer(testGmailSecret, time.Hour)

@@ -38,7 +38,7 @@ type oauthRegistry interface {
 // browser-extension connect flow, and API-key management. accounts resolves
 // external OAuth identities into local user accounts (identity-first lookup,
 // verified-email gate, link-or-create, race retry). cookieDomains are the
-// registrable domains we serve (bare, e.g. "hireme.example.com"): per request the session
+// registrable domains we serve (bare, e.g. "hiremetoday.ca"): per request the session
 // cookie is scoped to whichever one the request host falls under (empty list =
 // host-only, for dev); the same set gates requestOrigin (see
 // auth.CookieDomainForHost).

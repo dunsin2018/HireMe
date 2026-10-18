@@ -17,7 +17,7 @@ func serviceWithProvider(t *testing.T, h http.HandlerFunc) *Service {
 	srv := httptest.NewServer(h)
 	t.Cleanup(srv.Close)
 
-	setEnv(t, "sk_test", testSecret, proPrice, "https://hireme.example.com")
+	setEnv(t, "sk_test", testSecret, proPrice, "https://hiremetoday.ca")
 	s := New(ConfigFromEnv(), nil)
 	s.client = newClient("sk_test", srv.URL, srv.Client())
 	return s

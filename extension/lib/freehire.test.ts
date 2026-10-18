@@ -11,7 +11,7 @@ import {
 
 describe('hiremeSlugFromUrl', () => {
   it('extracts the slug from a hireme job URL', () => {
-    expect(hiremeSlugFromUrl('https://hireme.example.com/jobs/backend-engineer-stripe-abc')).toBe(
+    expect(hiremeSlugFromUrl('https://hiremetoday.ca/jobs/backend-engineer-stripe-abc')).toBe(
       'backend-engineer-stripe-abc',
     );
   });
@@ -23,11 +23,11 @@ describe('hiremeSlugFromUrl', () => {
   });
 
   it('ignores sub-paths under a job', () => {
-    expect(hiremeSlugFromUrl('https://hireme.example.com/jobs/abc/similar')).toBeNull();
+    expect(hiremeSlugFromUrl('https://hiremetoday.ca/jobs/abc/similar')).toBeNull();
   });
 
   it('ignores non-job hireme pages', () => {
-    expect(hiremeSlugFromUrl('https://hireme.example.com/companies')).toBeNull();
+    expect(hiremeSlugFromUrl('https://hiremetoday.ca/companies')).toBeNull();
   });
 
   it('ignores foreign hosts even with a /jobs/ path', () => {

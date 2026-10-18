@@ -93,7 +93,7 @@ func (f *fakeSender) Send(_ context.Context, m emailnotify.Message) error {
 }
 
 func newRunner(store *fakeStore, sender *fakeSender) *onboarding.Runner {
-	mailer := onboarding.NewMailer(sender, "notifications@hireme.example.com", "ilya@example.test", "https://hireme.example.com", testLinks())
+	mailer := onboarding.NewMailer(sender, "notifications@hiremetoday.ca", "ilya@example.test", "https://hiremetoday.ca", testLinks())
 	return onboarding.New(store, mailer, onboarding.DefaultConfig())
 }
 

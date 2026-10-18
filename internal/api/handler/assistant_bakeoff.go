@@ -297,8 +297,8 @@ func loadBakeoffProfileFrom(raw []byte, origin string) (bakeoffProfile, error) {
 //
 //	hireme auth login                                     # once
 //	curl -H "Authorization: Bearer <key>" \
-//	  'https://hireme.example.com/api/v1/jobs/search?sort=match&limit=8'   # pick slugs
-//	curl -sS 'https://hireme.example.com/api/v1/jobs/<slug>'               # the FULL posting
+//	  'https://hiremetoday.ca/api/v1/jobs/search?sort=match&limit=8'   # pick slugs
+//	curl -sS 'https://hiremetoday.ca/api/v1/jobs/<slug>'               # the FULL posting
 //
 // Two details are load-bearing. They are real rather than written, because a synthetic
 // vacancy states requirements somebody invented to be answerable, and a run over those

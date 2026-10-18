@@ -17,7 +17,7 @@ import (
 )
 
 func TestListProvidersV2StructuredAndOmitsWebApple(t *testing.T) {
-	h := &authHandlers{oauth: fakeRegistry{"google": &fakeProvider{name: "google"}, "apple": &fakeProvider{name: "apple"}}, mobileCallbacks: map[string]string{"ios": "https://hireme.example.com/auth/callback"}}
+	h := &authHandlers{oauth: fakeRegistry{"google": &fakeProvider{name: "google"}, "apple": &fakeProvider{name: "apple"}}, mobileCallbacks: map[string]string{"ios": "https://hiremetoday.ca/auth/callback"}}
 	app := fiber.New(fiber.Config{ErrorHandler: RenderError})
 	app.Get("/api/v2/auth/providers", h.ListProvidersV2)
 	resp := get(t, app, "/api/v2/auth/providers")

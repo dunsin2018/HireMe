@@ -38,9 +38,9 @@ pasting it into an agent**. That block is the hero:
 ```
 Install hireme and use it to run my job search.
 
-  curl -fsSL https://hireme.example.com/install.sh | sh
+  curl -fsSL https://hiremetoday.ca/install.sh | sh
 
-Then read https://hireme.example.com/llms.txt for the conventions,
+Then read https://hiremetoday.ca/llms.txt for the conventions,
 and `hireme --help` for the commands.
 ```
 

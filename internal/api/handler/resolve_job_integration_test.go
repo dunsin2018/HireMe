@@ -226,7 +226,7 @@ func TestResolveJobEndpoint(t *testing.T) {
 
 	t.Run("a page we already carry is found, not imported", func(t *testing.T) {
 		resp, out := resolve(t,
-			"https://himalayas.app/companies/mindera/jobs/staff-java-backend-developer?utm_source=hireme.example.com", true)
+			"https://himalayas.app/companies/mindera/jobs/staff-java-backend-developer?utm_source=hiremetoday.ca", true)
 		if resp.StatusCode != http.StatusOK {
 			t.Fatalf("status = %d, want 200", resp.StatusCode)
 		}

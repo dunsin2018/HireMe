@@ -50,7 +50,7 @@ const draftTimeout = 4 * time.Minute
 func run() error {
 	limit := flag.Int("limit", 100, "how many skills to draft; 0 for every undescribed one")
 	concurrency := flag.Int("concurrency", 4, "how many model calls to keep in flight")
-	apiURL := flag.String("api", "https://hireme.example.com/api/v1", "base URL of the API the demand ordering is read from")
+	apiURL := flag.String("api", "https://hiremetoday.ca/api/v1", "base URL of the API the demand ordering is read from")
 	flag.Parse()
 
 	cfg := config.LoadLLM()

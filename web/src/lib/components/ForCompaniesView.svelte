@@ -159,7 +159,7 @@
       <pre
         class="overflow-x-auto rounded-lg border border-border bg-secondary/60 p-3 font-mono text-sm leading-relaxed"><span
           class="text-muted-foreground"># POST a vacancy — goes to moderation review</span>
-curl -X POST https://hireme.example.com/api/v1/submissions \
+curl -X POST https://hiremetoday.ca/api/v1/submissions \
   -H <span class="text-foreground">"Authorization: Bearer $HIREME_API_KEY"</span> \
   -H <span class="text-foreground">"Content-Type: application/json"</span> \
   -d '&#123;"url": "https://acme.com/careers/go",

@@ -142,7 +142,7 @@ describe('Google Analytics bootstrap', () => {
     // plain-node test environment.
     Object.assign(globalThis, {
       window: globalThis,
-      location: { hostname: 'hireme.example.com' },
+      location: { hostname: 'hiremetoday.ca' },
       document: { createElement: () => ({}), head: { appendChild: () => {} } },
     });
 

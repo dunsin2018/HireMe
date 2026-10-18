@@ -1,9 +1,9 @@
 #!/bin/sh
 # Install the hireme CLI: download the prebuilt binary for this OS/arch from the
 # latest GitHub release and place it on PATH.
-#   curl -fsSL https://hireme.example.com/install.sh | sh
+#   curl -fsSL https://hiremetoday.ca/install.sh | sh
 #
-# Served at https://hireme.example.com/install.sh as a SvelteKit static asset — it must
+# Served at https://hiremetoday.ca/install.sh as a SvelteKit static asset — it must
 # live in web/static/, the only directory adapter-node serves. Kept in sync with
 # the canonical script in the hireme-cli repo.
 set -eu
@@ -44,4 +44,4 @@ fi
 trap - EXIT
 
 echo "Installed ${BIN} → ${target}"
-echo "Next: ${BIN} auth login --token fhk_…    (create a key at https://hireme.example.com → API keys)"
+echo "Next: ${BIN} auth login --token fhk_…    (create a key at https://hiremetoday.ca → API keys)"

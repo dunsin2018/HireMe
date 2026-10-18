@@ -13,7 +13,7 @@ and refuses assignment (428C9). It is the furthest of three sources — `pro_unt
 This package writes a provider's source and never the plan, which is what stops a provider
 that reports "no subscription" from revoking a plan some other origin still confers.
 
-**This is hireme.example.com's hosted billing and is not supported for self-hosting.** It is in the
+**This is hiremetoday.ca's hosted billing and is not supported for self-hosting.** It is in the
 open repository under the same licence as the rest — closing it would protect nothing, since
 secrets live in the environment either way — but nothing here is built to be run by anyone
 else. Without its environment variables the package reports itself disabled, its routes

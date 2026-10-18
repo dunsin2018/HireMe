@@ -16,7 +16,7 @@ import (
 )
 
 func TestNotifier_Render(t *testing.T) {
-	n := NewNotifier(NewClient("t"), "https://hireme.example.com/")
+	n := NewNotifier(NewClient("t"), "https://hiremetoday.ca/")
 	d := notify.Digest{
 		SavedSearchName: "Go & <remote>",
 		Total:           3,
@@ -37,11 +37,11 @@ func TestNotifier_Render(t *testing.T) {
 	}
 	// Line: a bullet whose escaped title links to the hireme job page (trailing
 	// slash trimmed) tagged with the telegram UTM, then " — Company · salary".
-	if want := `• <a href="https://hireme.example.com/jobs/go-dev-acme?utm_source=telegram-bot">Go Dev &lt;x&gt;</a> — Acme · $130K—$170K / year`; !strings.Contains(got, want) {
+	if want := `• <a href="https://hiremetoday.ca/jobs/go-dev-acme?utm_source=telegram-bot">Go Dev &lt;x&gt;</a> — Acme · $130K—$170K / year`; !strings.Contains(got, want) {
 		t.Errorf("line missing %q in: %q", want, got)
 	}
 	// A job with no company/salary omits those suffixes but still renders the link.
-	if want := `• <a href="https://hireme.example.com/jobs/rustacean-foo?utm_source=telegram-bot">Rustacean</a>` + "\n"; !strings.Contains(got, want) {
+	if want := `• <a href="https://hiremetoday.ca/jobs/rustacean-foo?utm_source=telegram-bot">Rustacean</a>` + "\n"; !strings.Contains(got, want) {
 		t.Errorf("company/salary-less line wrong: %q", got)
 	}
 	if strings.Contains(got, " — ·") || strings.Count(got, "·") != 1 {
@@ -54,7 +54,7 @@ func TestNotifier_Render(t *testing.T) {
 }
 
 func TestNotifier_RenderSingularNoOverflow(t *testing.T) {
-	n := NewNotifier(NewClient("t"), "https://hireme.example.com")
+	n := NewNotifier(NewClient("t"), "https://hiremetoday.ca")
 	got := n.render(notify.Digest{SavedSearchName: "x", Total: 1, Jobs: []notify.DigestJob{{Title: "A", Slug: "a"}}})
 	if !strings.Contains(got, "<b>1</b> new job for") || strings.Contains(got, "more") {
 		t.Errorf("singular render wrong: %q", got)
@@ -66,7 +66,7 @@ func TestNotifier_RenderSingularNoOverflow(t *testing.T) {
 // re-fails, and the whole batch is dead-lettered (the user loses all of it). The
 // jobs that don't fit fall into the "+ N more" tail, and none are lost.
 func TestNotifier_RenderCapsAtTelegramLimit(t *testing.T) {
-	n := NewNotifier(NewClient("t"), "https://hireme.example.com")
+	n := NewNotifier(NewClient("t"), "https://hiremetoday.ca")
 	const total = 20
 	// Long enough that fewer than notify.ListLimit lines fit, so the length guard
 	// — not the product bound — is what stops the loop.
@@ -106,7 +106,7 @@ func TestNotifier_Send(t *testing.T) {
 
 	c := NewClient("BOTTOKEN")
 	c.base = srv.URL
-	n := NewNotifier(c, "https://hireme.example.com")
+	n := NewNotifier(c, "https://hiremetoday.ca")
 
 	err := n.Send(context.Background(), notify.ChannelTelegram, "12345", notify.Digest{SavedSearchName: "x", Total: 1, Jobs: []notify.DigestJob{{Title: "A", Slug: "a"}}})
 	if err != nil {
@@ -124,7 +124,7 @@ func TestNotifier_Send(t *testing.T) {
 }
 
 func TestNotifier_SendBadChatID(t *testing.T) {
-	n := NewNotifier(NewClient("t"), "https://hireme.example.com")
+	n := NewNotifier(NewClient("t"), "https://hiremetoday.ca")
 	if err := n.Send(context.Background(), notify.ChannelTelegram, "not-a-number", notify.Digest{}); err == nil {
 		t.Error("Send with non-numeric dest succeeded, want error")
 	}
@@ -193,7 +193,7 @@ func tgDigest(n int, notificationID int64) notify.Digest {
 }
 
 func TestNotifier_RenderListsAtMostTenJobs(t *testing.T) {
-	n := NewNotifier(NewClient("t"), "https://hireme.example.com")
+	n := NewNotifier(NewClient("t"), "https://hiremetoday.ca")
 	got := n.render(tgDigest(67, 42))
 
 	if shown := strings.Count(got, "• "); shown != notify.ListLimit {
@@ -202,19 +202,19 @@ func TestNotifier_RenderListsAtMostTenJobs(t *testing.T) {
 	if !strings.Contains(got, "<b>67</b> new jobs for") {
 		t.Errorf("heading must still carry the true count: %q", got)
 	}
-	if want := `<a href="https://hireme.example.com/my/notifications/42/jobs?utm_source=telegram-bot">+ 57 more</a>`; !strings.Contains(got, want) {
+	if want := `<a href="https://hiremetoday.ca/my/notifications/42/jobs?utm_source=telegram-bot">+ 57 more</a>`; !strings.Contains(got, want) {
 		t.Errorf("tail missing %q in: %q", want, got)
 	}
 }
 
 func TestNotifier_RenderTailFallsBackWithoutANotificationID(t *testing.T) {
-	n := NewNotifier(NewClient("t"), "https://hireme.example.com")
+	n := NewNotifier(NewClient("t"), "https://hiremetoday.ca")
 	got := n.render(tgDigest(67, 0))
 
 	if strings.Contains(got, "/my/notifications/0/jobs") {
 		t.Errorf("a zero notification id must not be rendered as a URL: %q", got)
 	}
-	if want := `<a href="https://hireme.example.com/my/notifications">+ 57 more</a>`; !strings.Contains(got, want) {
+	if want := `<a href="https://hiremetoday.ca/my/notifications">+ 57 more</a>`; !strings.Contains(got, want) {
 		t.Errorf("tail missing fallback %q in: %q", want, got)
 	}
 }
@@ -297,7 +297,7 @@ func TestNotifier_ForbiddenSurfacesAsRecipientGone(t *testing.T) {
 
 	c := NewClient("t")
 	c.base = srv.URL
-	n := NewNotifier(c, "https://hireme.example.com")
+	n := NewNotifier(c, "https://hiremetoday.ca")
 	err := n.Send(context.Background(), notify.ChannelTelegram, "555", notify.Digest{SavedSearchName: "Go", Total: 1})
 	if !errors.Is(err, notify.ErrRecipientGone) {
 		t.Errorf("Send err = %v, want it to wrap notify.ErrRecipientGone", err)

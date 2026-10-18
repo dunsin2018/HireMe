@@ -15,7 +15,7 @@ func TestNeedsExplicitServedHosts(t *testing.T) {
 		cookieDomains []string
 		want          bool
 	}{
-		{"multi-domain deployment with no allowlist", nil, []string{"hireme.dev", "hireme.example.com"}, true},
+		{"multi-domain deployment with no allowlist", nil, []string{"hireme.dev", "hiremetoday.ca"}, true},
 		{"single-domain dev deployment", nil, nil, false},
 		{"allowlist configured", []string{"hireme.dev"}, []string{"hireme.dev"}, false},
 	}

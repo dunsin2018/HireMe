@@ -111,7 +111,7 @@ Three inline SVGs committed to `web/src/lib/brands/` (`YCombinator.svelte`,
 `Techstars.svelte`, `A16z.svelte`), each a bare `<svg>` accepting a `class`.
 
 Not the logo proxy, though it was the obvious candidate and was tested first.
-`logo.hireme.example.com` resolves **by name** (`logo.ts:6`), and on these three brands
+`logo.hiremetoday.ca` resolves **by name** (`logo.ts:6`), and on these three brands
 that mis-resolves in a way no fallback catches:
 
 | key | result |

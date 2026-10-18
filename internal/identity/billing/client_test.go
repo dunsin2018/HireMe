@@ -138,7 +138,7 @@ func TestClientCheckoutSession(t *testing.T) {
 	})
 
 	url, err := c.createCheckoutSession(context.Background(), 601, "buyer@example.com",
-		"price_pro_monthly", "https://hireme.example.com/my/plan", "https://hireme.example.com/my/plan", "", "")
+		"price_pro_monthly", "https://hiremetoday.ca/my/plan", "https://hiremetoday.ca/my/plan", "", "")
 	if err != nil {
 		t.Fatalf("want no error, got %v", err)
 	}
@@ -163,7 +163,7 @@ func TestClientCheckoutReusesAKnownCustomer(t *testing.T) {
 	})
 
 	if _, err := c.createCheckoutSession(context.Background(), 601, "buyer@example.com",
-		"price_pro_monthly", "https://hireme.example.com/my/plan", "https://hireme.example.com/my/plan", "cus_9", ""); err != nil {
+		"price_pro_monthly", "https://hiremetoday.ca/my/plan", "https://hiremetoday.ca/my/plan", "cus_9", ""); err != nil {
 		t.Fatalf("want no error, got %v", err)
 	}
 	if !strings.Contains(gotForm, "customer=cus_9") {
@@ -188,7 +188,7 @@ func TestClientCheckoutNeverSendsCustomerCreation(t *testing.T) {
 		})
 
 		if _, err := c.createCheckoutSession(context.Background(), 601, "buyer@example.com",
-			"price_pro_monthly", "https://hireme.example.com/my/plan", "https://hireme.example.com/my/plan", existing, ""); err != nil {
+			"price_pro_monthly", "https://hiremetoday.ca/my/plan", "https://hiremetoday.ca/my/plan", existing, ""); err != nil {
 			t.Fatalf("want no error, got %v", err)
 		}
 		if strings.Contains(gotForm, "customer_creation") {
@@ -234,7 +234,7 @@ func TestClientPortalSession(t *testing.T) {
 		_, _ = w.Write([]byte(`{"url":"https://billing.stripe.com/p/session/test_123"}`))
 	})
 
-	url, err := c.createPortalSession(context.Background(), "cus_9", "https://hireme.example.com/my/plan")
+	url, err := c.createPortalSession(context.Background(), "cus_9", "https://hiremetoday.ca/my/plan")
 	if err != nil {
 		t.Fatalf("want no error, got %v", err)
 	}

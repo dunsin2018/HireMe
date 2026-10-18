@@ -7,7 +7,7 @@
   // Confirmed monitored. This is the address a data-subject request and the Google OAuth
   // review team both arrive at, so it has to stay a mailbox somebody actually reads —
   // the same string is published on /terms, /support and /delete-account.
-  const contactEmail = 'notifications@hiremetoday.ca';
+  const contactEmail = 'Team@hiremetoday.ca';
 
   const canonical = $derived(`${page.url.origin}/privacy`);
 
@@ -34,8 +34,8 @@
 
     <p class="text-base leading-relaxed text-muted-foreground">
       hireme (<a
-        href="https://hireme.example.com"
-        class="font-medium text-foreground underline-offset-4 hover:underline">hireme.example.com</a
+        href="https://hiremetoday.ca"
+        class="font-medium text-foreground underline-offset-4 hover:underline">hiremetoday.ca</a
       >) is a free, open-source IT job aggregator. This policy explains what data we collect, why,
       and who we share it with. We collect only what the product needs to work, and we never sell
       your data.
@@ -166,7 +166,7 @@
           <span class="font-medium text-foreground">Page content.</span> While the panel is open and
           only in service of what you asked for, it can read the current page's URL, title, and
           visible text (capped at 5,000 characters), or the fields of a job-application form you asked
-          it to fill. This is sent to hireme.example.com — the only host the extension talks to — and kept in
+          it to fill. This is sent to hiremetoday.ca — the only host the extension talks to — and kept in
           that conversation's transcript, which you can read and delete from your account. A read is
           always named in the panel, and browser-internal pages, other extensions' pages, and local
           files are never read.

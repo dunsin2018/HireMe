@@ -273,7 +273,7 @@ func newClientWithProxy(proxy *url.URL) *Client {
 		// given to trusted, curated providers — never the link-following path.
 		httpClient:   safehttp.NewClientWithProxy(15*time.Second, proxy),
 		streamClient: safehttp.NewClientWithProxy(streamTimeout, proxy),
-		userAgent:    "hireme/0.1 (+https://hireme.example.com)",
+		userAgent:    "hireme/0.1 (+https://hiremetoday.ca)",
 		maxRetries:   2,
 		retryDelay:   500 * time.Millisecond,
 	}
@@ -319,7 +319,7 @@ func newSingleUseConnClient() *Client {
 //
 // This is not a preference. Measured against 4dayweek.io on 2026-09-07, on the path its own
 // robots.txt explicitly ALLOWS (/api/v2), Cloudflare answered 403 to every honest form —
-// "hireme/0.1 (+https://hireme.example.com)", the same wrapped as
+// "hireme/0.1 (+https://hiremetoday.ca)", the same wrapped as
 // "Mozilla/5.0 (compatible; hireme/0.1; +...)", and "hireme-aggregator/0.1" — and 200 only
 // to a browser string carrying no identity at all. The managed rule refuses self-identification
 // as such, not our name, so staying identifiable and staying readable turned out to be
@@ -359,7 +359,7 @@ func newMacBrowserUAClient() *Client {
 // crawlerUserAgent identifies as Googlebot, for the one provider whose edge does the OPPOSITE
 // of blocking bots: energyjobline.com's job-detail pages server-render their schema.org
 // JobPosting ld+json only for a recognised search-crawler User-Agent. Both the project's own
-// "hireme/0.1 (+https://hireme.example.com)" and a plain desktop browser string (browserUserAgent)
+// "hireme/0.1 (+https://hiremetoday.ca)" and a plain desktop browser string (browserUserAgent)
 // get a client-rendered shell with no ld+json at all — verified live 2026-10-07. The site's own
 // robots.txt does not disallow the /job/ path, and SSR'ing only for crawlers is how it gets
 // Google's job rich snippets in the first place, so this is the intended way to read exactly

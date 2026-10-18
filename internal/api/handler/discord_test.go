@@ -56,7 +56,7 @@ func (f *fakeDiscordLinker) Status(context.Context, int64) (discordlink.Link, er
 // served behind is what these tests exercise.
 func newDiscordApp(t *testing.T, svc DiscordLinker) (*fiber.App, string) {
 	t.Helper()
-	const frontend = "https://hireme.example.com"
+	const frontend = "https://hiremetoday.ca"
 	h := newDiscordHandlers(svc, "app-1", frontend, true)
 
 	iss := auth.NewIssuer(testDiscordSecret, time.Hour)
@@ -289,7 +289,7 @@ func TestDiscordRoutesAreAbsentWhenUnconfigured(t *testing.T) {
 	iss := auth.NewIssuer(testDiscordSecret, time.Hour)
 	app := fiber.New(fiber.Config{ErrorHandler: RenderError})
 	// A nil service is how the composition root expresses "not configured".
-	newDiscordHandlers(nil, "", "https://hireme.example.com", true).register(app.Group("/api/v1"), middleware{
+	newDiscordHandlers(nil, "", "https://hiremetoday.ca", true).register(app.Group("/api/v1"), middleware{
 		cookie:         auth.RequireAuth(iss, testVersions),
 		optionalCookie: auth.OptionalCookieAuth(iss, testVersions),
 		key:            auth.RequireAuthOrKey(iss, testVersions, nil),

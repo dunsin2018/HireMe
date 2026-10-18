@@ -42,7 +42,7 @@ not the repo. Ship it, then submit.
    `web/src/routes/privacy/+page.svelte`, added in hireme#2888). It has to carry the
    verbatim Limited Use sentence and describe each scope, or the submission is refused
    before anyone looks at the product.
-2. Verify domain ownership of `hireme.example.com` with Google. `dig +short TXT hireme.example.com`
+2. Verify domain ownership of `hiremetoday.ca` with Google. `dig +short TXT hiremetoday.ca`
    already returns a `google-site-verification=` record (measured 2026-09-16), so this is
    most likely done from the Search Console setup. **Confirm the account, not the record**
    — the verification has to sit under the same Google account that owns the Cloud
@@ -76,7 +76,7 @@ sips -Z 120 web/static/pwa-512x512.png --out /tmp/hireme-oauth-logo-120.png
 Not committed, because it is derived and the site never serves it — one command is a
 smaller thing to keep true than a binary that silently drifts from the icon it was cut
 from. The other four branding fields are already live and were checked on 2026-09-16:
-`hireme.example.com`, `/privacy` and `/terms` all answer 200, and the footer links the last two
+`hiremetoday.ca`, `/privacy` and `/terms` all answer 200, and the footer links the last two
 from every page, which is where a reviewer looks for them.
 
 ## Scope justifications
@@ -141,7 +141,7 @@ Google wants to see the OAuth flow and each scope being used, from the user's po
 view. Screen recording with no narration is fine; keep it under about three minutes and do
 not cut away from the consent screen.
 
-1. **Where it starts.** Open `hireme.example.com`, sign in, and navigate to the Inbox feature the
+1. **Where it starts.** Open `hiremetoday.ca`, sign in, and navigate to the Inbox feature the
    ordinary way — through the account navigation, not a deep link. Show that it is empty
    and offers to connect a Google account. This establishes the feature exists before the
    grant, which is the framing the reviewer is checking.

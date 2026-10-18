@@ -123,7 +123,7 @@ jobs:
           # both.
           persist-credentials: false
 
-      # web/static/install.sh is served at https://hireme.example.com/install.sh and documented as
+      # web/static/install.sh is served at https://hiremetoday.ca/install.sh and documented as
       # `curl -fsSL … | sh`, so a mistake in it runs on someone else's machine, as them.
       # web/docker-entrypoint.sh is what starts the site. shellcheck ships on the runner.
       #

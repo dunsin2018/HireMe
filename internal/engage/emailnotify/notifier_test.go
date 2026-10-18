@@ -35,7 +35,7 @@ func (s *fakeSender) Send(_ context.Context, m Message) error {
 // testLinks signs the unsubscribe URLs the digest carries. The secret only has to
 // clear emailprefs' length floor.
 func testLinks() *emailprefs.Links {
-	return emailprefs.NewLinks("notifier-test-secret-padded-to-32b", "https://hireme.example.com")
+	return emailprefs.NewLinks("notifier-test-secret-padded-to-32b", "https://hiremetoday.ca")
 }
 
 // testUnsubscribeURL is what testLinks mints for the digest sample, so a render
@@ -63,7 +63,7 @@ func digest() notify.Digest {
 }
 
 func TestNotifier_RenderSubject(t *testing.T) {
-	n := NewNotifier(&fakeSender{}, "notifications@hireme.example.com", "https://hireme.example.com/", testLinks())
+	n := NewNotifier(&fakeSender{}, "notifications@hiremetoday.ca", "https://hiremetoday.ca/", testLinks())
 
 	got := n.render(digest(), testUnsubscribeURL(t))
 	if want := `3 new jobs for "Go & <remote>"`; got.subject != want {
@@ -77,7 +77,7 @@ func TestNotifier_RenderSubject(t *testing.T) {
 }
 
 func TestNotifier_RenderHTML(t *testing.T) {
-	n := NewNotifier(&fakeSender{}, "notifications@hireme.example.com", "https://hireme.example.com/", testLinks())
+	n := NewNotifier(&fakeSender{}, "notifications@hiremetoday.ca", "https://hiremetoday.ca/", testLinks())
 	got := n.render(digest(), testUnsubscribeURL(t)).html
 
 	// The saved-search name and a hostile title are auto-escaped by html/template.
@@ -91,7 +91,7 @@ func TestNotifier_RenderHTML(t *testing.T) {
 		t.Errorf("raw unescaped title leaked into HTML: %q", got)
 	}
 	// Each job links to its on-platform hireme page tagged with the email UTM.
-	if !strings.Contains(got, "https://hireme.example.com/jobs/go-dev-acme?utm_source=email") {
+	if !strings.Contains(got, "https://hiremetoday.ca/jobs/go-dev-acme?utm_source=email") {
 		t.Errorf("missing job link: %q", got)
 	}
 	// Company + salary render for the first job.
@@ -102,13 +102,13 @@ func TestNotifier_RenderHTML(t *testing.T) {
 	if !strings.Contains(got, "1 more") {
 		t.Errorf("missing overflow tail: %q", got)
 	}
-	if !strings.Contains(got, "https://hireme.example.com/my/notifications") {
+	if !strings.Contains(got, "https://hiremetoday.ca/my/notifications") {
 		t.Errorf("missing manage-alerts footer link: %q", got)
 	}
 }
 
 func TestNotifier_RenderTextAlternative(t *testing.T) {
-	n := NewNotifier(&fakeSender{}, "notifications@hireme.example.com", "https://hireme.example.com", testLinks())
+	n := NewNotifier(&fakeSender{}, "notifications@hiremetoday.ca", "https://hiremetoday.ca", testLinks())
 	got := n.render(digest(), testUnsubscribeURL(t)).text
 
 	// The text alternative carries the same content in plain form (unescaped).
@@ -118,7 +118,7 @@ func TestNotifier_RenderTextAlternative(t *testing.T) {
 	if !strings.Contains(got, "Acme") || !strings.Contains(got, "$130K—$170K / year") {
 		t.Errorf("text missing company/salary: %q", got)
 	}
-	if !strings.Contains(got, "https://hireme.example.com/jobs/go-dev-acme?utm_source=email") {
+	if !strings.Contains(got, "https://hiremetoday.ca/jobs/go-dev-acme?utm_source=email") {
 		t.Errorf("text missing job link: %q", got)
 	}
 	if !strings.Contains(got, "1 more") {
@@ -128,7 +128,7 @@ func TestNotifier_RenderTextAlternative(t *testing.T) {
 
 func TestNotifier_Send(t *testing.T) {
 	fs := &fakeSender{}
-	n := NewNotifier(fs, "notifications@hireme.example.com", "https://hireme.example.com", testLinks())
+	n := NewNotifier(fs, "notifications@hiremetoday.ca", "https://hiremetoday.ca", testLinks())
 
 	err := n.Send(context.Background(), notify.ChannelEmail, "user@acme.com", digest())
 	if err != nil {
@@ -138,7 +138,7 @@ func TestNotifier_Send(t *testing.T) {
 		t.Fatalf("sender calls = %d, want 1", fs.calls)
 	}
 	// From carries a display name over the configured address — see emailnotify.From.
-	if !strings.Contains(fs.from, "notifications@hireme.example.com") || !strings.Contains(fs.from, "hireme") {
+	if !strings.Contains(fs.from, "notifications@hiremetoday.ca") || !strings.Contains(fs.from, "hireme") {
 		t.Errorf("from = %q, want the configured address behind a readable name", fs.from)
 	}
 	if fs.to != "user@acme.com" {
@@ -154,7 +154,7 @@ func TestNotifier_Send(t *testing.T) {
 
 func TestNotifier_SendPropagatesError(t *testing.T) {
 	fs := &fakeSender{err: errors.New("ses throttled")}
-	n := NewNotifier(fs, "notifications@hireme.example.com", "https://hireme.example.com", testLinks())
+	n := NewNotifier(fs, "notifications@hiremetoday.ca", "https://hiremetoday.ca", testLinks())
 
 	if err := n.Send(context.Background(), notify.ChannelEmail, "user@acme.com", digest()); err == nil {
 		t.Error("Send should propagate the sender error so the delivery retries")
@@ -174,7 +174,7 @@ func bigDigest(n int, notificationID int64) notify.Digest {
 }
 
 func TestNotifier_ListsAtMostTenJobs(t *testing.T) {
-	n := NewNotifier(&fakeSender{}, "notifications@hireme.example.com", "https://hireme.example.com", testLinks())
+	n := NewNotifier(&fakeSender{}, "notifications@hiremetoday.ca", "https://hiremetoday.ca", testLinks())
 	got := n.render(bigDigest(67, 42), testUnsubscribeURL(t))
 
 	if c := strings.Count(got.html, "/jobs/job-"); c != notify.ListLimit {
@@ -192,10 +192,10 @@ func TestNotifier_ListsAtMostTenJobs(t *testing.T) {
 }
 
 func TestNotifier_TailLinksToTheDigestsOwnPage(t *testing.T) {
-	n := NewNotifier(&fakeSender{}, "notifications@hireme.example.com", "https://hireme.example.com", testLinks())
+	n := NewNotifier(&fakeSender{}, "notifications@hiremetoday.ca", "https://hiremetoday.ca", testLinks())
 	got := n.render(bigDigest(67, 42), testUnsubscribeURL(t))
 
-	const want = "https://hireme.example.com/my/notifications/42/jobs?utm_source=email"
+	const want = "https://hiremetoday.ca/my/notifications/42/jobs?utm_source=email"
 	if !strings.Contains(got.html, want) {
 		t.Errorf("HTML tail does not link to %q: %s", want, got.html)
 	}
@@ -205,13 +205,13 @@ func TestNotifier_TailLinksToTheDigestsOwnPage(t *testing.T) {
 }
 
 func TestNotifier_TailFallsBackWithoutANotificationID(t *testing.T) {
-	n := NewNotifier(&fakeSender{}, "notifications@hireme.example.com", "https://hireme.example.com", testLinks())
+	n := NewNotifier(&fakeSender{}, "notifications@hiremetoday.ca", "https://hiremetoday.ca", testLinks())
 	got := n.render(bigDigest(67, 0), testUnsubscribeURL(t))
 
 	if strings.Contains(got.html, "/my/notifications/0/jobs") {
 		t.Errorf("a zero notification id must not be rendered as a URL: %s", got.html)
 	}
-	if !strings.Contains(got.html, "https://hireme.example.com/my/notifications") {
+	if !strings.Contains(got.html, "https://hiremetoday.ca/my/notifications") {
 		t.Errorf("missing the fallback destination: %s", got.html)
 	}
 	if !strings.Contains(got.text, "57 more") {

@@ -54,7 +54,7 @@ a{display:inline-block;margin-top:1.5rem;color:#3f3f46;font-size:.875rem}
 </style></head><body><main>
 <h1>This link is no longer active</h1>
 <p>The CV it pointed to has been removed by its owner.</p>
-<a href="https://hireme.example.com">hireme.example.com</a>
+<a href="https://hiremetoday.ca">hiremetoday.ca</a>
 </main></body></html>`
 
 // Redirect resolves a traced link, records the click, and sends the visitor on.

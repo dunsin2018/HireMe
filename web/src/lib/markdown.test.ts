@@ -80,8 +80,8 @@ describe('renderMarkdown — prose survives', () => {
   });
 
   it('opens a link in a new tab', () => {
-    const html = renderMarkdown('[hireme](https://hireme.example.com/jobs)');
-    expect(html).toContain('href="https://hireme.example.com/jobs"');
+    const html = renderMarkdown('[hireme](https://hiremetoday.ca/jobs)');
+    expect(html).toContain('href="https://hiremetoday.ca/jobs"');
     expect(html).toContain('target="_blank"');
     expect(html).toContain('rel="noopener noreferrer"');
   });

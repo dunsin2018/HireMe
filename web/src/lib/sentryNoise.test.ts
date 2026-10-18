@@ -18,8 +18,8 @@ describe('isTransientNoise', () => {
     ['HIREME-WEB-F: Chrome', new TypeError('Failed to fetch')],
     ['HIREME-WEB-1M: Firefox', new TypeError('NetworkError when attempting to fetch resource.')],
     ['HIREME-WEB-K: Firefox, shorter', new TypeError('network error')],
-    ['HIREME-WEB-6: a chunk the deploy deleted', new TypeError('Failed to fetch dynamically imported module: https://hireme.example.com/_app/immutable/nodes/0.js')],
-    ['HIREME-WEB-1D: the same, Firefox wording', new TypeError('error loading dynamically imported module: https://hireme.example.com/_app/immutable/chunks/a.js')],
+    ['HIREME-WEB-6: a chunk the deploy deleted', new TypeError('Failed to fetch dynamically imported module: https://hiremetoday.ca/_app/immutable/nodes/0.js')],
+    ['HIREME-WEB-1D: the same, Firefox wording', new TypeError('error loading dynamically imported module: https://hiremetoday.ca/_app/immutable/chunks/a.js')],
     ['HIREME-WEB-8: the same, Safari wording', new TypeError('Importing a module script failed.')],
     ['HIREME-WEB-1R: the suggestion box abandoning a query', Object.assign(new Error('signal is aborted without reason'), { name: 'AbortError' })],
     // The abort and timeout entries below had no test, which is how a filter entry becomes

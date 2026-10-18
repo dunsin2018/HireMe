@@ -18,10 +18,10 @@ func (stubTokens) AccessToken(context.Context) (string, error) { return "token",
 // helper with defaults, so a reader can see that all four values are what "configured" means.
 func linkedInSettings() config.Settings {
 	return config.Settings{
-		FrontendOrigin:         "https://hireme.example.com",
+		FrontendOrigin:         "https://hiremetoday.ca",
 		LinkedInClientID:       "client",
 		LinkedInClientSecret:   "secret",
-		LinkedInRedirectURI:    "https://hireme.example.com/oauth/linkedin",
+		LinkedInRedirectURI:    "https://hiremetoday.ca/oauth/linkedin",
 		LinkedInOrganizationID: "130854077",
 	}
 }
@@ -30,7 +30,7 @@ func TestConfiguredPublishers(t *testing.T) {
 	t.Run("a configured webhook yields the discord channel", func(t *testing.T) {
 		cfg := config.Settings{
 			DiscordDigestWebhookURL: "https://discord.example/api/webhooks/1/abc",
-			FrontendOrigin:          "https://hireme.example.com",
+			FrontendOrigin:          "https://hiremetoday.ca",
 		}
 		got := configuredPublishers(cfg, nil)
 		if len(got) != 1 {
@@ -45,7 +45,7 @@ func TestConfiguredPublishers(t *testing.T) {
 	// error and must not read like one, or the worker looks broken every night on
 	// every deployment that has not adopted the feature.
 	t.Run("an absent webhook yields no channel and no error", func(t *testing.T) {
-		cfg := config.Settings{FrontendOrigin: "https://hireme.example.com"}
+		cfg := config.Settings{FrontendOrigin: "https://hiremetoday.ca"}
 		if got := configuredPublishers(cfg, nil); len(got) != 0 {
 			t.Errorf("got %d publishers, want 0", len(got))
 		}
@@ -117,7 +117,7 @@ func TestRenderOnlyTouchesNothing(t *testing.T) {
 	// than render, this would fail instead of passing quietly.
 	publishers := configuredPublishers(config.Settings{
 		DiscordDigestWebhookURL: "http://127.0.0.1:1/hook",
-		FrontendOrigin:          "https://hireme.example.com",
+		FrontendOrigin:          "https://hiremetoday.ca",
 	}, nil)
 
 	if got := renderOnly(digest, publishers); got != 0 {

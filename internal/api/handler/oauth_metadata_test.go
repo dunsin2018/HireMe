@@ -10,7 +10,7 @@ import (
 )
 
 func oauthMetadataApp() *fiber.App {
-	h := &authHandlers{frontendOrigin: "https://hireme.example.com"}
+	h := &authHandlers{frontendOrigin: "https://hiremetoday.ca"}
 	app := fiber.New(fiber.Config{ErrorHandler: RenderError})
 	app.Get("/api/v1/oauth/metadata/authorization-server", h.OAuthAuthorizationServerMetadata)
 	app.Get("/api/v1/oauth/metadata/protected-resource", h.OAuthProtectedResourceMetadata)

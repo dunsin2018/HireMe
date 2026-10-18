@@ -8,7 +8,7 @@ import { GET } from './+server';
 function call(headers: Record<string, string>) {
   const setHeaders = vi.fn();
   const response = (GET as unknown as (event: unknown) => Response)({
-    request: new Request('https://hireme.example.com/geo/region', { headers }),
+    request: new Request('https://hiremetoday.ca/geo/region', { headers }),
     setHeaders,
   });
   return { response, setHeaders };

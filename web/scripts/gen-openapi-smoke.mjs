@@ -131,8 +131,8 @@ async function main() {
   assert('default title is unchanged', ext.info.title === 'hireme API');
   assert('title override reaches info.title', int.info.title === 'hireme API — internal reference');
 
-  assert('external description cross-links to the internal reference', ext.info.description.includes('hireme.example.com/docs/api/internal'));
-  assert('internal description cross-links back to the external reference', int.info.description.includes('hireme.example.com/docs/api'));
+  assert('external description cross-links to the internal reference', ext.info.description.includes('hiremetoday.ca/docs/api/internal'));
+  assert('internal description cross-links back to the external reference', int.info.description.includes('hiremetoday.ca/docs/api'));
 
   let failed = 0;
   for (const c of checks) {

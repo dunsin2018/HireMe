@@ -28,7 +28,7 @@ import (
 func newService(t *testing.T, h http.HandlerFunc) (*Service, *pgxpool.Pool) {
 	t.Helper()
 	pool := testdb.Pool(t)
-	setEnv(t, "sk_test", testSecret, proPrice, "https://hireme.example.com")
+	setEnv(t, "sk_test", testSecret, proPrice, "https://hiremetoday.ca")
 
 	if h == nil {
 		return New(ConfigFromEnv(), db.New(pool)), pool

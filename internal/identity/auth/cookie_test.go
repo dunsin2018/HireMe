@@ -28,13 +28,13 @@ func setCookieHeader(t *testing.T, domain string) string {
 }
 
 // A non-empty domain must appear as the cookie's Domain attribute so the session
-// is shared across hireme.example.com and apply.hireme.example.com (unified SSO).
+// is shared across hiremetoday.ca and apply.hiremetoday.ca (unified SSO).
 func TestSetTokenCookieSetsDomain(t *testing.T) {
-	sc := setCookieHeader(t, ".hireme.example.com")
+	sc := setCookieHeader(t, ".hiremetoday.ca")
 	if !strings.Contains(sc, CookieName+"=tok") {
 		t.Fatalf("cookie value missing in %q", sc)
 	}
-	if !strings.Contains(strings.ToLower(sc), "domain=.hireme.example.com") {
+	if !strings.Contains(strings.ToLower(sc), "domain=.hiremetoday.ca") {
 		t.Fatalf("expected domain attribute, got %q", sc)
 	}
 }
@@ -66,10 +66,10 @@ func clearCookieHeaders(t *testing.T, domain string) []string {
 }
 
 // Logout during the cookie-domain migration must clear BOTH the configured
-// `.hireme.example.com` cookie and any leftover host-only cookie — otherwise a user
+// `.hiremetoday.ca` cookie and any leftover host-only cookie — otherwise a user
 // still holding an old host-only cookie can never log out.
 func TestClearTokenCookieClearsBothScopesWithDomain(t *testing.T) {
-	scs := clearCookieHeaders(t, ".hireme.example.com")
+	scs := clearCookieHeaders(t, ".hiremetoday.ca")
 	if len(scs) != 2 {
 		t.Fatalf("expected 2 Set-Cookie headers (domain + host-only), got %d: %q", len(scs), scs)
 	}
@@ -79,14 +79,14 @@ func TestClearTokenCookieClearsBothScopesWithDomain(t *testing.T) {
 			t.Fatalf("expected an expiring clear, got %q", sc)
 		}
 		low := strings.ToLower(sc)
-		if strings.Contains(low, "domain=.hireme.example.com") {
+		if strings.Contains(low, "domain=.hiremetoday.ca") {
 			haveDomain = true
 		} else if !strings.Contains(low, "domain=") {
 			haveHostOnly = true
 		}
 	}
 	if !haveDomain || !haveHostOnly {
-		t.Fatalf("expected both a .hireme.example.com clear and a host-only clear, got %q", scs)
+		t.Fatalf("expected both a .hiremetoday.ca clear and a host-only clear, got %q", scs)
 	}
 }
 

@@ -6,7 +6,7 @@
   const repoUrl = 'https://github.com/dunsin2018/HireMe';
   const issuesUrl = 'https://github.com/dunsin2018/HireMe/issues';
   const telegramUrl = 'https://t.me/hiremedev';
-  const contactEmail = 'notifications@hiremetoday.ca';
+  const contactEmail = 'Team@hiremetoday.ca';
 
   const canonical = $derived(`${page.url.origin}/support`);
 

@@ -105,7 +105,7 @@ export default {
         'img-src': [
           'self',
           'data:',
-          'https://logo.hireme.example.com',
+          'https://logo.hiremetoday.ca',
           'https://api.producthunt.com',
           'https://avatars.githubusercontent.com',
         ],

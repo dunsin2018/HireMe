@@ -65,7 +65,7 @@ func enabledBillingConfig() billing.Config {
 		// Without a price nothing confers Pro, so the config reports itself disabled and no
 		// route is mounted at all.
 		Prices:  []string{"price_pro_monthly"},
-		SiteURL: "https://hireme.example.com",
+		SiteURL: "https://hiremetoday.ca",
 	}
 }
 

@@ -471,7 +471,7 @@ func TestWellfound_Fetch_MapsAWellFormedEntryToAJob(t *testing.T) {
 }
 
 // TestWellfound_Fetch_ConvertsMarkdownDescriptionToHTML guards against a real bug found live
-// (hireme.example.com/jobs/ai-engineer-co-founder-role-brandbrahma-pkuqoprb): Wellfound's own
+// (hiremetoday.ca/jobs/ai-engineer-co-founder-role-brandbrahma-pkuqoprb): Wellfound's own
 // description field is Markdown, not HTML — the earlier test fixtures happened to use
 // already-HTML bodies ("<p>Build things.</p>"), which never exercised this. A raw
 // "**bold**"/"* list item" was rendering literally on the site instead of as real markup.

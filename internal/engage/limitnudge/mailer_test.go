@@ -30,11 +30,11 @@ func (s *fakeSender) Send(_ context.Context, m emailnotify.Message) error {
 const nudgeUserID int64 = 42
 
 func testLinks() *emailprefs.Links {
-	return emailprefs.NewLinks("limitnudge-test-secret-padded-to-32b", "https://hireme.example.com")
+	return emailprefs.NewLinks("limitnudge-test-secret-padded-to-32b", "https://hiremetoday.ca")
 }
 
 func newMailer(sender Sender) *Mailer {
-	return NewMailer(sender, "billing@hireme.example.com", "ilya@hireme.example.com", "https://hireme.example.com", testLinks())
+	return NewMailer(sender, "billing@hiremetoday.ca", "ilya@hiremetoday.ca", "https://hiremetoday.ca", testLinks())
 }
 
 func TestMailer_RenderLinksPricing(t *testing.T) {
@@ -42,7 +42,7 @@ func TestMailer_RenderLinksPricing(t *testing.T) {
 	if err != nil {
 		t.Fatalf("render: %v", err)
 	}
-	const wantURL = "https://hireme.example.com/pricing?utm_source=email"
+	const wantURL = "https://hiremetoday.ca/pricing?utm_source=email"
 	if !strings.Contains(mail.html, wantURL) {
 		t.Errorf("html does not link the pricing page (%s)", wantURL)
 	}
@@ -74,7 +74,7 @@ func TestMailer_SendUsesHumanReplyTo(t *testing.T) {
 	if sender.to != "capped-user@example.test" {
 		t.Errorf("to = %q, want the account's address", sender.to)
 	}
-	if sender.replyTo != "ilya@hireme.example.com" {
+	if sender.replyTo != "ilya@hiremetoday.ca" {
 		t.Errorf("reply-to = %q, want the configured human inbox, not the sending address", sender.replyTo)
 	}
 	if sender.group != emailprefs.GroupNews {

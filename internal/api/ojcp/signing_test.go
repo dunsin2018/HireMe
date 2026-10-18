@@ -28,7 +28,7 @@ func testSigner(t *testing.T) *Signer {
 	if err != nil {
 		t.Fatalf("marshal key: %v", err)
 	}
-	signer, err := NewSigner(pem.EncodeToMemory(&pem.Block{Type: "PRIVATE KEY", Bytes: der}), "hireme.example.com")
+	signer, err := NewSigner(pem.EncodeToMemory(&pem.Block{Type: "PRIVATE KEY", Bytes: der}), "hiremetoday.ca")
 	if err != nil {
 		t.Fatalf("NewSigner: %v", err)
 	}
@@ -127,8 +127,8 @@ func TestTheSignatureStatesWhoSignedAndForHowLong(t *testing.T) {
 	if sig.Alg != "ES256" {
 		t.Errorf("alg = %q, want ES256", sig.Alg)
 	}
-	if sig.Iss != "hireme.example.com" {
-		t.Errorf("iss = %q, want hireme.example.com — agents compare it to the serving domain", sig.Iss)
+	if sig.Iss != "hiremetoday.ca" {
+		t.Errorf("iss = %q, want hiremetoday.ca — agents compare it to the serving domain", sig.Iss)
 	}
 	if sig.SignedAt != "2026-10-13T12:00:00Z" || sig.ExpiresAt != "2026-10-14T12:00:00Z" {
 		t.Errorf("validity = %s..%s, want the 24 hours the spec recommends", sig.SignedAt, sig.ExpiresAt)
@@ -158,7 +158,7 @@ func TestEveryPublishedKeyCarriesWhatTheSpecRequires(t *testing.T) {
 func TestNewSignerRefusesAKeyItCannotSignWith(t *testing.T) {
 	rsaLike := pem.EncodeToMemory(&pem.Block{Type: "PRIVATE KEY", Bytes: []byte("not a key")})
 	for name, input := range map[string][]byte{"empty": nil, "garbage": rsaLike} {
-		if _, err := NewSigner(input, "hireme.example.com"); err == nil {
+		if _, err := NewSigner(input, "hiremetoday.ca"); err == nil {
 			t.Errorf("%s: NewSigner accepted it", name)
 		}
 	}

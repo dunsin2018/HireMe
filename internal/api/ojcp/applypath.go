@@ -15,7 +15,7 @@ import (
 // than being threaded through every call or read from the environment inside a package
 // that is meant to stay pure.
 type Projector struct {
-	// Origin is the absolute site origin (e.g. https://hireme.example.com) a posting's own page
+	// Origin is the absolute site origin (e.g. https://hiremetoday.ca) a posting's own page
 	// is served from.
 	Origin string
 	// CanonicalURLProviders names the sources whose stored URL really is the employer's own

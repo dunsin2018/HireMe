@@ -48,9 +48,9 @@ func inbound(handle, recipient, raw string) Inbound {
 }
 
 func TestRunOnce_KnownRecipientStored(t *testing.T) {
-	src := &fakeSource{batch: []Inbound{inbound("m1", "ivan@inbox.hireme.example.com", sampleMIME)}}
-	store := &fakeStore{byAddr: map[string]int64{"ivan@inbox.hireme.example.com": 42}}
-	w := NewWorker(src, store, "inbox.hireme.example.com")
+	src := &fakeSource{batch: []Inbound{inbound("m1", "ivan@inbox.hiremetoday.ca", sampleMIME)}}
+	store := &fakeStore{byAddr: map[string]int64{"ivan@inbox.hiremetoday.ca": 42}}
+	w := NewWorker(src, store, "inbox.hiremetoday.ca")
 
 	if err := w.RunOnce(context.Background()); err != nil {
 		t.Fatalf("RunOnce: %v", err)
@@ -74,8 +74,8 @@ func TestRunOnce_MixedCaseRecipientResolves(t *testing.T) {
 	// SES may hand us the envelope recipient in a different case than the stored
 	// (always-lowercase) address; the worker must still resolve it.
 	src := &fakeSource{batch: []Inbound{inbound("m1", "Ivan@Inbox.HireMe.Me", sampleMIME)}}
-	store := &fakeStore{byAddr: map[string]int64{"ivan@inbox.hireme.example.com": 42}}
-	w := NewWorker(src, store, "inbox.hireme.example.com")
+	store := &fakeStore{byAddr: map[string]int64{"ivan@inbox.hiremetoday.ca": 42}}
+	w := NewWorker(src, store, "inbox.hiremetoday.ca")
 
 	if err := w.RunOnce(context.Background()); err != nil {
 		t.Fatalf("RunOnce: %v", err)
@@ -86,9 +86,9 @@ func TestRunOnce_MixedCaseRecipientResolves(t *testing.T) {
 }
 
 func TestRunOnce_UnknownRecipientDropped(t *testing.T) {
-	src := &fakeSource{batch: []Inbound{inbound("m1", "nobody@inbox.hireme.example.com", sampleMIME)}}
+	src := &fakeSource{batch: []Inbound{inbound("m1", "nobody@inbox.hiremetoday.ca", sampleMIME)}}
 	store := &fakeStore{byAddr: map[string]int64{}}
-	w := NewWorker(src, store, "inbox.hireme.example.com")
+	w := NewWorker(src, store, "inbox.hiremetoday.ca")
 
 	if err := w.RunOnce(context.Background()); err != nil {
 		t.Fatalf("RunOnce: %v", err)
@@ -103,9 +103,9 @@ func TestRunOnce_UnknownRecipientDropped(t *testing.T) {
 
 func TestRunOnce_MissingMessageIDUsesS3Key(t *testing.T) {
 	raw := "From: solo@x.io\r\nSubject: hi\r\n\r\njust text\r\n" // no Message-ID
-	src := &fakeSource{batch: []Inbound{inbound("m9", "ivan@inbox.hireme.example.com", raw)}}
-	store := &fakeStore{byAddr: map[string]int64{"ivan@inbox.hireme.example.com": 7}}
-	w := NewWorker(src, store, "inbox.hireme.example.com")
+	src := &fakeSource{batch: []Inbound{inbound("m9", "ivan@inbox.hiremetoday.ca", raw)}}
+	store := &fakeStore{byAddr: map[string]int64{"ivan@inbox.hiremetoday.ca": 7}}
+	w := NewWorker(src, store, "inbox.hiremetoday.ca")
 
 	if err := w.RunOnce(context.Background()); err != nil {
 		t.Fatalf("RunOnce: %v", err)
@@ -119,9 +119,9 @@ func TestRunOnce_MissingMessageIDUsesS3Key(t *testing.T) {
 }
 
 func TestRunOnce_StoreErrorNotAcked(t *testing.T) {
-	src := &fakeSource{batch: []Inbound{inbound("m1", "ivan@inbox.hireme.example.com", sampleMIME)}}
-	store := &fakeStore{byAddr: map[string]int64{"ivan@inbox.hireme.example.com": 42}, insertErr: errors.New("db down")}
-	w := NewWorker(src, store, "inbox.hireme.example.com")
+	src := &fakeSource{batch: []Inbound{inbound("m1", "ivan@inbox.hiremetoday.ca", sampleMIME)}}
+	store := &fakeStore{byAddr: map[string]int64{"ivan@inbox.hiremetoday.ca": 42}, insertErr: errors.New("db down")}
+	w := NewWorker(src, store, "inbox.hiremetoday.ca")
 
 	if err := w.RunOnce(context.Background()); err != nil {
 		t.Fatalf("RunOnce should swallow per-message store error: %v", err)

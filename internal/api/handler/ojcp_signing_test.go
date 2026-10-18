@@ -16,7 +16,7 @@ import (
 
 func manifestApp(t *testing.T, signer *ojcp.Signer) *fiber.App {
 	t.Helper()
-	h := newOJCPHandlers(&fakeSearcher{}, fakeOJCPStore{}, "https://hireme.example.com", nil)
+	h := newOJCPHandlers(&fakeSearcher{}, fakeOJCPStore{}, "https://hiremetoday.ca", nil)
 	h.signer = signer
 	app := fiber.New(fiber.Config{ErrorHandler: RenderError})
 	app.Get("/ojcp/manifest", h.OJCPManifest)
@@ -34,7 +34,7 @@ func newTestSigner(t *testing.T) *ojcp.Signer {
 	if err != nil {
 		t.Fatalf("marshal key: %v", err)
 	}
-	signer, err := ojcp.NewSigner(pem.EncodeToMemory(&pem.Block{Type: "EC PRIVATE KEY", Bytes: der}), "hireme.example.com")
+	signer, err := ojcp.NewSigner(pem.EncodeToMemory(&pem.Block{Type: "EC PRIVATE KEY", Bytes: der}), "hiremetoday.ca")
 	if err != nil {
 		t.Fatalf("NewSigner: %v", err)
 	}

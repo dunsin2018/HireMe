@@ -127,7 +127,7 @@ info:
     (`?seniority=senior`) is a real facet name, but not one company search reads,
     so it is ignored and reported.
 servers:
-  - url: https://hireme.example.com/api/v1
+  - url: https://hiremetoday.ca/api/v1
 security: []
 tags:
   - name: Jobs
@@ -1586,7 +1586,7 @@ components:
       properties:
         public_slug:
           type: string
-          description: Stable public identifier. The hireme page is https://hireme.example.com/jobs/{public_slug}.
+          description: Stable public identifier. The hireme page is https://hiremetoday.ca/jobs/{public_slug}.
         title:
           type: string
         company:

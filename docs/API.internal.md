@@ -2,7 +2,7 @@
 
 # hireme API — internal reference
 
-Base URL: `https://hireme.example.com/api/v1`
+Base URL: `https://hiremetoday.ca/api/v1`
 
 ## Contents
 
@@ -39,9 +39,9 @@ Base URL: `https://hireme.example.com/api/v1`
 
 ## Base URL
 
-All endpoints are served under `https://hireme.example.com/api/v1`. The API is read-first and open: the job, search, facet, and company endpoints need no authentication and may be called cross-origin.
+All endpoints are served under `https://hiremetoday.ca/api/v1`. The API is read-first and open: the job, search, facet, and company endpoints need no authentication and may be called cross-origin.
 
-Authenticated endpoints accept either the browser session cookie (set by sign-in, same-origin) or a personal API key sent as a Bearer token — see the authentication model below. Keys are created in your account, at [hireme.example.com/my/api-keys](https://hireme.example.com/my/api-keys), not through this API.
+Authenticated endpoints accept either the browser session cookie (set by sign-in, same-origin) or a personal API key sent as a Bearer token — see the authentication model below. Keys are created in your account, at [hiremetoday.ca/my/api-keys](https://hiremetoday.ca/my/api-keys), not through this API.
 
 ## Response envelope
 
@@ -77,13 +77,13 @@ Endpoints marked “Session or API key” accept either; endpoints marked “Ses
 
 ## External vs internal endpoints
 
-This reference covers endpoints that require the browser’s own session cookie — including moderator-only and browser-extension-only endpoints. None of them accept a personal API key, so an external client or agent cannot call them. For the endpoints a key (or no auth at all) can reach, see [hireme.example.com/docs/api](https://hireme.example.com/docs/api).
+This reference covers endpoints that require the browser’s own session cookie — including moderator-only and browser-extension-only endpoints. None of them accept a personal API key, so an external client or agent cannot call them. For the endpoints a key (or no auth at all) can reach, see [hiremetoday.ca/docs/api](https://hiremetoday.ca/docs/api).
 
 ## What is not here
 
 This reference covers every endpoint you can call. A handful are deliberately left out because calling them directly is meaningless: the Gmail and calendar consent redirects (`/me/gmail/connect`, `/me/calendar/connect`, and their callbacks), which only a browser can complete; the Telegram bot webhook; the browser-tool websocket relay; the sitemap-cursor helpers behind `/sitemap.xml`; and the `/og/*.png` social-preview cards, which render an image rather than answer with JSON.
 
-Managing API keys (`POST`, `GET` and `DELETE` on `/me/api-keys`) is not documented here, because no API client can call it. Those endpoints accept only the browser session cookie, and additionally require a freshly proven identity — a password re-entry or a sign-in-provider check — that a script has no way to supply. Create and revoke keys in your account instead, at [hireme.example.com/my/api-keys](https://hireme.example.com/my/api-keys); the plaintext token is shown exactly once, at creation, so store it then.
+Managing API keys (`POST`, `GET` and `DELETE` on `/me/api-keys`) is not documented here, because no API client can call it. Those endpoints accept only the browser session cookie, and additionally require a freshly proven identity — a password re-entry or a sign-in-provider check — that a script has no way to supply. Create and revoke keys in your account instead, at [hiremetoday.ca/my/api-keys](https://hiremetoday.ca/my/api-keys); the plaintext token is shown exactly once, at creation, so store it then.
 
 The `/jobs/{slug}/fit` endpoints are pre-rename aliases of `/jobs/{slug}/match-analysis` and hit the same handlers. They still work, so existing clients do not break — use the match-analysis paths in new code.
 
@@ -172,7 +172,7 @@ Your own feedback on this company, across every category (empty if none).
 | `slug` | string | yes | The company slug. (e.g. `acme`) |
 
 ```bash
-curl "https://hireme.example.com/api/v1/companies/acme/feedback/mine" -b cookies.txt
+curl "https://hiremetoday.ca/api/v1/companies/acme/feedback/mine" -b cookies.txt
 ```
 
 ```json
@@ -202,7 +202,7 @@ One entry per (user, category): posting again in the same `feedback_type` overwr
 | `body` | string | yes | Free-text review. (e.g. `Fast process, clear communication.`) |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/companies/acme/feedback" \
+curl -X POST "https://hiremetoday.ca/api/v1/companies/acme/feedback" \
   -b cookies.txt -H 'Content-Type: application/json' \
   -d '{"rating":4,"feedback_type":"interview","body":"Fast process, clear communication."}'
 ```
@@ -243,7 +243,7 @@ Returns the company's freshly recomputed counters, the same cast/clear shape as 
 | `feedback_type` | string | yes | Which category to delete. (e.g. `interview`) |
 
 ```bash
-curl -X DELETE "https://hireme.example.com/api/v1/companies/acme/feedback?feedback_type=interview" -b cookies.txt
+curl -X DELETE "https://hiremetoday.ca/api/v1/companies/acme/feedback?feedback_type=interview" -b cookies.txt
 ```
 
 ```json
@@ -271,7 +271,7 @@ A second report of the same review by you is a silent no-op.
 | `reason` | string | yes | Report reason code. (e.g. `spam`) |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/company-feedback/5/report" \
+curl -X POST "https://hiremetoday.ca/api/v1/company-feedback/5/report" \
   -b cookies.txt -H 'Content-Type: application/json' \
   -d '{"reason":"spam"}'
 ```
@@ -287,7 +287,7 @@ curl -X POST "https://hireme.example.com/api/v1/company-feedback/5/report" \
 Every review with at least one report, most-reported first.
 
 ```bash
-curl "https://hireme.example.com/api/v1/company-feedback/reported" -b cookies.txt
+curl "https://hiremetoday.ca/api/v1/company-feedback/reported" -b cookies.txt
 ```
 
 ```json
@@ -324,7 +324,7 @@ Idempotent. 404 for an unknown id.
 | `id` | integer | yes | The feedback entry id. (e.g. `5`) |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/company-feedback/5/hide" -b cookies.txt
+curl -X POST "https://hiremetoday.ca/api/v1/company-feedback/5/hide" -b cookies.txt
 ```
 
 ```json
@@ -344,7 +344,7 @@ Send (or resend) a six-digit email verification code.
 Mails a fresh code to the caller’s own address, never a body field. Returns `202 Accepted`. `409` if the address is already confirmed.
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/auth/verify/request" -b cookies.txt
+curl -X POST "https://hiremetoday.ca/api/v1/auth/verify/request" -b cookies.txt
 ```
 
 ### `POST /auth/verify/confirm`
@@ -360,7 +360,7 @@ Confirm the address with the mailed code.
 | `code` | string | yes | The six-digit code mailed to your address. (e.g. `123456`) |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/auth/verify/confirm" \
+curl -X POST "https://hiremetoday.ca/api/v1/auth/verify/confirm" \
   -H 'Content-Type: application/json' -b cookies.txt \
   -d '{"code":"123456"}'
 ```
@@ -378,7 +378,7 @@ Sign out every session on the account, including this one.
 Bumps the account’s session generation (stranding every issued token and API-key session state) then clears the caller’s cookie. Cookie-only — an API key must not be able to sign a human out of their browser. Returns `204 No Content`.
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/auth/logout-all" -b cookies.txt
+curl -X POST "https://hiremetoday.ca/api/v1/auth/logout-all" -b cookies.txt
 ```
 
 ### `GET /auth/extension/connect`
@@ -398,7 +398,7 @@ Opened by the extension via `chrome.identity.launchWebAuthFlow`, not called dire
 
 ```bash
 # opened by the extension, not called directly:
-https://hireme.example.com/api/v1/auth/extension/connect?redirect_uri=https://<extension-id>.chromiumapp.org/&state=...
+https://hiremetoday.ca/api/v1/auth/extension/connect?redirect_uri=https://<extension-id>.chromiumapp.org/&state=...
 ```
 
 ### `POST /auth/extension/connect`
@@ -434,7 +434,7 @@ Re-read your own store subscription now.
 For a mobile client that has just completed an App Store or Google Play purchase. The purchase finishes on the device before the provider’s webhook reaches us, and if that delivery is lost the provider stops retrying after 80 minutes — so without this route a paid subscriber can be left looking at a paywall. It names nobody: the account is the session’s, and a user id in the request is ignored. Rate-limited per caller, and absent entirely where the store provider is unconfigured. `status` is `synced` when the plan was written, or `no_subscription` when RevenueCat holds nothing for this account; a 503 means the provider could not be reached and the hourly reconciler will finish the job.
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/billing/revenuecat/sync" -b cookies.txt
+curl -X POST "https://hiremetoday.ca/api/v1/billing/revenuecat/sync" -b cookies.txt
 ```
 
 ```json
@@ -460,7 +460,7 @@ Session-only, not API-key — an unattended run edits a CV, and the browser is t
 | `id` | string (UUID) | yes | The session id. |
 
 ```bash
-curl -N -X POST "https://hireme.example.com/api/v1/assistant/sessions/<id>/autopilot" -b cookies.txt
+curl -N -X POST "https://hiremetoday.ca/api/v1/assistant/sessions/<id>/autopilot" -b cookies.txt
 ```
 
 ## Job submissions
@@ -474,7 +474,7 @@ Any signed-in user can submit a vacancy for moderation and read their own queue.
 The pending submission queue (moderators).
 
 ```bash
-curl "https://hireme.example.com/api/v1/submissions" -b cookies.txt
+curl "https://hiremetoday.ca/api/v1/submissions" -b cookies.txt
 ```
 
 ```json
@@ -494,7 +494,7 @@ Approve a submission, minting a live job.
 | `id` | integer | yes | The submission id. (e.g. `9`) |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/submissions/9/approve" -b cookies.txt
+curl -X POST "https://hiremetoday.ca/api/v1/submissions/9/approve" -b cookies.txt
 ```
 
 ```json
@@ -520,7 +520,7 @@ Reject a submission with a reason.
 | `reason` | string | no | Why it was rejected. (e.g. `duplicate`) |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/submissions/9/reject" \
+curl -X POST "https://hiremetoday.ca/api/v1/submissions/9/reject" \
   -b cookies.txt -H 'Content-Type: application/json' \
   -d '{"reason":"duplicate"}'
 ```
@@ -540,7 +540,7 @@ Any signed-in user can flag a problem with a live vacancy. Review actions are mo
 The pending report queue (moderators).
 
 ```bash
-curl "https://hireme.example.com/api/v1/reports" -b cookies.txt
+curl "https://hiremetoday.ca/api/v1/reports" -b cookies.txt
 ```
 
 ```json
@@ -568,7 +568,7 @@ Resolve a report, optionally closing the job and telling the reporter.
 | `notify_reporter` | boolean | no | Email the reporter this decision. Defaults to false when omitted. (e.g. `true`) |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/reports/3/resolve" \
+curl -X POST "https://hiremetoday.ca/api/v1/reports/3/resolve" \
   -b cookies.txt -H 'Content-Type: application/json' \
   -d '{"close_job":true,"note":"Fixed — the job is now marked hybrid","notify_reporter":true}'
 ```
@@ -597,7 +597,7 @@ Dismiss a report with a reason, optionally telling the reporter.
 | `notify_reporter` | boolean | no | Email the reporter this decision. Defaults to false when omitted. (e.g. `true`) |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/reports/3/dismiss" \
+curl -X POST "https://hiremetoday.ca/api/v1/reports/3/dismiss" \
   -b cookies.txt -H 'Content-Type: application/json' \
   -d '{"reason":"not an issue"}'
 ```
@@ -630,7 +630,7 @@ Create a curated job.
 | `posted_at` | string (RFC3339) | no | Posting date. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/jobs" \
+curl -X POST "https://hiremetoday.ca/api/v1/jobs" \
   -b cookies.txt -H 'Content-Type: application/json' \
   -d '{"url":"https://acme.com/careers/123","title":"Senior Go Engineer","company":"Acme"}'
 ```
@@ -658,7 +658,7 @@ Edit a curated job.
 | `(any job field)` | varies | no | Same fields as create; provided fields are updated. |
 
 ```bash
-curl -X PATCH "https://hireme.example.com/api/v1/jobs/<slug>" \
+curl -X PATCH "https://hiremetoday.ca/api/v1/jobs/<slug>" \
   -b cookies.txt -H 'Content-Type: application/json' \
   -d '{"title":"Staff Go Engineer"}'
 ```
@@ -678,7 +678,7 @@ Your career profile and stored CV, session-only (a browser feature, like saved s
 Your career profile, or null if you have not saved one.
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/profile" -b cookies.txt
+curl "https://hiremetoday.ca/api/v1/me/profile" -b cookies.txt
 ```
 
 ```json
@@ -710,7 +710,7 @@ The whole profile is replaced on each save. An unknown specialization (must be a
 | `location_preferences` | object | no | Optional location block (`work_modes`, `remote`, `base`, `relocation`); omit or null to clear. |
 
 ```bash
-curl -X PUT "https://hireme.example.com/api/v1/me/profile" \
+curl -X PUT "https://hiremetoday.ca/api/v1/me/profile" \
   -H 'Content-Type: application/json' -b cookies.txt \
   -d '{"specializations":["backend"],"skills":["go","postgresql"]}'
 ```
@@ -728,7 +728,7 @@ Clear your profile (idempotent).
 Returns `204 No Content`.
 
 ```bash
-curl -X DELETE "https://hireme.example.com/api/v1/me/profile" -b cookies.txt
+curl -X DELETE "https://hiremetoday.ca/api/v1/me/profile" -b cookies.txt
 ```
 
 ### `GET /me/profile/verdict`
@@ -746,7 +746,7 @@ How many of your selected role’s open vacancies your skills reach, and which m
 | `(any search filter)` | string | no | Any search facet param scopes the role (the `skills` facet is ignored; your profile skills are the measured set). (e.g. `category=backend`) |
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/profile/verdict" -b cookies.txt
+curl "https://hiremetoday.ca/api/v1/me/profile/verdict" -b cookies.txt
 ```
 
 ```json
@@ -772,7 +772,7 @@ CV ATS-readiness report (deterministic + any cached LLM review).
 Scores your stored CV’s structure and its keyword match against the selected role. `has_cv` is false when no CV is stored; no profile is a `404`; `503` when search is unavailable.
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/profile/ats-report" -b cookies.txt
+curl "https://hiremetoday.ca/api/v1/me/profile/ats-report" -b cookies.txt
 ```
 
 ```json
@@ -800,7 +800,7 @@ Run the optional LLM qualitative ATS review and cache it.
 Runs the LLM review over your stored CV and folds it into the report (`reviewed: true`). Best-effort: an unconfigured or failing LLM returns the deterministic report (200).
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/profile/ats-report" -b cookies.txt
+curl -X POST "https://hiremetoday.ca/api/v1/me/profile/ats-report" -b cookies.txt
 ```
 
 ```json
@@ -822,7 +822,7 @@ Accepts a PDF (`multipart/form-data` field `file`) or plain text (`application/j
 | `text` | string | no | Résumé plain text (JSON path); or send a PDF as multipart field `file`. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/resume/extract" \
+curl -X POST "https://hiremetoday.ca/api/v1/me/resume/extract" \
   -H 'Content-Type: application/json' -b cookies.txt \
   -d '{"text":"Senior Go engineer, 6 years..."}'
 ```
@@ -846,7 +846,7 @@ Accepts a PDF (multipart `file`) or JSON `{ "text": ... }`. Returns the résumé
 | `text` | string | no | Résumé plain text (JSON path); or send a PDF as multipart field `file`. |
 
 ```bash
-curl -X PUT "https://hireme.example.com/api/v1/me/resume" \
+curl -X PUT "https://hiremetoday.ca/api/v1/me/resume" \
   -H 'Content-Type: application/json' -b cookies.txt \
   -d '{"text":"Senior Go engineer, 6 years..."}'
 ```
@@ -864,7 +864,7 @@ Your résumé status (enabled / present / uploaded_at).
 Always `200`: unconfigured storage or no résumé is a normal state. `structured` carries the read-only structured résumé, or null when none is current.
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/resume" -b cookies.txt
+curl "https://hiremetoday.ca/api/v1/me/resume" -b cookies.txt
 ```
 
 ```json
@@ -880,7 +880,7 @@ Delete your stored résumé.
 Returns `204 No Content`. `501` when object storage is unconfigured.
 
 ```bash
-curl -X DELETE "https://hireme.example.com/api/v1/me/resume" -b cookies.txt
+curl -X DELETE "https://hiremetoday.ca/api/v1/me/resume" -b cookies.txt
 ```
 
 ### `PUT /me/resume/contacts`
@@ -907,7 +907,7 @@ Each body field is owned per field: a value you set here takes over that field f
 | `education` | object[] | no | Education entries to show. |
 
 ```bash
-curl -X PUT "https://hireme.example.com/api/v1/me/resume/contacts" -b cookies.txt \
+curl -X PUT "https://hiremetoday.ca/api/v1/me/resume/contacts" -b cookies.txt \
   -H 'Content-Type: application/json' -d '{"email":"me@work.com","phone":"+1 555 0100"}'
 ```
 
@@ -924,7 +924,7 @@ Reset every contact override from your current structured résumé.
 A full reset, not just identity fields — every owned field is replaced from the current structured extract. `409` when you have no structured résumé to copy from.
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/resume/contacts/replace-from-cv" -b cookies.txt
+curl -X POST "https://hiremetoday.ca/api/v1/me/resume/contacts/replace-from-cv" -b cookies.txt
 ```
 
 ```json
@@ -957,7 +957,7 @@ A field the body omits is left unchanged. An unrecognized country code, a curren
 | `age_18_or_older` | boolean | no | Whether you are 18 or older. |
 
 ```bash
-curl -X PUT "https://hireme.example.com/api/v1/me/screening-answers" \
+curl -X PUT "https://hiremetoday.ca/api/v1/me/screening-answers" \
   -b cookies.txt -H 'Content-Type: application/json' \
   -d '{"willing_to_relocate":true,"notice_period_days":30}'
 ```
@@ -1001,7 +1001,7 @@ A field the body omits is left unchanged. A stage or challenge outside its vocab
 | `current_income_period` | string | no | Income period, e.g. `year`, `month`. (e.g. `month`) |
 
 ```bash
-curl -X PUT "https://hireme.example.com/api/v1/me/survey" \
+curl -X PUT "https://hiremetoday.ca/api/v1/me/survey" \
   -b cookies.txt -H 'Content-Type: application/json' \
   -d '{"job_search_stage":"searching"}'
 ```
@@ -1023,7 +1023,7 @@ Record that you have been through the onboarding wizard.
 Sets `onboarding_completed_at` on your account, which is what stops the app routing you into the wizard again. Idempotent: calling it a second time keeps the original timestamp and still answers `200`.
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/onboarding/complete" -b cookies.txt
+curl -X POST "https://hiremetoday.ca/api/v1/me/onboarding/complete" -b cookies.txt
 ```
 
 ```json
@@ -1041,7 +1041,7 @@ Browser conveniences, session-only. A saved search stores a canonical filter que
 List your saved searches.
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/searches" -b cookies.txt
+curl "https://hiremetoday.ca/api/v1/me/searches" -b cookies.txt
 ```
 
 ```json
@@ -1062,7 +1062,7 @@ Save a search.
 | `query` | string | yes | Canonical filter query string. (e.g. `q=go&seniority=senior&work_mode=remote`) |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/searches" \
+curl -X POST "https://hiremetoday.ca/api/v1/me/searches" \
   -H 'Content-Type: application/json' -b cookies.txt \
   -d '{"name":"Senior Go remote","query":"q=go&seniority=senior&work_mode=remote"}'
 ```
@@ -1091,7 +1091,7 @@ Rename or re-query a saved search.
 | `query` | string | no | New query (optional). |
 
 ```bash
-curl -X PATCH "https://hireme.example.com/api/v1/me/searches/2" \
+curl -X PATCH "https://hiremetoday.ca/api/v1/me/searches/2" \
   -H 'Content-Type: application/json' -b cookies.txt \
   -d '{"name":"Senior Go — EU remote"}'
 ```
@@ -1113,7 +1113,7 @@ Delete a saved search.
 | `id` | integer | yes | The saved-search id. (e.g. `2`) |
 
 ```bash
-curl -X DELETE "https://hireme.example.com/api/v1/me/searches/2" -b cookies.txt
+curl -X DELETE "https://hiremetoday.ca/api/v1/me/searches/2" -b cookies.txt
 ```
 
 ```json
@@ -1127,7 +1127,7 @@ curl -X DELETE "https://hireme.example.com/api/v1/me/searches/2" -b cookies.txt
 List your subscriptions.
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/subscriptions" -b cookies.txt
+curl "https://hiremetoday.ca/api/v1/me/subscriptions" -b cookies.txt
 ```
 
 ```json
@@ -1148,7 +1148,7 @@ Subscribe a saved search to a digest channel.
 | `channel` | string | yes | Delivery channel. (e.g. `telegram`) |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/subscriptions" \
+curl -X POST "https://hiremetoday.ca/api/v1/me/subscriptions" \
   -H 'Content-Type: application/json' -b cookies.txt \
   -d '{"saved_search_id":2,"channel":"telegram"}'
 ```
@@ -1176,7 +1176,7 @@ Pause or resume a subscription.
 | `active` | boolean | yes | Whether the subscription is active. (e.g. `false`) |
 
 ```bash
-curl -X PATCH "https://hireme.example.com/api/v1/me/subscriptions/1" \
+curl -X PATCH "https://hiremetoday.ca/api/v1/me/subscriptions/1" \
   -H 'Content-Type: application/json' -b cookies.txt \
   -d '{"active":false}'
 ```
@@ -1198,7 +1198,7 @@ Delete a subscription.
 | `id` | integer | yes | The subscription id. (e.g. `1`) |
 
 ```bash
-curl -X DELETE "https://hireme.example.com/api/v1/me/subscriptions/1" -b cookies.txt
+curl -X DELETE "https://hiremetoday.ca/api/v1/me/subscriptions/1" -b cookies.txt
 ```
 
 ```json
@@ -1212,7 +1212,7 @@ curl -X DELETE "https://hireme.example.com/api/v1/me/subscriptions/1" -b cookies
 Your Telegram link status (for digests).
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/telegram" -b cookies.txt
+curl "https://hiremetoday.ca/api/v1/me/telegram" -b cookies.txt
 ```
 
 ```json
@@ -1226,7 +1226,7 @@ curl "https://hireme.example.com/api/v1/me/telegram" -b cookies.txt
 Start linking your Telegram account.
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/telegram/link" -b cookies.txt
+curl -X POST "https://hiremetoday.ca/api/v1/me/telegram/link" -b cookies.txt
 ```
 
 ```json
@@ -1240,7 +1240,7 @@ curl -X POST "https://hireme.example.com/api/v1/me/telegram/link" -b cookies.txt
 Unlink your Telegram account.
 
 ```bash
-curl -X DELETE "https://hireme.example.com/api/v1/me/telegram" -b cookies.txt
+curl -X DELETE "https://hiremetoday.ca/api/v1/me/telegram" -b cookies.txt
 ```
 
 ```json
@@ -1254,7 +1254,7 @@ curl -X DELETE "https://hireme.example.com/api/v1/me/telegram" -b cookies.txt
 Your Discord link status, and whether the paid role is on it.
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/discord" -b cookies.txt
+curl "https://hiremetoday.ca/api/v1/me/discord" -b cookies.txt
 ```
 
 ```json
@@ -1268,7 +1268,7 @@ curl "https://hireme.example.com/api/v1/me/discord" -b cookies.txt
 Unlink your Discord account, giving up the paid role with it.
 
 ```bash
-curl -X DELETE "https://hireme.example.com/api/v1/me/discord" -b cookies.txt
+curl -X DELETE "https://hiremetoday.ca/api/v1/me/discord" -b cookies.txt
 ```
 
 ```json
@@ -1282,7 +1282,7 @@ curl -X DELETE "https://hireme.example.com/api/v1/me/discord" -b cookies.txt
 Your webhook destination for saved-search matches, or null if none is configured.
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/webhook" -b cookies.txt
+curl "https://hiremetoday.ca/api/v1/me/webhook" -b cookies.txt
 ```
 
 ```json
@@ -1304,7 +1304,7 @@ There is exactly one destination per account. Deliveries are plain, unsigned HTT
 | `url` | string | yes | Destination URL — must be http or https. (e.g. `https://example.com/hook`) |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/webhook" \
+curl -X POST "https://hiremetoday.ca/api/v1/me/webhook" \
   -H 'Content-Type: application/json' -b cookies.txt \
   -d '{"url":"https://example.com/hook"}'
 ```
@@ -1326,7 +1326,7 @@ Enable or disable your webhook destination without changing its URL.
 | `enabled` | boolean | yes | Whether the destination is enabled. (e.g. `false`) |
 
 ```bash
-curl -X PATCH "https://hireme.example.com/api/v1/me/webhook" \
+curl -X PATCH "https://hiremetoday.ca/api/v1/me/webhook" \
   -H 'Content-Type: application/json' -b cookies.txt \
   -d '{"enabled":false}'
 ```
@@ -1342,7 +1342,7 @@ curl -X PATCH "https://hireme.example.com/api/v1/me/webhook" \
 Delete your webhook destination.
 
 ```bash
-curl -X DELETE "https://hireme.example.com/api/v1/me/webhook" -b cookies.txt
+curl -X DELETE "https://hiremetoday.ca/api/v1/me/webhook" -b cookies.txt
 ```
 
 ```json
@@ -1360,7 +1360,7 @@ Named lists of specific jobs — independent of the single-flag "save" — that 
 List your job lists.
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/lists" -b cookies.txt
+curl "https://hiremetoday.ca/api/v1/me/lists" -b cookies.txt
 ```
 
 ```json
@@ -1381,7 +1381,7 @@ Create a job list.
 | `description` | string | no | Optional free-text description. (e.g. `Shortlist for this round`) |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/lists" \
+curl -X POST "https://hiremetoday.ca/api/v1/me/lists" \
   -H 'Content-Type: application/json' -b cookies.txt \
   -d '{"name":"Backend jobs","description":"Shortlist for this round"}'
 ```
@@ -1410,7 +1410,7 @@ Rename or re-describe a job list.
 | `description` | string | no | New description (optional). |
 
 ```bash
-curl -X PATCH "https://hireme.example.com/api/v1/me/lists/3" \
+curl -X PATCH "https://hiremetoday.ca/api/v1/me/lists/3" \
   -H 'Content-Type: application/json' -b cookies.txt \
   -d '{"name":"Backend jobs — Q3"}'
 ```
@@ -1434,7 +1434,7 @@ The referenced jobs and your separate "save" flags are untouched.
 | `id` | integer | yes | The job-list id. (e.g. `3`) |
 
 ```bash
-curl -X DELETE "https://hireme.example.com/api/v1/me/lists/3" -b cookies.txt
+curl -X DELETE "https://hiremetoday.ca/api/v1/me/lists/3" -b cookies.txt
 ```
 
 ```json
@@ -1462,7 +1462,7 @@ Jobs are addressed by `job_slug` (the public slug), the same identifier every jo
 | `job_slug` | string | yes | The job to add. (e.g. `senior-go-engineer-acme-1a2b`) |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/lists/3/jobs" \
+curl -X POST "https://hiremetoday.ca/api/v1/me/lists/3/jobs" \
   -H 'Content-Type: application/json' -b cookies.txt \
   -d '{"job_slug":"senior-go-engineer-acme-1a2b"}'
 ```
@@ -1487,7 +1487,7 @@ Idempotent: a job not in the list, or a slug that resolves to no job at all, is 
 | `job_slug` | string | yes | The job to remove. (e.g. `senior-go-engineer-acme-1a2b`) |
 
 ```bash
-curl -X DELETE "https://hireme.example.com/api/v1/me/lists/3/jobs/senior-go-engineer-acme-1a2b" -b cookies.txt
+curl -X DELETE "https://hiremetoday.ca/api/v1/me/lists/3/jobs/senior-go-engineer-acme-1a2b" -b cookies.txt
 ```
 
 ```json
@@ -1509,7 +1509,7 @@ Mints (or keeps) the public slug. Returns the list, now carrying `public_slug`.
 | `id` | integer | yes | The job-list id. (e.g. `3`) |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/lists/3/share" -b cookies.txt
+curl -X POST "https://hiremetoday.ca/api/v1/me/lists/3/share" -b cookies.txt
 ```
 
 ```json
@@ -1531,7 +1531,7 @@ Idempotent (already-private is a no-op).
 | `id` | integer | yes | The job-list id. (e.g. `3`) |
 
 ```bash
-curl -X DELETE "https://hireme.example.com/api/v1/me/lists/3/share" -b cookies.txt
+curl -X DELETE "https://hiremetoday.ca/api/v1/me/lists/3/share" -b cookies.txt
 ```
 
 ```json
@@ -1558,7 +1558,7 @@ Upserted by token value, not by user: if a different account signs in on the sam
 | `platform` | string | yes | `ios` or `android`. (e.g. `ios`) |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/push-tokens" \
+curl -X POST "https://hiremetoday.ca/api/v1/me/push-tokens" \
   -H 'Content-Type: application/json' -b cookies.txt \
   -d '{"token":"ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]","platform":"ios"}'
 ```
@@ -1570,7 +1570,7 @@ curl -X POST "https://hireme.example.com/api/v1/me/push-tokens" \
 List your own registered devices.
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/push-tokens" -b cookies.txt
+curl "https://hiremetoday.ca/api/v1/me/push-tokens" -b cookies.txt
 ```
 
 ```json
@@ -1595,7 +1595,7 @@ Returns `204 No Content`. `404` if the token is not yours (or unknown).
 | `token` | string | yes | The token to remove. |
 
 ```bash
-curl -X DELETE "https://hireme.example.com/api/v1/me/push-tokens" \
+curl -X DELETE "https://hiremetoday.ca/api/v1/me/push-tokens" \
   -H 'Content-Type: application/json' -b cookies.txt \
   -d '{"token":"ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]"}'
 ```
@@ -1609,7 +1609,7 @@ Send a test push to all of your own registered devices.
 Never targets another user or a caller-supplied destination — only your own registered tokens. Rate-limited to 20/hour, since each call fans out one outbound send per device.
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/push-tokens/test" -b cookies.txt
+curl -X POST "https://hiremetoday.ca/api/v1/me/push-tokens/test" -b cookies.txt
 ```
 
 ```json
@@ -1630,7 +1630,7 @@ List your notification-center entries, newest first.
 | `offset` | integer | no | Rows to skip. (e.g. `0`) |
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/notifications?limit=20" -b cookies.txt
+curl "https://hiremetoday.ca/api/v1/me/notifications?limit=20" -b cookies.txt
 ```
 
 ```json
@@ -1653,7 +1653,7 @@ One of your notifications, including its jobs snapshot.
 | `id` | integer | yes | The notification id. (e.g. `5`) |
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/notifications/5" -b cookies.txt
+curl "https://hiremetoday.ca/api/v1/me/notifications/5" -b cookies.txt
 ```
 
 ```json
@@ -1675,7 +1675,7 @@ Returns `204 No Content`.
 | `id` | integer | yes | The notification id. (e.g. `5`) |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/notifications/5/read" -b cookies.txt
+curl -X POST "https://hiremetoday.ca/api/v1/me/notifications/5/read" -b cookies.txt
 ```
 
 ### `POST /me/notifications/read-all`
@@ -1685,7 +1685,7 @@ curl -X POST "https://hireme.example.com/api/v1/me/notifications/5/read" -b cook
 Mark every unread notification read.
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/notifications/read-all" -b cookies.txt
+curl -X POST "https://hiremetoday.ca/api/v1/me/notifications/read-all" -b cookies.txt
 ```
 
 ```json
@@ -1712,7 +1712,7 @@ Revokes every session; your own cookie is re-issued at the new generation, so yo
 | `new_password` | string | yes | The replacement. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/password" -b cookies.txt \
+curl -X POST "https://hiremetoday.ca/api/v1/me/password" -b cookies.txt \
   -H 'Content-Type: application/json' -d '{"current_password":"…","new_password":"…"}'
 ```
 
@@ -1727,7 +1727,7 @@ curl -X POST "https://hireme.example.com/api/v1/me/password" -b cookies.txt \
 Delete your account and everything under it.
 
 ```bash
-curl -X DELETE "https://hireme.example.com/api/v1/me" -b cookies.txt
+curl -X DELETE "https://hiremetoday.ca/api/v1/me" -b cookies.txt
 ```
 
 ### `POST /me/autofill/run`
@@ -1739,7 +1739,7 @@ Drive your own browser to fill an application form.
 Runs the autofill agent over the browser-tool wire — your extension on one end, the agent on the other, routed strictly within your own channel. Requires the extension to be connected, and authenticates only as the extension itself — a session cookie or an API key gets a 403, since this call writes into whatever form your browser has open, not just reads it.
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/autofill/run" -H "Authorization: Bearer <extension session token>"
+curl -X POST "https://hiremetoday.ca/api/v1/me/autofill/run" -H "Authorization: Bearer <extension session token>"
 ```
 
 ```json
@@ -1759,7 +1759,7 @@ Set your account’s IANA timezone.
 | `timezone` | string | yes | IANA timezone name. (e.g. `Europe/Berlin`) |
 
 ```bash
-curl -X PATCH "https://hireme.example.com/api/v1/me/timezone" \
+curl -X PATCH "https://hiremetoday.ca/api/v1/me/timezone" \
   -H 'Content-Type: application/json' -b cookies.txt \
   -d '{"timezone":"Europe/Berlin"}'
 ```
@@ -1781,7 +1781,7 @@ Set your preferred interface language.
 | `language` | string | yes | Supported language code. (e.g. `en`) |
 
 ```bash
-curl -X PATCH "https://hireme.example.com/api/v1/me/language" \
+curl -X PATCH "https://hiremetoday.ca/api/v1/me/language" \
   -H 'Content-Type: application/json' -b cookies.txt \
   -d '{"language":"en"}'
 ```
@@ -1813,7 +1813,7 @@ Exactly one of `job_slug`, `url`, or `text` is required. A recognized URL resolv
 | `company` | string | no | Optional hint, used only alongside `text`. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/jd/resolve" \
+curl -X POST "https://hiremetoday.ca/api/v1/me/jd/resolve" \
   -H 'Content-Type: application/json' -b cookies.txt \
   -d '{"url":"https://boards.greenhouse.io/acme/jobs/123"}'
 ```
@@ -1833,7 +1833,7 @@ The lighter per-user surfaces: a vote on a job or company, the account-level not
 Your notification rule (gates saved-job reminders and both lifecycle nudges).
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/notification-settings" -b cookies.txt
+curl "https://hiremetoday.ca/api/v1/me/notification-settings" -b cookies.txt
 ```
 
 ```json
@@ -1854,7 +1854,7 @@ Change your notification rule.
 | `channels` | string[] | no | Delivery channels: `email`, `telegram`. |
 
 ```bash
-curl -X PUT "https://hireme.example.com/api/v1/me/notification-settings" -b cookies.txt \
+curl -X PUT "https://hiremetoday.ca/api/v1/me/notification-settings" -b cookies.txt \
   -H 'Content-Type: application/json' -d '{"enabled":true,"channels":["email"]}'
 ```
 
@@ -1876,7 +1876,7 @@ Start a thread.
 | `body` | string | yes | Opening post. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/threads" -b cookies.txt \
+curl -X POST "https://hiremetoday.ca/api/v1/threads" -b cookies.txt \
   -H 'Content-Type: application/json' -d '{"title":"Anyone interviewed at Acme lately?","body":"…"}'
 ```
 
@@ -1903,7 +1903,7 @@ Reply to a thread.
 | `body` | string | yes | Your reply. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/threads/31/replies" -b cookies.txt \
+curl -X POST "https://hiremetoday.ca/api/v1/threads/31/replies" -b cookies.txt \
   -H 'Content-Type: application/json' -d '{"body":"Two rounds, both technical."}'
 ```
 
@@ -1924,7 +1924,7 @@ Close a thread.
 | `id` | integer | yes | The thread id. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/threads/31/close" -b cookies.txt
+curl -X POST "https://hiremetoday.ca/api/v1/threads/31/close" -b cookies.txt
 ```
 
 ```json
@@ -1944,7 +1944,7 @@ Weekly demand trend for your profile skills.
 One entry per profile skill seen in at least one open job; a skill never seen is omitted rather than reported with a zero. `change_pct` is `null` with fewer than two snapshots, or when the earliest snapshot’s count was zero. A profile with no skills yet answers an empty `data` array, not an error.
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/market-pulse" -b cookies.txt
+curl "https://hiremetoday.ca/api/v1/me/market-pulse" -b cookies.txt
 ```
 
 ```json
@@ -1975,7 +1975,7 @@ Two sides of the same marketplace: an employee offers to refer into the company 
 The offer-moderation queue.
 
 ```bash
-curl "https://hireme.example.com/api/v1/referrals/offers" -H "Authorization: Bearer fhk_…"
+curl "https://hiremetoday.ca/api/v1/referrals/offers" -H "Authorization: Bearer fhk_…"
 ```
 
 ```json
@@ -1995,7 +1995,7 @@ View an offer's proof document.
 | `id` | string (uuid) | yes | The offer id. |
 
 ```bash
-curl "https://hireme.example.com/api/v1/referrals/offers/b71e…/proof" -H "Authorization: Bearer fhk_…" -o proof.pdf
+curl "https://hiremetoday.ca/api/v1/referrals/offers/b71e…/proof" -H "Authorization: Bearer fhk_…" -o proof.pdf
 ```
 
 ### `POST /referrals/offers/{id}/decide`
@@ -2017,7 +2017,7 @@ Approve or reject an offer.
 | `approve` | boolean | yes | True approves the referrer; false rejects the offer. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/referrals/offers/b71e…/decide" \
+curl -X POST "https://hiremetoday.ca/api/v1/referrals/offers/b71e…/decide" \
   -H "Authorization: Bearer fhk_…" -H 'Content-Type: application/json' -d '{"approve":true}'
 ```
 
@@ -2044,7 +2044,7 @@ Two states, not three: `public` was retired with the mode picker itself, and a r
 | `visibility` | string | yes | Either `off` or `anonymous`. (e.g. `anonymous`) |
 
 ```bash
-curl -X PUT "https://hireme.example.com/api/v1/me/talent-network" \
+curl -X PUT "https://hiremetoday.ca/api/v1/me/talent-network" \
   -H 'Content-Type: application/json' -b cookies.txt \
   -d '{"visibility":"anonymous"}'
 ```
@@ -2064,7 +2064,7 @@ Your CVs, and the tailoring flow that reframes one toward a single vacancy. Auth
 List your CVs, without their documents.
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/cvs" -b cookies.txt
+curl "https://hiremetoday.ca/api/v1/me/cvs" -b cookies.txt
 ```
 
 ```json
@@ -2086,7 +2086,7 @@ Create a CV, optionally seeded from your stored history.
 | `seed` | boolean | no | Pre-fill from your parsed CV / experience bank instead of starting blank. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/cvs" -b cookies.txt \
+curl -X POST "https://hiremetoday.ca/api/v1/me/cvs" -b cookies.txt \
   -H 'Content-Type: application/json' -d '{"title":"Backend engineer","seed":true}'
 ```
 
@@ -2115,7 +2115,7 @@ Replace a CV — title, template and document.
 | `document` | object | yes | The whole CV document. |
 
 ```bash
-curl -X PUT "https://hireme.example.com/api/v1/me/cvs/0f2c…" -b cookies.txt \
+curl -X PUT "https://hiremetoday.ca/api/v1/me/cvs/0f2c…" -b cookies.txt \
   -H 'Content-Type: application/json' -d '{"title":"Backend engineer","document":{…}}'
 ```
 
@@ -2142,7 +2142,7 @@ Switch the template only.
 | `template_id` | string | yes | A template id from `/cv-templates`. |
 
 ```bash
-curl -X PUT "https://hireme.example.com/api/v1/me/cvs/0f2c…/template" -b cookies.txt \
+curl -X PUT "https://hiremetoday.ca/api/v1/me/cvs/0f2c…/template" -b cookies.txt \
   -H 'Content-Type: application/json' -d '{"template_id":"compact"}'
 ```
 
@@ -2163,7 +2163,7 @@ Delete a CV.
 | `id` | string (uuid) | yes | The CV id. |
 
 ```bash
-curl -X DELETE "https://hireme.example.com/api/v1/me/cvs/0f2c…" -b cookies.txt
+curl -X DELETE "https://hiremetoday.ca/api/v1/me/cvs/0f2c…" -b cookies.txt
 ```
 
 ### `GET /cv-templates`
@@ -2173,7 +2173,7 @@ curl -X DELETE "https://hireme.example.com/api/v1/me/cvs/0f2c…" -b cookies.txt
 The template gallery.
 
 ```bash
-curl "https://hireme.example.com/api/v1/cv-templates" -b cookies.txt
+curl "https://hiremetoday.ca/api/v1/cv-templates" -b cookies.txt
 ```
 
 ```json
@@ -2189,7 +2189,7 @@ The typefaces a CV may use.
 Read this rather than hard-coding a list: an unregistered `document.style.font_family` is dropped on save and the CV renders in the template's own face. `note` names the familiar face the entry matches; `css` is a font stack for rendering a preview in a browser.
 
 ```bash
-curl "https://hireme.example.com/api/v1/cv-fonts" -b cookies.txt
+curl "https://hiremetoday.ca/api/v1/cv-fonts" -b cookies.txt
 ```
 
 ```json
@@ -2211,7 +2211,7 @@ Copies your base CV into a vacancy-bound tailored one and mints the short-lived 
 | `job_slug` | string | yes | The vacancy to tailor toward. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/cvs/tailor" -b cookies.txt \
+curl -X POST "https://hiremetoday.ca/api/v1/me/cvs/tailor" -b cookies.txt \
   -H 'Content-Type: application/json' -d '{"job_slug":"senior-backend-engineer-acme-1a2b"}'
 ```
 
@@ -2234,7 +2234,7 @@ For a tailored CV whose session was lost or never bound. 409 when the CV is not 
 | `id` | string (uuid) | yes | The tailored CV id. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/cvs/7d1a…/tailor-session" -b cookies.txt
+curl -X POST "https://hiremetoday.ca/api/v1/me/cvs/7d1a…/tailor-session" -b cookies.txt
 ```
 
 ```json
@@ -2250,7 +2250,7 @@ Rebuild your base CV from your current seed.
 Replaces the base (non-tailored) document from the current seed (experience bank first, your résumé's own extract for what the bank doesn't track). Preserves template and typography. Does not rewrite tailored copies for specific jobs. 409 when there is no usable seed.
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/cvs/base/reseed" -b cookies.txt
+curl -X POST "https://hiremetoday.ca/api/v1/me/cvs/base/reseed" -b cookies.txt
 ```
 
 ```json
@@ -2272,7 +2272,7 @@ Replaces the tailored document's content from the current seed (experience bank 
 | `id` | string (uuid) | yes | The tailored CV id. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/cvs/7d1a…/reseed" -b cookies.txt
+curl -X POST "https://hiremetoday.ca/api/v1/me/cvs/7d1a…/reseed" -b cookies.txt
 ```
 
 ```json
@@ -2300,7 +2300,7 @@ Off is the default for every CV. Turning it on is refused with a `409` on a depl
 | `enabled` | boolean | yes | Turn tracing on or off. |
 
 ```bash
-curl -X PUT "https://hireme.example.com/api/v1/me/cvs/0f2c…/tracer-links" -b cookies.txt \
+curl -X PUT "https://hiremetoday.ca/api/v1/me/cvs/0f2c…/tracer-links" -b cookies.txt \
   -H 'Content-Type: application/json' -d '{"enabled":true}'
 ```
 
@@ -2323,7 +2323,7 @@ One entry per link the PDF carries (header links, project links). Clicks you mad
 | `id` | string (uuid) | yes | The CV id. |
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/cvs/0f2c…/tracer-links" -b cookies.txt
+curl "https://hiremetoday.ca/api/v1/me/cvs/0f2c…/tracer-links" -b cookies.txt
 ```
 
 ```json
@@ -2332,7 +2332,7 @@ curl "https://hireme.example.com/api/v1/me/cvs/0f2c…/tracer-links" -b cookies.
     {
       "source_path": "header.links[0]",
       "destination_url": "https://github.com/you",
-      "traced_url": "https://hireme.example.com/cv/acme-x7abc",
+      "traced_url": "https://hiremetoday.ca/cv/acme-x7abc",
       "clicks": 12,
       "bot_clicks": 3,
       "distinct_visitors": 9,
@@ -2357,7 +2357,7 @@ Each entry names what changed and where (`paths`), not the edit itself — the o
 | `id` | string (uuid) | yes | The CV id. |
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/cvs/0f2c…/revisions" -b cookies.txt
+curl "https://hiremetoday.ca/api/v1/me/cvs/0f2c…/revisions" -b cookies.txt
 ```
 
 ```json
@@ -2395,7 +2395,7 @@ The undo is itself recorded as a new revision. A `409` when the entry has nothin
 | `rid` | string (uuid) | yes | The revision id, from the history feed. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/cvs/0f2c…/revisions/b1a2…/undo" -b cookies.txt
+curl -X POST "https://hiremetoday.ca/api/v1/me/cvs/0f2c…/revisions/b1a2…/undo" -b cookies.txt
 ```
 
 ```json
@@ -2423,7 +2423,7 @@ Reverse every standing edit of one agent turn, newest first.
 | `bid` | string (uuid) | yes | The batch id shared by the revisions to undo. |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/cvs/0f2c…/revisions/batch/f3c1…/undo" -b cookies.txt
+curl -X POST "https://hiremetoday.ca/api/v1/me/cvs/0f2c…/revisions/batch/f3c1…/undo" -b cookies.txt
 ```
 
 ```json
@@ -2445,7 +2445,7 @@ The tailored copy scored against the base CV it came from, with template, page m
 | `id` | string (uuid) | yes | The tailored CV id. |
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/cvs/7d1a…/ats-delta" -b cookies.txt
+curl "https://hiremetoday.ca/api/v1/me/cvs/7d1a…/ats-delta" -b cookies.txt
 ```
 
 ```json
@@ -2479,7 +2479,7 @@ Deterministic and free — no model call, unlike the AI match analysis. Scored o
 | `id` | string (uuid) | yes | The tailored CV id. |
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/cvs/7d1a…/job-match" -b cookies.txt
+curl "https://hiremetoday.ca/api/v1/me/cvs/7d1a…/job-match" -b cookies.txt
 ```
 
 ```json
@@ -2511,7 +2511,7 @@ Upload (or replace) your headshot.
 Multipart upload of the `file` part — JPEG, PNG, or WebP, capped at 8 MB and rate-limited to 12 uploads/hour. Replaces any existing headshot. `501` when object storage is not configured, `400` for an undecodable, unsupported, or oversized image.
 
 ```bash
-curl -X PUT "https://hireme.example.com/api/v1/me/photo" -b cookies.txt -F "file=@headshot.jpg"
+curl -X PUT "https://hiremetoday.ca/api/v1/me/photo" -b cookies.txt -F "file=@headshot.jpg"
 ```
 
 ```json
@@ -2527,7 +2527,7 @@ Whether you have a stored headshot, and when it was uploaded.
 `enabled` is false when object storage is not configured — the client should then offer no upload control at all rather than one that answers `501`. `uploaded_at` doubles as a cache-busting value for the image URL.
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/photo" -b cookies.txt
+curl "https://hiremetoday.ca/api/v1/me/photo" -b cookies.txt
 ```
 
 ```json
@@ -2543,7 +2543,7 @@ The stored headshot itself, as image bytes.
 Not a JSON endpoint — the response is `image/jpeg` with a short private cache lifetime (60s), meant to be busted with `?v=<uploaded_at>`. `404` when no headshot is stored.
 
 ```bash
-curl "https://hireme.example.com/api/v1/me/photo/image" -b cookies.txt -o headshot.jpg
+curl "https://hiremetoday.ca/api/v1/me/photo/image" -b cookies.txt -o headshot.jpg
 ```
 
 ### `DELETE /me/photo`
@@ -2555,7 +2555,7 @@ Remove your stored headshot.
 Returns `204 No Content`.
 
 ```bash
-curl -X DELETE "https://hireme.example.com/api/v1/me/photo" -b cookies.txt
+curl -X DELETE "https://hiremetoday.ca/api/v1/me/photo" -b cookies.txt
 ```
 
 ## Experience bank
@@ -2575,7 +2575,7 @@ Edit one employment.
 | `id` | string (uuid) | yes | The employment id. |
 
 ```bash
-curl -X PUT "https://hireme.example.com/api/v1/me/experience/employments/3fa8…" -b cookies.txt \
+curl -X PUT "https://hiremetoday.ca/api/v1/me/experience/employments/3fa8…" -b cookies.txt \
   -H 'Content-Type: application/json' -d '{"company":"Acme","role":"Staff Engineer"}'
 ```
 
@@ -2596,7 +2596,7 @@ Remove an employment and its atoms.
 | `id` | string (uuid) | yes | The employment id. |
 
 ```bash
-curl -X DELETE "https://hireme.example.com/api/v1/me/experience/employments/3fa8…" -b cookies.txt
+curl -X DELETE "https://hiremetoday.ca/api/v1/me/experience/employments/3fa8…" -b cookies.txt
 ```
 
 ### `PUT /me/experience/atoms/{id}`
@@ -2612,7 +2612,7 @@ Edit one evidence atom.
 | `id` | string (uuid) | yes | The atom id. |
 
 ```bash
-curl -X PUT "https://hireme.example.com/api/v1/me/experience/atoms/88b1…" -b cookies.txt \
+curl -X PUT "https://hiremetoday.ca/api/v1/me/experience/atoms/88b1…" -b cookies.txt \
   -H 'Content-Type: application/json' -d '{"claim":"Cut p99 checkout latency 40% (12k rps)"}'
 ```
 
@@ -2633,7 +2633,7 @@ Remove an evidence atom.
 | `id` | string (uuid) | yes | The atom id. |
 
 ```bash
-curl -X DELETE "https://hireme.example.com/api/v1/me/experience/atoms/88b1…" -b cookies.txt
+curl -X DELETE "https://hiremetoday.ca/api/v1/me/experience/atoms/88b1…" -b cookies.txt
 ```
 
 ### `POST /me/experience/atoms/merge`
@@ -2651,7 +2651,7 @@ Session-only, unlike its sibling create/edit/delete routes — the merge folds t
 | `ids` | string[] (2 uuids) | yes | Exactly two atom ids; the first is kept. (e.g. `["88b1…","91c2…"]`) |
 
 ```bash
-curl -X POST "https://hireme.example.com/api/v1/me/experience/atoms/merge" -b cookies.txt \
+curl -X POST "https://hiremetoday.ca/api/v1/me/experience/atoms/merge" -b cookies.txt \
   -H 'Content-Type: application/json' -d '{"ids":["88b1…","91c2…"]}'
 ```
 

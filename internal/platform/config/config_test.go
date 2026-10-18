@@ -426,12 +426,12 @@ func TestLoad_OAuthApplePrivateKeyInvalidBase64IsEmpty(t *testing.T) {
 func TestLoad_NativeAppleAndAuthV2(t *testing.T) {
 	key := bytes.Repeat([]byte{7}, 32)
 	t.Setenv("AUTH_V2_ENABLED", "true")
-	t.Setenv("MOBILE_AUTH_CALLBACKS", "web=https://hireme.example.com/my/reauth,ios=https://hireme.example.com/auth/callback")
+	t.Setenv("MOBILE_AUTH_CALLBACKS", "web=https://hiremetoday.ca/my/reauth,ios=https://hiremetoday.ca/auth/callback")
 	t.Setenv("APPLE_NATIVE_CLIENT_ID", "me.hireme.mobile")
 	t.Setenv("APPLE_GRANT_ACTIVE_KEY_ID", "v2")
 	t.Setenv("APPLE_GRANT_KEYS", "v1:"+base64.StdEncoding.EncodeToString(bytes.Repeat([]byte{1}, 32))+",v2:"+base64.StdEncoding.EncodeToString(key))
 	s := Load()
-	if !s.AuthV2Enabled || s.MobileAuthCallbacks["ios"] != "https://hireme.example.com/auth/callback" {
+	if !s.AuthV2Enabled || s.MobileAuthCallbacks["ios"] != "https://hiremetoday.ca/auth/callback" {
 		t.Fatalf("v2 config not loaded: %+v", s.MobileAuthCallbacks)
 	}
 	if s.AppleNativeClientID != "me.hireme.mobile" || s.AppleGrantActiveKeyID != "v2" || !bytes.Equal(s.AppleGrantKeys["v2"], key) {
@@ -441,17 +441,17 @@ func TestLoad_NativeAppleAndAuthV2(t *testing.T) {
 
 func TestSettingsValidateRejectsUnsafeProductionV2Callbacks(t *testing.T) {
 	base := Settings{Env: "production", CookieSecure: true, JWTSecret: strings.Repeat("x", 32),
-		FrontendOrigin: "https://hireme.example.com", AuthV2Enabled: true,
-		MobileAuthCallbacks: map[string]string{"web": "https://hireme.example.com/my/reauth"}}
+		FrontendOrigin: "https://hiremetoday.ca", AuthV2Enabled: true,
+		MobileAuthCallbacks: map[string]string{"web": "https://hiremetoday.ca/my/reauth"}}
 	for name, callback := range map[string]string{
-		"unknown target": "https://hireme.example.com/callback",
-		"insecure":       "http://hireme.example.com/callback",
-		"userinfo":       "https://user@hireme.example.com/callback",
-		"fragment":       "https://hireme.example.com/callback#token",
+		"unknown target": "https://hiremetoday.ca/callback",
+		"insecure":       "http://hiremetoday.ca/callback",
+		"userinfo":       "https://user@hiremetoday.ca/callback",
+		"fragment":       "https://hiremetoday.ca/callback#token",
 	} {
 		t.Run(name, func(t *testing.T) {
 			s := base
-			s.MobileAuthCallbacks = map[string]string{"web": "https://hireme.example.com/my/reauth", "unknown": callback}
+			s.MobileAuthCallbacks = map[string]string{"web": "https://hiremetoday.ca/my/reauth", "unknown": callback}
 			if name != "unknown target" {
 				s.MobileAuthCallbacks = map[string]string{"web": callback}
 			}
@@ -463,8 +463,8 @@ func TestSettingsValidateRejectsUnsafeProductionV2Callbacks(t *testing.T) {
 }
 
 func TestSettingsValidateRequiresSameOriginWebReauthCallback(t *testing.T) {
-	s := Settings{JWTSecret: strings.Repeat("x", 32), FrontendOrigin: "https://hireme.example.com", CookieSecure: true,
-		AuthV2Enabled: true, MobileAuthCallbacks: map[string]string{"web": "https://auth.hireme.example.com/my/reauth"}}
+	s := Settings{JWTSecret: strings.Repeat("x", 32), FrontendOrigin: "https://hiremetoday.ca", CookieSecure: true,
+		AuthV2Enabled: true, MobileAuthCallbacks: map[string]string{"web": "https://auth.hiremetoday.ca/my/reauth"}}
 	if err := s.Validate(); err == nil || !strings.Contains(err.Error(), "FRONTEND_ORIGIN") {
 		t.Fatalf("Validate()=%v", err)
 	}
@@ -488,10 +488,10 @@ func TestLoad_OAuthUnsetProviderIsZero(t *testing.T) {
 
 func TestLoad_EmailNotifyFromEnv(t *testing.T) {
 	t.Setenv("AWS_REGION", "eu-central-1")
-	t.Setenv("NOTIFY_EMAIL_FROM", "notifications@hireme.example.com")
+	t.Setenv("NOTIFY_EMAIL_FROM", "notifications@hiremetoday.ca")
 
 	s := Load()
-	if s.AWSRegion != "eu-central-1" || s.NotifyEmailFrom != "notifications@hireme.example.com" {
+	if s.AWSRegion != "eu-central-1" || s.NotifyEmailFrom != "notifications@hiremetoday.ca" {
 		t.Errorf("email-notify settings = %q/%q, want the env values", s.AWSRegion, s.NotifyEmailFrom)
 	}
 }
@@ -565,7 +565,7 @@ func TestSettings_Validate(t *testing.T) {
 			settings: Settings{
 				Env:            "production",
 				CookieSecure:   true,
-				FrontendOrigin: "https://hireme.example.com",
+				FrontendOrigin: "https://hiremetoday.ca",
 				JWTSecret:      "12345678901234567890123456789012",
 			},
 			wantErr: "",
@@ -575,7 +575,7 @@ func TestSettings_Validate(t *testing.T) {
 			settings: Settings{
 				Env:            "production",
 				CookieSecure:   false,
-				FrontendOrigin: "https://hireme.example.com",
+				FrontendOrigin: "https://hiremetoday.ca",
 				JWTSecret:      "12345678901234567890123456789012",
 			},
 			wantErr: "COOKIE_SECURE must be true in production",
@@ -585,7 +585,7 @@ func TestSettings_Validate(t *testing.T) {
 			settings: Settings{
 				Env:            "development",
 				CookieSecure:   false,
-				FrontendOrigin: "https://hireme.example.com",
+				FrontendOrigin: "https://hiremetoday.ca",
 				JWTSecret:      "12345678901234567890123456789012",
 			},
 			wantErr: "COOKIE_SECURE must be true when using HTTPS origin",
@@ -595,7 +595,7 @@ func TestSettings_Validate(t *testing.T) {
 			settings: Settings{
 				Env:            "production",
 				CookieSecure:   true,
-				FrontendOrigin: "https://hireme.example.com",
+				FrontendOrigin: "https://hiremetoday.ca",
 				JWTSecret:      "too-short-secret",
 			},
 			wantErr: "JWT_SECRET is required and must be at least 32 bytes",

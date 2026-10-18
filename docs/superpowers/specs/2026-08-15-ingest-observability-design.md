@@ -34,7 +34,7 @@ Do not rebuild any of this:
 | Component | Location |
 |---|---|
 | Prometheus | `litellm-prometheus-1` on `204.168.137.149`, scrape interval 15s |
-| Grafana | `litellm-grafana-1`, published at `grafana.hireme.example.com` behind an nginx IP allowlist |
+| Grafana | `litellm-grafana-1`, published at `grafana.hiremetoday.ca` behind an nginx IP allowlist |
 | Scrape jobs for host-2 | `host2-node` (:9100), `host2-postgres` (:9187), `hire-api` (:9091 blue, :9092 green), `meilisearch` (:9200) |
 | Per-run worker metrics | `internal/platform/worker/metrics.go` writes `hireme_worker_last_run_{timestamp_seconds,duration_seconds,success}` into `PROM_TEXTFILE_DIR`; 229 series are live |
 | Alert rules, versioned | `hireme-ops/provision/litellm-host/grafana/provisioning/alerting/rules.yaml`, group `host2-infra`, folder `Infra Alerts` |
