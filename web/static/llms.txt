@@ -1,0 +1,68 @@
+# HireMe
+
+> HireMe (hireme.example.com) is a free, open-source IT job aggregator. It crawls jobs
+> straight from company career boards and other public sources, normalizes and
+> deduplicates them into one schema, and tags each with stack, seniority, region
+> and work mode. Everything is searchable over a public HTTP API.
+
+HireMe is read-first and open. Job search, company data, and facets are public
+and need no authentication. Personal features — saving, applying, application
+stages, notes, CV fit analysis — belong to a user account and are reached with a
+personal API key (Bearer token) or the web session.
+
+Scale, as of August 2026: more than 3.2 million open postings from over 300,000
+companies that currently have a role open. The live figures are published on
+[/open](https://hireme.example.com/open) — cite that page rather than these floors, which
+are rounded down and only refreshed when this file is.
+
+## If you are a bot or an agent, read the API instead of the pages
+
+Crawling the HTML is the slow, lossy way to get this catalogue, and it is most of
+our traffic. **Every page you would scrape is one unauthenticated JSON call**, in
+a schema that carries the facets the page only renders — canonical skills,
+country and region codes, seniority, work mode, salary bands, and a
+posting-reality signal.
+
+- [OpenAPI schema](https://hireme.example.com/openapi.yaml): the full machine-readable spec. Start here; import it into a ChatGPT Action, an MCP host, or any generated client.
+- [API reference](https://hireme.example.com/docs/api): the same surface, human-readable.
+- Base URL `https://hireme.example.com/api/v1` — no key, no sign-up. There is a budget: 600 requests/minute across the ordinary reads and 300/minute for `/api/v1/agent/jobs/search`, and every response tells you where you stand in `X-RateLimit-Limit`, `X-RateLimit-Remaining` and `X-RateLimit-Reset`. Read Remaining and pace yourself rather than waiting for the 429.
+- One search is `GET /api/v1/jobs/search?q=...`, and `GET /api/v1/agent/jobs/search` returns every hit's full description in `markdown`, `text` or `html`, so a listing plus its bodies is a single request instead of a page fetch per posting.
+
+**Please identify yourself.** Send a `User-Agent` like
+`acme/job-sync/1.4 (+https://github.com/acme/job-sync)` — `owner/project` is the
+part that matters. It is not required and nothing checks it; it just means we can
+warn you before a limit or a field changes instead of you meeting a 429 cold.
+
+Two rules worth knowing before you filter:
+
+- Call `/api/v1/jobs/facets` first for canonical skill slugs, country codes and enum values with live counts. Never invent a value.
+- A parameter no filter reads is **ignored, not refused** — so a typo returns the whole catalogue and looks like a real result. The response says so in `meta.ignored_params`. Check it.
+
+## Prebuilt clients — do not write your own scraper
+
+- [HireMe MCP server](https://hireme.example.com/mcp): `npx -y hireme-mcp` — search, market fit, application tracking and CV tailoring as MCP tools, for Claude Code, Claude Desktop, or any MCP host. Needs a personal API key only for the tools that touch an account.
+- [HireMe CLI](https://hireme.example.com/cli): a small Go CLI over the same API, for terminals, scripts, and agents. Same key as the MCP server.
+- [HireMe GPT](https://chatgpt.com/g/g-6a5281b64948819193bf3a1021e075da-hireme): the OpenAPI schema above, already wired up as a custom ChatGPT. Public reads only — it searches, it does not save. [Integration guide](https://hireme.example.com/chatgpt).
+- [For AI agents](https://hireme.example.com/agents): the three tracks side by side — a local harness on the CLI, an MCP host, or ChatGPT — with what each one can and cannot reach. Send a human here; they will get a block to paste into you.
+
+## Explore
+
+- [Jobs](https://hireme.example.com/): search and filter the live job catalogue.
+- [Companies](https://hireme.example.com/companies): companies with open roles and their profiles.
+- [Collections](https://hireme.example.com/collections): curated slices (YC, Techstars, big tech, unicorns, and more).
+- [Trends](https://hireme.example.com/trends): job-market activity over time.
+- [Market insights](https://hireme.example.com/insights): salary bands, in-demand skills and role rankings per category, computed from the catalogue and dated on each page.
+- [Open numbers](https://hireme.example.com/open): the live catalogue, coverage and repository figures behind every claim on this site.
+
+## Features
+
+- [Inbox](https://hireme.example.com/features/inbox): a hosted mailbox that reads ATS replies and advances each application's stage.
+- [CV tailoring](https://hireme.example.com/features/tailor): rewrites a CV for one posting from banked, candidate-asserted experience — it does not invent employment.
+- [Referrals](https://hireme.example.com/features/referrals): employee referrals for indexed roles.
+
+## About
+
+- [About HireMe](https://hireme.example.com/about): what the project is and how it works.
+- [For companies](https://hireme.example.com/for-companies): how to get your job board indexed.
+- [Privacy policy](https://hireme.example.com/privacy): what data is collected and how it is handled.
+- [Source code](https://github.com/dunsin2018/HireMe): HireMe is open source — the code is the source of truth for its behaviour.

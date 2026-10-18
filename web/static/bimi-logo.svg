@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny-ps" viewBox="0 0 512 512" width="512" height="512">
+  <title>HireMe</title>
+  <rect x="56" y="56" width="400" height="400" rx="112" fill="#0a0a0a"/>
+  <g fill="#ffffff">
+    <rect x="172" y="168" width="44" height="176"/>
+    <rect x="296" y="128" width="44" height="216"/>
+    <rect x="172" y="234" width="168" height="40"/>
+    <path d="M296 128 L340 128 L318 82 Z"/>
+  </g>
+</svg>
