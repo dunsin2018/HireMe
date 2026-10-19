@@ -38,7 +38,7 @@ const SOCIAL_ORDER = [
  *  origin, so the scheme is allow-listed rather than cleaned up: anything that is not
  *  plain http(s) is dropped entirely. A protocol-relative `//host` is refused too —
  *  `URL` cannot parse it without a base, which is exactly the ambiguity we don't want. */
-function isSafeUrl(raw: string): boolean {
+export function isSafeUrl(raw: string): boolean {
   try {
     const { protocol } = new URL(raw);
     return protocol === 'http:' || protocol === 'https:';

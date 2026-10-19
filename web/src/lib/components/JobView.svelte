@@ -19,6 +19,7 @@
   import { isAuthenticated } from '$lib/auth.svelte';
   import { autoApplyButtonState, jobCtaPlan, type JobCtaPlan } from '$lib/autoApplyButton';
   import { askConfirmTailor } from '$lib/confirmTailorDialog.svelte';
+  import { isSafeUrl } from '$lib/companyDetails';
   import { onboardingUrl } from '$lib/onboardingGate.svelte';
   import { promptSignIn } from '$lib/signin';
   import { formatSalary, summaryFacets } from '$lib/enrichment';
@@ -265,9 +266,15 @@
     void goto(onboardingUrl(page.url.pathname + page.url.search));
   }
 
+  // job.url arrives from the API (scraped employer HTML or the submission queue), so it
+  // is treated as untrusted: only a plain http(s) URL may carry a navigation. Anything
+  // else falls back to this job's own page rather than handing the click to a
+  // script-capable scheme.
+  const safeJobUrl = $derived(isSafeUrl(job.url) ? job.url : page.url.pathname);
+
   function viewWithoutSignIn() {
     showSignInPrompt = false;
-    window.open(job.url, '_blank', 'noopener,noreferrer');
+    window.open(safeJobUrl, '_blank', 'noopener,noreferrer');
   }
 
   async function confirmApplied() {
@@ -441,7 +448,7 @@
   <Button
     variant="outline"
     {size}
-    href={job.url}
+    href={safeJobUrl}
     target="_blank"
     rel="nofollow noopener noreferrer"
     onclick={onApplyClick}
@@ -643,7 +650,7 @@
          both. -->
     {#if cta.autoApply?.leads}
       <!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- the posting's own URL on its employer's site; there is no route to resolve --><a
-        href={job.url}
+        href={safeJobUrl}
         class="inline-flex shrink-0 items-center gap-1.5 px-2 text-sm font-medium text-muted-foreground hover:text-foreground lg:hidden"
         target="_blank"
         rel="nofollow noopener noreferrer"
